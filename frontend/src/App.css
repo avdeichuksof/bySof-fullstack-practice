@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --mainColor: #ffff;
+    --lightGrey: #e1e1e1;
+    --detailColor: #F27135;
+    --highlightColor: #CF3622;
+    --primaryColor: #104B56;
+    --secondaryColor: #208393;
+    --font: 'Nunito', sans-serif;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-areas: 
+        'navbar' 'navbar' 'navbar'
+        'main' 'main' 'main'
+        'footer' 'footer' 'footer'
+    ;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.navbar {
+    grid-area: navbar;
+}
+.main {
+    grid-area: main;
+}
+.footer {
+    grid-area: footer;
+}

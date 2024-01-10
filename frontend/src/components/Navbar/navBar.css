@@ -1,0 +1,129 @@
+
+.header{
+    display: flex;
+    width: 100vw;
+    height: 60px;
+    background-color: var(--mainColor);
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: var(--font);
+    color: var(--primaryColor);
+    font-weight: 600;
+}
+
+.header img{
+    height: 40px;
+    width: auto;
+}
+
+.header ul.menu-inline{
+    display: flex;
+    flex-wrap: wrap;
+    float: right;
+    margin: 20 0px;
+    padding: 0 20px;
+}
+
+.header ul.menu-mobile{
+    background-color: var(--mainColor);
+    display: block;
+    width: 40%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    transition: all .6s ease;
+    padding-top: 60px;
+    overflow-y: scroll;
+    
+}
+
+ul.menu-mobile li{
+    display: block;
+    text-align: center;
+    margin: 15px;
+}
+
+.header li{
+    list-style: none;
+    display: inline;
+}
+
+.header .menu-item{
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    margin: 0 15px;
+    color: var(--primaryColor);
+    font-size: 1rem;
+    position: relative;
+    padding: 5px;
+}
+
+.header .menu-item:hover,
+.header .menu-item.text-color{
+    color: var(--detailColor);
+    transition: all .5s;
+}
+
+.submenu-closed{
+    display: none;
+}
+
+.submenu-open{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: var(--mainColor);
+    box-shadow: -6px 6px 20px -10px rgba(0, 0, 0, 0.702);
+    width: fit-content;
+    height: auto;
+    padding: 10px;
+    z-index: 10;
+}
+
+.header ul.menu-mobile .submenu-open{
+    position: relative;
+    box-shadow: none;
+    margin-top: 10px;
+    width: 100%;
+    border-top: 1px solid var(--detailColor);
+    border-bottom: 1px solid var(--detailColor);
+}
+
+li .bi-chevron-compact-down{
+    display: inline;
+    margin: 2px;
+}
+
+.icon-burger{
+    display: fixed;
+    padding-top: 10px;
+    margin-left: 10px;
+}
+
+
+/* MEDIA */
+
+@media(min-width: 768px) {
+    .icon-burger{
+        display: none;
+    }
+    .header{
+        justify-content: space-evenly;
+    }
+    .header ul.menu-mobile{
+        display: none;
+    }
+}
+
+@media(max-width: 768px){
+    .header ul.menu-inline{
+        display: none;
+        
+    }
+}
+
+
