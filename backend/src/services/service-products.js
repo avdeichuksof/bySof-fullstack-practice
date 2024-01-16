@@ -9,7 +9,7 @@ class ProductService {
         return productFound
     }
 
-    /* getProducts = async () => {
+    getProducts = async () => {
         try {
             const products = await productMethods.getProducts()
             return products
@@ -18,7 +18,7 @@ class ProductService {
             throw new Error(error.message)
         }
     }
- */
+
     getProductsPaginate = async (category, limit, page, sort) => {
         try {
             const products = await productMethods.getProductsPaginate(category, limit, page, sort)

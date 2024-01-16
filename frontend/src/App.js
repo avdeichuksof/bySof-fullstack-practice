@@ -1,28 +1,30 @@
 import './App.css'
 import { Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+
 
 // components
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 
-
 // pages
-import Home from './pages/home'
-import Products from './pages/Products'
+import Home from './pages/Home'
+import Login from './pages/Session/Login'
+import Register from './pages/Session/Register'
 
-// const Home = React.lazy(() => import('./X'))
 
 function App() {
+  const baseURL = process.env.REACT_APP_BASE_URL
   return (
-    <Suspense fallback="loading" >
+    <Suspense fallback={<div>Loading...</div>} >
       <div className='grid-container'>
         <Navbar className="navbar"/>
           <div className='main'>
-            <Routes>
-              <Route path='/' exact Component={Home} />
-              <Route path='/api/products' exact Component={Products}/>
-            </Routes>
+              <Routes>
+                <Route path='/login'  element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/' element={<Home />} />
+              </Routes>
           </div>
         <Footer className="footer"/>
       </div>

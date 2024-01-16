@@ -1,4 +1,4 @@
-import User from "../dao/models/model-user"
+import User from "../dao/models/model-user.js"
 import UserService from "../services/service-users.js"
 const userService = new UserService()
 import EmailController from './controller-emails.js'
@@ -106,7 +106,7 @@ class UsersController {
                 cart: req.user.cart
             }
 
-            res.status(200).redirect('LOGIN ROUTE')
+            res.status(200).redirect('/api/auth/login')
         } catch (error) {
             res.status(500).send({error: error})
         }
@@ -139,7 +139,7 @@ class UsersController {
             try {
                 let token = jwt.sign(req.session.user, 'secret', {expiresIn: '2000s'})
                 console.log('User logged in')
-                res.redirect('HOME ROUTE')
+                res.redirect('/')
             } catch (error) {   
                 return next(tokenError)
             }

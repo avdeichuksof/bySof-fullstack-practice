@@ -1,33 +1,50 @@
 // dependencies
 import cors from 'cors'
+import passport from 'passport'
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 
+
 import config from './src/config/config.js'
+import initPassport from './src/config/passport.js'
 
 
 // server
 import express from 'express'
-const app = express()
+import history from 'connect-history-api-fallback'
 
+const app = express()
+const PORT = config.port
+
+// http
 import http from 'http'
 const server = http.createServer(app)
 
-const PORT = config.port
+// CORS
+app.use(cors())
 
-// mongo
+// mongoDB
 import connectDB from './src/dao/db/db.js'
 
 // JSON settings
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(cors())
 app.use(bodyParser.json())
 
-import path from 'path'
-import __dirname from './src/utils/utils.js'
+// dirname
+import path from "path"
+import { fileURLToPath } from "url"
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname + '/public')))
+
+// history API fallback
+app.use(history())
+
+// ruta estática para archivos de react
+const frontendBuildPath = path.join(__dirname, '..' ,'frontend')
+app.use(express.static(path.join(frontendBuildPath, 'build')))
 
 // mongoStore
 app.use(session({
@@ -41,18 +58,20 @@ app.use(session({
 
 
 // passport
-
+initPassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 // logger
 
 
 // routers
-import homeRouter from './src/routers/home-router.js'
-import productsRouter from './src/routers/products-router.js'
+/* import authRouter from './src/routers/router-auth.js'
+app.use('/api/auth', authRouter)
 
-app.use('/', homeRouter)
-app.use('/api/products', productsRouter)
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendBuildPath, 'index.html'))
+}) */
 
 // server listen
 server.listen(PORT, () => {

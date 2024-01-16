@@ -2,6 +2,16 @@ import ProductService from "../services/service-products.js"
 const productService = new ProductService()
 
 class ProductController {
+
+    getProducts = async (req, res) => {
+        try {
+            const products = await productService.getProducts()
+            res.status(200).send({products: products})
+        } catch (error) {
+            res.status(400).send({error: error})
+        }
+    }
+
     getProductsPaginate = async (req, res) => {
         try {
             let {category, limit, page, sort} = req.query
