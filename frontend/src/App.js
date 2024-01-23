@@ -1,7 +1,6 @@
 import './App.css'
-import { Suspense } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
 
 // components
 import Navbar from './components/Navbar/Navbar'
@@ -11,10 +10,19 @@ import Footer from './components/Footer/Footer'
 import Home from './pages/Home'
 import Login from './pages/Session/Login'
 import Register from './pages/Session/Register'
-
+import axios from 'axios'
 
 function App() {
-  const baseURL = process.env.REACT_APP_BASE_URL
+  const backend_url = 'http://localhost:8080'
+  
+  const [data, setData] = useState()
+  useEffect( () => {
+    axios.get(backend_url)
+      .then(res => {
+        setData(res.data)
+      })
+  }, [data])
+
   return (
     <Suspense fallback={<div>Loading...</div>} >
       <div className='grid-container'>

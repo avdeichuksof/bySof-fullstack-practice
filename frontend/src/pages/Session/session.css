@@ -1,0 +1,13 @@
+*{
+    --mainColor: #ffff;
+    --lightGrey: #e1e1e1;
+    --detailColor: #F27135;
+    --highlightColor: #CF3622;
+    --primaryColor: #104B56;
+    --secondaryColor: #208393;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: repeat(2 1fr);
+}

@@ -1,3 +1,5 @@
+import 'core-js/stable/index.js'
+import 'regenerator-runtime/runtime.js'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
@@ -9,8 +11,9 @@ if(module.hot){
   module.hot.accept()
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
+const rootElement = document.getElementById('root')
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

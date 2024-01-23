@@ -1,5 +1,6 @@
-import './subMenu.css';
-import { NavLink } from "react-router-dom";
+import './subMenu.css'
+import React from 'react'
+import { NavLink } from "react-router-dom"
 
 const Submenu = () => {
     return (

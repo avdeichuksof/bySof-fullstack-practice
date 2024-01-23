@@ -1,6 +1,7 @@
 /* import React, {useState, useEffect} from "react"
 import AxiosClient from "../services/axiosClient"
 const axiosClient = new AxiosClient() */
+import React from "react"
 
 const Home = () => {
 
@@ -36,7 +37,7 @@ const Home = () => {
  */
 
     return <div>
-        <h1>Home</h1>
+        <h1>Chau</h1>
     </div>
 }
 

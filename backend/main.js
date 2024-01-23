@@ -5,7 +5,6 @@ import bodyParser from 'body-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 
-
 import config from './src/config/config.js'
 import initPassport from './src/config/passport.js'
 
@@ -37,14 +36,11 @@ import path from "path"
 import { fileURLToPath } from "url"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-app.use(express.static(path.join(__dirname + '/public')))
-
-// history API fallback
-app.use(history())
+app.use(express.static(path.join(__dirname , '/public')))
 
 // ruta estática para archivos de react
-const frontendBuildPath = path.join(__dirname, '..' ,'frontend')
-app.use(express.static(path.join(frontendBuildPath, 'build')))
+const frontendBuildPath = path.join(__dirname, '..' ,'frontend', 'dist')
+app.use(express.static(path.join(frontendBuildPath)))
 
 // mongoStore
 app.use(session({
@@ -66,12 +62,17 @@ app.use(passport.session())
 
 
 // routers
-/* import authRouter from './src/routers/router-auth.js'
+import authRouter from './src/routers/router-auth.js'
 app.use('/api/auth', authRouter)
+
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(frontendBuildPath, 'index.html'))
-}) */
+})
+
+// history API fallback
+app.use(history())
 
 // server listen
 server.listen(PORT, () => {

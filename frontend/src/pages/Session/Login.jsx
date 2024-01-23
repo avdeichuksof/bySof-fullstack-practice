@@ -8,7 +8,7 @@ const formBase = {
     password: ''
 }
 
-const baseURL = process.env.REACT_APP_BASE_URL
+const baseURL = 'http://localhost:8080'
 const Login = () => {
 
     const [form, setForm] = useState(formBase)
@@ -24,7 +24,7 @@ const Login = () => {
 
         try {
             axiosClient.postRequest({
-                url: `${baseURL}/api/auth/login`,
+                url: `${baseURL}/login`,
                 body: form,
                 config: config,
                 callbackSuccess: (res) => {
@@ -63,8 +63,9 @@ const Login = () => {
             </div>
 
             <div>
+                <a href="#">¿Olvidaste tu contraseña?</a>
                 <p>¿Aún no tienes una cuenta?</p>
-                <a href={`${baseURL}/api/auth/register`}>Registrate</a>
+                <a href={`${baseURL}/register`}>Registrate</a>
             </div>
         </div>
     )
