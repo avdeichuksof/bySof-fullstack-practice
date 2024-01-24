@@ -1,13 +1,115 @@
-*{
-    --mainColor: #ffff;
-    --lightGrey: #e1e1e1;
-    --detailColor: #F27135;
-    --highlightColor: #CF3622;
-    --primaryColor: #104B56;
-    --secondaryColor: #208393;
+.container {
+    display: grid;
+    grid-template-rows: repeat(2 1fr);
+    width: 70%;
+    margin: 10% auto;
+    border-radius: 16px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    font-family: var(--titleFont);
+    font-weight: 400;
 }
 
-.container{
-    display: grid;
-    grid-template-columns: repeat(2 1fr);
+.container-right {
+    padding: 1rem;
+    color: var(--primaryColor);
+    font-size: 1rem;
+}
+
+.container-right h3 {
+    font-family: var(--titleFont);
+    font-size: 2rem;
+    text-align: center;
+    color: var(--secondaryColor);
+}
+
+.container-left {
+    margin-top: 15px;
+}
+
+.container-left img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 16px 16px;
+}
+
+.forgot-pass a {
+    text-decoration: none;
+    color: var(--secondaryColor);
+}
+
+.register a,
+.login a {
+    text-decoration: none;
+    color: var(--detailColor);
+}
+
+.form-item {
+    display: block;
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.form-item label {
+    margin-right: 10px;
+}
+
+.form-item input {
+    border: none;
+    border-bottom: 2px solid var(--detailColor);
+    width: 100%;
+    height: 1.5rem;
+    outline: none;
+    transition: all ease 500ms;
+}
+
+.form-item input:focus{
+    background-color: var(--lightGrey);
+    border-radius: 5px;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+button {
+    border: 1.5px solid var(--secondaryColor);
+    background-color: var(--secondaryColor);
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    color: #ffff;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px 25px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+}
+
+button:hover {
+    box-shadow: var(--secondaryColor) 3px 3px 0px 0px;
+    transform: translateY(-2px);
+    background: none;
+    color: var(--secondaryColor);
+}
+
+.small-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.small-content .register{
+    text-align: left;
+}
+
+.login {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.login p{
+    margin-right: 5px;
 }

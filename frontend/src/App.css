@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Afacad:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,900&display=swap');
 
 *{
     margin: 0;
@@ -8,12 +11,13 @@
 
 :root{
     --mainColor: #ffff;
-    --lightGrey: #e1e1e1;
+    --lightGrey: #f2f2f2;
     --detailColor: #F27135;
-    --highlightColor: #CF3622;
+    /* --highlightColor: #f6420b; */
     --primaryColor: #104B56;
     --secondaryColor: #208393;
     --font: 'Nunito', sans-serif;
+    --titleFont: 'Afacad', sans-serif;
 }
 
 .grid-container{

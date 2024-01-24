@@ -53,7 +53,7 @@ const initPassport = async () => {
                     console.log('User registered')
                     done(null, userCreated)
                 } catch (error) {
-                    return done('Error registering user' + err)
+                    return done('Error registering user ' + error.message)
                 }
             }
         )

@@ -102,7 +102,7 @@ class UsersController {
                 email: req.user.email,
                 password: req.user.password,
                 age: req.user.age,
-                role: req.user.age,
+                role: req.user.role,
                 cart: req.user.cart
             }
 

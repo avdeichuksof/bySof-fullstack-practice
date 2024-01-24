@@ -12,11 +12,14 @@ import Login from './pages/Session/Login'
 import Register from './pages/Session/Register'
 import axios from 'axios'
 
+// context
+import { AuthProvider } from './context/AuthContext'
+
 function App() {
   const backend_url = 'http://localhost:8080'
-  
+
   const [data, setData] = useState()
-  useEffect( () => {
+  useEffect(() => {
     axios.get(backend_url)
       .then(res => {
         setData(res.data)
@@ -25,17 +28,19 @@ function App() {
 
   return (
     <Suspense fallback={<div>Loading...</div>} >
-      <div className='grid-container'>
-        <Navbar className="navbar"/>
+      <AuthProvider>
+        <div className='grid-container'>
+          <Navbar className="navbar" />
           <div className='main'>
-              <Routes>
-                <Route path='/login'  element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/' element={<Home />} />
-              </Routes>
+            <Routes>
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/' element={<Home />} />
+            </Routes>
           </div>
-        <Footer className="footer"/>
-      </div>
+          <Footer className="footer" />
+        </div>
+      </AuthProvider>
     </Suspense>
   )
 }

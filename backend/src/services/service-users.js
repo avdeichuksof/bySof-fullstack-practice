@@ -50,7 +50,7 @@ class UserService {
             const newUser = await userMethods.createUser(user)
             return newUser
         } catch (error) {
-            throw new Error(err.message)
+            throw new Error(error.message)
         }
     }
 
