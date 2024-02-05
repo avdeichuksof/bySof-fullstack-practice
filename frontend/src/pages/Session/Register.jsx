@@ -1,6 +1,8 @@
 import './session.css'
+import logo from '../../img/logo.png'
+import background from '../../img/bg7.png'
 import React, { useState } from 'react'
-import background from '../../img/sessionBackground.png'
+import { Link } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -54,52 +56,55 @@ const Register = () => {
 
 
     return (
-        <div className='container'>
-            <div className="container-right">
-                <div className="form-box">
-                    <h3>REGISTRATE</h3>
-                    <div className="registerForm">
+        <div className="body" style={{ backgroundImage: `url(${background})` }}>
+            <nav className="nav">
+                <Link to='/'>
+                    <img src={`${logo}`} alt="brand" />
+                </Link>
+            </nav>
+            <div className='container'>
+                    <h1>REGISTRATE</h1>
+                    <div className="form-box">
                         <form onSubmit={submitHandler}>
+                            <div className="box">
+                                <div className="form-item">
+                                    <input type="text" name='firstName' value={form.firstName} onChange={inputChangeHandler} required />
+                                    <label htmlFor="firstName">NOMBRE</label>
+                                </div>
 
-                            <div className="form-item">
-                                <label htmlFor="firstName">Nombre</label>
-                                <input type="text" name='firstName' value={form.firstName} onChange={inputChangeHandler} required />
+                                <div className="form-item">
+                                    <input type="text" name='lastName' value={form.lastName} onChange={inputChangeHandler} required />
+                                    <label htmlFor="lastName">APELLIDO</label>
+                                </div>
                             </div>
 
                             <div className="form-item">
-                                <label htmlFor="lastName">Apellido</label>
-                                <input type="text" name='lastName' value={form.lastName} onChange={inputChangeHandler} required />
-                            </div>
-
-                            <div className="form-item">
-                                <label htmlFor="email">Email</label>
                                 <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
+                                <label htmlFor="email">EMAIL</label>
                             </div>
 
-                            <div className="form-item">
-                                <label htmlFor="password">Contraseña</label>
-                                <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
-                            </div>
+                            <div className="box2">
+                                <div className="form-item">
+                                    <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
+                                    <label htmlFor="password">CONTRASEÑA</label>
+                                </div>
 
-                            <div className="form-item">
-                                <label htmlFor="age">Edad</label>
-                                <input type="number" name='age' value={form.age} onChange={inputChangeHandler} required />
+                                <div className="form-item">
+                                    <input type="number" name='age' value={form.age} onChange={inputChangeHandler} required />
+                                    <label htmlFor="age">EDAD</label>
+                                </div>
                             </div>
 
                             <div className="button">
-                                <button type='submit'>Registrarse</button>
+                                <button type='submit'>REGISTRARSE</button>
                             </div>
                         </form>
                     </div>
-                </div>
 
-                    <div className="login">
-                        <p>¿Ya tienes una cuenta?</p>
-                        <a href={`${baseURL}/login`}>Inicia sesión</a>
-                    </div>
-            </div>
-            <div className='container-left'>
-                <img src={background} alt="darth vader | anakin" />
+                <div className="loginRedirect">
+                    <p>¿Ya tienes una cuenta?</p>
+                    <a href={`${baseURL}/login`}>Inicia sesión</a>
+                </div>
             </div>
         </div>
     )

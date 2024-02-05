@@ -31,16 +31,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-// dirname
-import path from "path"
-import { fileURLToPath } from "url"
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-app.use(express.static(path.join(__dirname , '/public')))
-
-// ruta estática para archivos de react
-const frontendBuildPath = path.join(__dirname, '..' ,'frontend', 'dist')
-app.use(express.static(path.join(frontendBuildPath)))
 
 // mongoStore
 app.use(session({
@@ -51,7 +41,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
-
 
 // passport
 initPassport()
@@ -65,14 +54,33 @@ app.use(passport.session())
 import authRouter from './src/routers/router-auth.js'
 app.use('/api/auth', authRouter)
 
+import userRouter from './src/routers/router-users.js'
+app.use('/api/users', userRouter)
+
+import cartRouter from './src/routers/router-carts.js'
+app.use('/api/carts', cartRouter)
+
+// staticFiles
+import path from "path"
+import { fileURLToPath } from "url"
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// history API fallback
+// app.use(history())
 
 
+// ruta estática para archivos de react
+app.use(express.static(path.join(__dirname , '/public')))
+const frontendBuildPath = path.join(__dirname, '..' ,'frontend', 'dist')
+app.use(express.static(path.join(frontendBuildPath)))
+
+// catch-all
 app.get('*', (req, res) => {
     res.sendFile(path.join(frontendBuildPath, 'index.html'))
 })
 
-// history API fallback
-app.use(history())
+
 
 // server listen
 server.listen(PORT, () => {

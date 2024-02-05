@@ -1,8 +1,11 @@
 import './session.css'
-import React, { useState } from 'react'
-import background from '../../img/sessionBackground.png'
+import logo from '../../img/logo.png'
+import background from '../../img/bg5.png'
+import React, { useState} from 'react'
+import { Link } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
+
 
 const formBase = {
     email: '',
@@ -36,8 +39,6 @@ const Login = () => {
                     console.error('Error logging in: ', error)
                 }
             })
-
-
         } catch (error) {
             console.error('Error sending request:', error)
             throw new Error('Error al iniciar sesión, verifica tus credenciales.')
@@ -51,40 +52,39 @@ const Login = () => {
     }
 
     return (
+        <div className="body" style={{ backgroundImage: `url(${background})` }}>
+            <nav className="nav">
+                <Link to='/'>
+                    <img src={`${logo}`} alt="brand" />
+                </Link>
+            </nav>
+                <div className='container'>
+                    <h1>INICIA SESIÓN</h1>
+                    <div className="form-box">
+                        <form onSubmit={submitHandler}>
+                            <div className="form-item">
+                                <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
+                                <label htmlFor="email">EMAIL</label>
+                            </div>
 
-        <div className='container'>
-            <div className="container-right">
-                <h3>INICIA SESIÓN</h3>
-                <div className="form-box">
-                    <form onSubmit={submitHandler}>
-                        <div className="form-item">
-                            <label htmlFor="email">EMAIL</label>
-                            <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                        </div>
+                            <div className="form-item">
+                                <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
+                                <label htmlFor="password">CONTRASEÑA</label>
+                            </div>
 
-                        <div className="form-item">
-                            <label htmlFor="password">CONTRASEÑA</label>
-                            <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
-                        </div>
-
-                        <div className="button">
-                            <button type='submit'>Iniciar sesión</button>
-                        </div>
-                    </form>
-                </div>
-                <div className="small-content">
-                    <div className="register">
+                            <div className="button">
+                                <button type='submit'>INICIAR SESIÓN</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="forgot-pass">
+                        <a href={`${baseURL}/sendrecoverymail`}>¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div className="registerRedirect">
                         <p>¿Aún no tienes una cuenta?</p>
                         <a href={`${baseURL}/register`}>Registrate</a>
                     </div>
-                    <div className="forgot-pass">
-                        <a href="#">¿Olvidaste tu contraseña?</a>
-                    </div>
                 </div>
-            </div>
-            <div className='container-left'>
-                <img src={background} alt="darth vader | anakin" />
-            </div>
         </div>
     )
 }

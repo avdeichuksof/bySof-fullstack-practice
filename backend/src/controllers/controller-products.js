@@ -12,7 +12,7 @@ class ProductController {
         }
     }
 
-    getProductsPaginate = async (req, res) => {
+    /* getProductsPaginate = async (req, res) => {
         try {
             let {category, limit, page, sort} = req.query
 
@@ -48,11 +48,11 @@ class ProductController {
 
             const user = req.session.user
 
-            res.send({products: products, pagination: rest, links, user: user}) 
+            res.status(200).send({products: products, pagination: rest, links, user: user}) 
         } catch (error) {
-            throw new Error(error)
+            res.status(500).send({ error: error.message })
         }
-    }
+    } */
 
     getProductById = async (req, res) => {
         try {

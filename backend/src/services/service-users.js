@@ -26,7 +26,7 @@ class UserService {
 
     getLastConnection = async (id, isLogged) => {
         try {
-            const lastConnection = new Date().getDate().toString()
+            const lastConnection = new Date().toLocaleString()
 
             const userFound = await this.getUserById(id)
 
@@ -63,7 +63,7 @@ class UserService {
             const updatePassword = await userMethods.updateUser(userFound._id, {password: createHash(newPassword)})
 
             if(updatePassword){
-                return {message: 'Password updated successfully'}
+                return {data: updatePassword}
             }else{
                 throw new Error('There was an error updating your password')
             }

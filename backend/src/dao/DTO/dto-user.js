@@ -5,7 +5,8 @@ class UserDTO {
         this.email = user.email,
         this.age = user.age,
         this.cart = user.cart,
-        this.role = user.role
+        this.role = user.role,
+        this.lastConnection = user.lastConnection
     }
 
 }

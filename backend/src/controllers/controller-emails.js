@@ -77,8 +77,7 @@ class EmailController {
                         <p> Ingrese al siguiente link para cambiar su contraseña: </p>
                         <p> Pasada una hora, el link expirará y se deberá solicitar nuevamente </p>
                 
-                        /* FIJARSE DE CAMBIAR EL LINK */
-                        <a href="http://localhost:8080/api/????/restorepassword?secret=${secret}&email=${userEmail}"> Cambiar contraseña </a>
+                        <a href="http://localhost:8080/restorepassword?secret=${secret}&email=${userEmail}"> Cambiar contraseña </a>
     
                         <h6> Si usted no solicitó un cambio de contraseña ignore este mail </h6>
                     </div>
@@ -91,6 +90,8 @@ class EmailController {
                     if(err) console.log(err)
                     console.log('Message sent: %s', info.messageId)
                 })
+            }else{
+                console.log('El usuario ingresado no existe')
             }
         } catch (err) {
             throw new Error('Error sending mail ' + err)

@@ -30,8 +30,16 @@ class UsersController {
     }
 
     changePassword = async (req, res) => {
-        await userService.changePassword(req.query.email, req.body.password)
-        res.status(200).redirect('RUTA LOGIN')
+        try {
+            const newPassword = await userService.changePassword(req.body.email, req.body.password)
+            res.status(200).json({ message: 'Password changed successfully', password: newPassword })
+        } catch (error) {
+            // Log the error
+            console.error('Error changing password:', error)
+
+            // Send error response
+            res.status(500).json({ error: 'Internal Server Error' })
+        }
     }
 
     deleteUser = async (req, res) => {
@@ -81,7 +89,7 @@ class UsersController {
 
                     await emailController.sendEmail(email)
 
-                    res.status(200).send({message: 'Inactive users deleted'})
+                    res.status(200).send({ message: 'Inactive users deleted' })
                 })
             }
         } catch (error) {
@@ -93,7 +101,7 @@ class UsersController {
 
     userRegister = (req, res) => {
         try {
-            if(!req.user) return res.status(400).send({error: 'There was an error registering.'})
+            if (!req.user) return res.status(400).send({ error: 'There was an error registering.' })
 
             req.session.user = {
                 _id: req.user._id,
@@ -108,24 +116,30 @@ class UsersController {
 
             res.status(200).redirect('/api/auth/login')
         } catch (error) {
-            res.status(500).send({error: error})
+            res.status(500).send({ error: error })
         }
     }
 
     redirectFailedRegister = (req, res) => {
-        res.status(400).send({error: 'Failed to register'})
+        res.status(400).send({ error: 'Failed to register' })
     }
 
     userLogin = (req, res) => {
         try {
-            if(!req.user) res.status(401).send({error: 'Invalid credentials'})
+            if (!req.user) res.status(401).send({ error: 'Invalid credentials' })
+
+            req.logIn(req.user, (err) => {
+                if (err) {
+                    console.error('Error logging in: ', err)
+                    return res.status(500).send({ error: 'Internal server error' })
+                }
+            })
 
             req.session.user = {
                 _id: req.user._id,
                 firstName: req.user.firstName,
                 lastName: req.user.lastName,
                 email: req.user.email,
-                password: req.user.password,
                 age: req.user.age,
                 role: req.user.role,
                 cart: req.user.cart,
@@ -133,39 +147,42 @@ class UsersController {
             }
 
             const showUserData = new UserDTO(req.session.user)
-            console.log({loggedIn: showUserData})
+            console.log({ loggedIn: showUserData })
 
             // si se loggea creamos un token
             try {
-                let token = jwt.sign(req.session.user, 'secret', {expiresIn: '2000s'})
+                let token = jwt.sign(req.session.user, 'secret', { expiresIn: '2000s' })
                 console.log('User logged in')
-                res.redirect('/')
-            } catch (error) {   
-                return next(tokenError)
+
+                res.status(200).json({ token: token, user: showUserData })
+            } catch (error) {
+                return res.status(500).send({ error: 'Error creating token', detail: error })
             }
         } catch (error) {
-            res.status(500).send({error: error})
+            console.error('Error logging in: ', error)
+            res.status(500).send({ error: error })
         }
     }
 
     redirectFailedLogin = (req, res) => {
-        res.status(400).send({error: 'Failed to login'})
+        res.status(400).send({ error: 'Failed to login' })
     }
 
     userLogout = async (req, res) => {
         const userId = req.session.user._id
         // si encontramos el user id 
-        if(userId) {
+        if (userId) {
             // cerramos la session y updateamos lastConnection
             await userService.getLastConnection(userId, false)
-                .then((lastConnection) => {ñ
-                req.session.destroy((error) => {
-                    if(err) res.status(500).send({error: 'Logout failed', detail: error})
-                    console.log('Logged out')
-                    res.redirect('LOGIN ROUTE')
+                .then((lastConnection) => {
+                    ñ
+                    req.session.destroy((error) => {
+                        if (err) res.status(500).send({ error: 'Logout failed', detail: error })
+                        console.log('Logged out')
+                        res.redirect('/api/auth/login')
+                    })
                 })
-            })
-        }else{
+        } else {
             res.status(401).send('Error logging out')
         }
     }
@@ -174,7 +191,7 @@ class UsersController {
         const user = req.session.user
         const showUserData = new UserDTO(user)
 
-        res.status(200).send({currentUser: showUserData})
+        res.status(200).send({ currentUser: showUserData })
     }
 
 }

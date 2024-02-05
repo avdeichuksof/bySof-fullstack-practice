@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom"
 const Submenu = () => {
     return (
         <nav>
-            <ul>
+            <ul className='submenu'>
                 <li><NavLink to="/api/products" className='menu-item'>Todo</NavLink></li>
                 <li><NavLink to="/api/products/arcilla" className='menu-item'>Arcilla</NavLink></li>
                 <li><NavLink to="/api/products/cajitas" className='menu-item'>Cajitas</NavLink></li>

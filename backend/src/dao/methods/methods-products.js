@@ -12,12 +12,8 @@ class ProductMethods {
             const options = {
                 limit: limit || 6,
                 page: page || 1,
-                sort: sort || 'asc'
-            }
-
-            if(sort){
-                options.sort = {
-                    price: sort
+                sort: {
+                    price: sort || 'asc'
                 }
             }
 
@@ -26,6 +22,7 @@ class ProductMethods {
 
         } catch (error) {
             console.error(error)
+            throw error
         }
     }
 

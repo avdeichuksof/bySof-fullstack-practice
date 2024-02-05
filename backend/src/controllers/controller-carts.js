@@ -17,7 +17,7 @@ class CartController {
         try {
             const cid = req.params.cid
             const cartFound = await cartService.getCartById(cid)
-            res.status(200).send({ cartFound: cartFound })
+            res.status(200).send({ cart: cartFound })
         } catch (error) {
             res.status(404).send({ error: error })
         }

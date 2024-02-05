@@ -36,7 +36,9 @@ const ProductSchema = new Schema({
     }
 })
 
-ProductSchema.plugin(paginate)
+
+/* ProductSchema.plugin(paginate)
+ */
 
 const Product = model('Product', ProductSchema)
 export default Product

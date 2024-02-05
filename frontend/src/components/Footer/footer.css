@@ -1,6 +1,7 @@
 .footer{
     background-color: var(--primaryColor);
     width: 100%;
+    height: auto;
     padding: 1rem;
     font-family: var(--font);
     color: var(--mainColor);
@@ -8,36 +9,20 @@
     display: grid;
 }
 
-.footer .box-container{
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-bottom: 10px;
-    align-items: center;
-}
 
 h4{
     margin-bottom: 10px;
     text-align: center;
 }
 
-.box-logo,
-.box-rrss,
-.box-links{
-    padding: 1rem;
-}
-
-.box-logo img{
-    width: 50%;
-    height: auto;
-    margin: 0 25%;
-}
 
 .box-rrss .rrss{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1rem;
 }
-.box-rrss div{
+.box-rrss .rrss div{
     display: inline-block;
 }
 .box-rrss a{
@@ -47,14 +32,7 @@ h4{
     text-align: center;
 }
 
-.box-links a{
-    display: block;
-    text-decoration: none;
-    color: var(--mainColor);
-    text-align: center;
-    font-size: small;
-}
-.box-links a:hover,
+
 .rrss a:hover{
     color: var(--detailColor);
     transition: all 0.3s;
@@ -66,19 +44,8 @@ h4{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0.5rem;
 }
 .copy-container p{
     color: var(--lightGrey);
     margin-top: 1rem;
-}
-
-@media(min-width: 768px){
-    .footer{
-        grid-template-rows: 2fr 0.3fr;
-    }
-
-    .footer .box-container{
-        grid-template-columns: 1fr 1fr 1fr;
-    }
 }

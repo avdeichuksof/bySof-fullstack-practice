@@ -1,51 +1,68 @@
 import './profileMenu.css'
 import { NavLink } from "react-router-dom"
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
-import { useAuth } from '../../../context/AuthContext'
-
 
 const ProfileMenu = () => {
-
     const baseURL = 'http://localhost:8080'
 
-    const {isLoggedIn, logout} = useAuth()
+    const [isLoggedIn, setLogin] = useState(false)
+    const [lastConnection, setLastConnection] = useState()
 
-    const sessionRoutesHandler = async (route) => {
+    useEffect( () => {
+        // fijarse si existe un currentUser
+        axiosClient.getRequest({
+            url : `${baseURL}/api/auth/currentuser`,
+            callbackSuccess: (res) => {
+                setLogin(!!res.data.currentUser)
+                setLastConnection(res.data.currentUser.lastConnection)
+            },
+            callbackError: (error) => {
+                console.error('Error checking current user: ', error)
+            }
+        })
+    }, [])
+
+
+    const logoutHandler = async () => {
         const config = {
-            headers: {
+            headers :{
                 'Content-Type': 'application/json'
             }
         }
-        
+
         try {
-            axiosClient.getRequest({
-                url: `${baseURL}${route}`,
+            setLogin(false)
+            const res = await axiosClient.getRequest({
+                url:  `${baseURL}/logout`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Successfull request ', res)
+                    console.log('User logged out ', res)
                 },
-                calbackError: (error) => {
-                    console.error('Error: ', error)
+                callbackError: (error) => {
+                    console.error('Error logging out: ', error)
+                    throw new Error(error)
                 }
             })
         } catch (error) {
-            throw new Error('Error sending request:', error)
+            console.log('Error sending request: ', error)
         }
     }
 
     return (
         <nav>
-            <ul>
+            <ul className='profileMenu'>
                 {!isLoggedIn ? (
-                    <li><NavLink to="/login" className='menu-item' onClick={() => sessionRoutesHandler('/auth/login')}>Iniciar Sesión</NavLink></li>
+                    <li><NavLink to="/login" className='menu-item' >Iniciar Sesión</NavLink></li>
                 ) : (
                     <>
-                        <li><NavLink to="/currentuser" className='menu-item' onClick={() => sessionRoutesHandler('/auth/currentuser')}>Mi Perfil</NavLink></li>
-                        {/* <li>Última conexión: </li> */}
-                        <li><NavLink to="/logout" className='menu-item' onClick={logout}>Cerrar Sesión</NavLink></li>
+                        <li><NavLink to="/currentuser" className='menu-item' >Mi Perfil</NavLink></li>
+                            {lastConnection !== undefined && (
+                                <li className='menu-item'>Última conexión: {lastConnection}</li>
+                            )}
+                        <li onClick={logoutHandler} className='menu-item'>Cerrar Sesión</li>
                     </>
                 )}
             </ul>

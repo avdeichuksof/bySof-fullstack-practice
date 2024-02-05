@@ -11,9 +11,8 @@
 
 :root{
     --mainColor: #ffff;
-    --lightGrey: #f2f2f2;
+    --lightGrey: #e8e8e8;
     --detailColor: #F27135;
-    /* --highlightColor: #f6420b; */
     --primaryColor: #104B56;
     --secondaryColor: #208393;
     --font: 'Nunito', sans-serif;
