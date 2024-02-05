@@ -14,6 +14,7 @@ import Home from './pages/Home'
 import Login from './pages/Session/Login'
 import CartView from './pages/Cart/CartView'
 import Register from './pages/Session/Register'
+import ProfileView from './pages/Profile/ProfileView'
 import ForgotPassword from './pages/Session/ForgotPassword'
 import RestorePassword from './pages/Session/RestorePassword'
 
@@ -40,7 +41,6 @@ function App() {
       axiosClient.getRequest({
           url: `${backend_url}/api/auth/currentuser`,
           callbackSuccess: (res) => {
-              console.log('User Data: ', res.data.currentUser)
               setUserData(res.data.currentUser)
           },
           callbackError: (error) => {
@@ -50,6 +50,7 @@ function App() {
   }, [])
 
   const userCart = userData ? userData.cart : null
+  const userId = userData ? userData.id : null
 
   return (
     <Suspense fallback={<div>Loading...</div>} >
@@ -57,11 +58,14 @@ function App() {
           {!isSessionPage && <Navbar className="navbar" />}
           <div className='main'>
             <Routes>
+              {/* Session routes */}
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/sendrecoverymail' element={<ForgotPassword />} />
               <Route path='/restorepassword' element={<RestorePassword />} />
+              {/* nav routes */}
               <Route path='/' element={<Home />} />
+              <Route path={`/users/${userId}`} element={<ProfileView />}/>
               <Route path={`/carts/${userCart}`} element={<CartView />}/>
             </Routes>
           </div>

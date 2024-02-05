@@ -126,7 +126,7 @@ class UsersController {
 
     userLogin = (req, res) => {
         try {
-            if (!req.user) res.status(401).send({ error: 'Invalid credentials' })
+            if (!req.user) res.status(401).json({ error: 'Invalid credentials' })
 
             req.logIn(req.user, (err) => {
                 if (err) {
@@ -175,9 +175,9 @@ class UsersController {
             // cerramos la session y updateamos lastConnection
             await userService.getLastConnection(userId, false)
                 .then((lastConnection) => {
-                    ñ
+                    
                     req.session.destroy((error) => {
-                        if (err) res.status(500).send({ error: 'Logout failed', detail: error })
+                        if (error) res.status(500).send({ error: 'Logout failed', detail: error })
                         console.log('Logged out')
                         res.redirect('/api/auth/login')
                     })
@@ -187,6 +187,8 @@ class UsersController {
         }
     }
 
+
+    
     getCurrentSessionInfo = (req, res) => {
         const user = req.session.user
         const showUserData = new UserDTO(user)

@@ -3,6 +3,8 @@ import logo from '../../img/logo.png'
 import background from '../../img/bg5.png'
 import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -16,6 +18,20 @@ const baseURL = 'http://localhost:8080'
 const Login = () => {
 
     const [form, setForm] = useState(formBase)
+
+    const checkCurrentUser = () => {
+        // fijarse si existe un currentUser
+        axiosClient.getRequest({
+            url: `${baseURL}/api/auth/currentuser`,
+            callbackSuccess: (res) => {
+                setLogin(!!res.data.currentUser);
+                setLastConnection(res.data.currentUser.lastConnection);
+            },
+            callbackError: (error) => {
+                console.error('Error checking current user: ', error);
+            }
+        });
+    }
 
     const submitHandler = async (e) => {
         e.preventDefault()
@@ -33,10 +49,12 @@ const Login = () => {
                 config: config,
                 callbackSuccess: (res) => {
                     console.log('User logged in ', res)
+                    checkCurrentUser()
                     if (res && res.status === 200) window.location.href = `${baseURL}`
                 },
                 callbackError: (error) => {
                     console.error('Error logging in: ', error)
+                    alert(error.response.data.error || 'Error al iniciar sesión, verifica tus credenciales.')
                 }
             })
         } catch (error) {
@@ -64,16 +82,16 @@ const Login = () => {
                         <form onSubmit={submitHandler}>
                             <div className="form-item">
                                 <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                                <label htmlFor="email">EMAIL</label>
+                                <label htmlFor="email">email</label>
                             </div>
 
                             <div className="form-item">
                                 <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
-                                <label htmlFor="password">CONTRASEÑA</label>
+                                <label htmlFor="password">contraseña</label>
                             </div>
 
                             <div className="button">
-                                <button type='submit'>INICIAR SESIÓN</button>
+                                <button type='submit'>Iniciar Sesión</button>
                             </div>
                         </form>
                     </div>

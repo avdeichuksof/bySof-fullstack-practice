@@ -98,6 +98,35 @@ class EmailController {
         }
     }
 
+    sendEmailContact = (data) => {
+        try {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                port: 587,
+                auth: {
+                    user: mailAccount,
+                    pass: mailPass
+                }
+            })
+    
+            const mailOptions = {
+                from: data.fullName + data.email,
+                to: mailAccount,
+                subject: data.subject,
+                text: data.message
+            }
+    
+            let message = transporter.sendMail(mailOptions, (err, info) => {
+                if(err) console.log(err)
+        
+                console.log(`Email sent to: ${mailOptions.to}`)
+            })
+    
+        } catch (err) {
+            console.log('Error sending mail', err)
+        }
+    }
+
 }
 
 export default EmailController

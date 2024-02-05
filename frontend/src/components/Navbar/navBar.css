@@ -75,19 +75,20 @@ ul.menu-mobile li {
 .submenu-open,
 .profileMenu-open {
     display: flex;
-    flex-flow: wrap row;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     position: absolute;
     background-color: var(--mainColor);
-    border: 1.5px solid var(--secondaryColor);
+    border: 1.5px solid var(--detailColor);
     border-radius: 5px;
-    box-shadow: var(--secondaryColor) 3px 3px 0px 0px;
+    box-shadow: var(--detailColor) 3px 3px 0px 0px;
     color: var(--secondaryColor);
-    width: fit-content;
+    width: 140px;
     height: auto;
     padding: 0.5rem;
     z-index: 10;
+    text-align: center;
 }
 
 .submenu-open .menu-item,
@@ -105,10 +106,10 @@ ul.menu-mobile li {
 .header ul.menu-mobile .profileMenu-open {
     position: relative;
     box-shadow: none;
-    margin-top: 10px;
+    padding-bottom: 1rem;
     width: 100%;
-    border: 1.5px solid var(--secondaryColor);
-    box-shadow: var(--secondaryColor) 3px 3px 0px 0px;
+    border: 1.5px solid var(--detailColor);
+    box-shadow: var(--detailColor) 3px 3px 0px 0px;
 }
 
 .icon-burger {
@@ -134,9 +135,9 @@ ul.menu-mobile li {
     }
 }
 
-@media(min-width: 768px) and (max-width: 900px) {
+@media(min-width: 768px) and (max-width: 1010px) {
     .header ul.menu-inline .profileMenu-open {
-        left: -80px;
+        left: -120px;
     }
 }
 

@@ -14,9 +14,9 @@ const formBase = {
     age: ''
 }
 
-const baseURL = 'http://localhost:8080'
 const Register = () => {
-
+    const baseURL = 'http://localhost:8080'
+    
     const [form, setForm] = useState(formBase)
 
     const submitHandler = async (e) => {
@@ -34,16 +34,10 @@ const Register = () => {
                 body: form,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('User registered ', res)
                     if (res && res.status === 200) window.location.href = '/login'
                 },
-                callbackError: (error) => {
-                    console.error('Error registering user: ', error)
-                }
+                callbackError: (error) => console.error('Error registering user: ', error)
             })
-
-
-
         } catch (error) {
             console.error('Error sending request:', error)
         }
@@ -69,34 +63,34 @@ const Register = () => {
                             <div className="box">
                                 <div className="form-item">
                                     <input type="text" name='firstName' value={form.firstName} onChange={inputChangeHandler} required />
-                                    <label htmlFor="firstName">NOMBRE</label>
+                                    <label htmlFor="firstName">nombre</label>
                                 </div>
 
                                 <div className="form-item">
                                     <input type="text" name='lastName' value={form.lastName} onChange={inputChangeHandler} required />
-                                    <label htmlFor="lastName">APELLIDO</label>
+                                    <label htmlFor="lastName">apellido</label>
                                 </div>
                             </div>
 
                             <div className="form-item">
                                 <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                                <label htmlFor="email">EMAIL</label>
+                                <label htmlFor="email">email</label>
                             </div>
 
                             <div className="box2">
                                 <div className="form-item">
                                     <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
-                                    <label htmlFor="password">CONTRASEÑA</label>
+                                    <label htmlFor="password">contraseña</label>
                                 </div>
 
                                 <div className="form-item">
                                     <input type="number" name='age' value={form.age} onChange={inputChangeHandler} required />
-                                    <label htmlFor="age">EDAD</label>
+                                    <label htmlFor="age">edad</label>
                                 </div>
                             </div>
 
                             <div className="button">
-                                <button type='submit'>REGISTRARSE</button>
+                                <button type='submit'>Registrarse</button>
                             </div>
                         </form>
                     </div>

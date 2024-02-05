@@ -5,6 +5,8 @@ const router = new Router()
 import {isAdmin, isUser} from  '../utils/middlewares.js'
 
 router.get('/', usersController.getUsers)
+router.get('/:uid', usersController.getUsersById)
+
 
 router.delete('/', isAdmin, usersController.deleteInactiveUsers)
 router.delete('/delete/:uid', isAdmin, usersController.deleteUser)

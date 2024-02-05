@@ -3,18 +3,16 @@
     width: 100%;
     height: auto;
     padding: 1rem;
-    font-family: var(--font);
     color: var(--mainColor);
-    grid-template-rows: 1fr 0.1fr;
+    grid-template-rows: 1fr;
     display: grid;
 }
-
 
 h4{
     margin-bottom: 10px;
     text-align: center;
+    font-family: var(--titleFont);
 }
-
 
 .box-rrss .rrss{
     display: flex;
@@ -31,21 +29,16 @@ h4{
     margin: 8px;
     text-align: center;
 }
-
-
 .rrss a:hover{
     color: var(--detailColor);
     transition: all 0.3s;
 }
 
 .copy-container{
-    border-top: 1px solid var(--lightGrey);
-    font-size: small;
+    color: var(--lightGrey);
+    font-family: var(--font);
+    font-size: 0.6rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-}
-.copy-container p{
-    color: var(--lightGrey);
-    margin-top: 1rem;
+    justify-content: flex-start;
 }

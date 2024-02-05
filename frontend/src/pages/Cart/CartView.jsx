@@ -13,7 +13,6 @@ const CartView = () => {
         axiosClient.getRequest({
             url: `${baseURL}/api/auth/currentuser`,
             callbackSuccess: (res) => {
-                console.log('User Data: ', res.data.currentUser)
                 setUserData(res.data.currentUser)
             },
             callbackError: (error) => {
@@ -28,30 +27,30 @@ const CartView = () => {
     const [cart, setCart] = useState(null)
 
     useEffect( () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
-
-        axiosClient.getRequest({
-            url: `${baseURL}/api/carts/${userCart}`,
-            config: config,
-            callbackSuccess: (res) => {
-                console.log('Cart: ', res.data.cart)
-                setCart(res.data.cart)
-            },
-            callbackError: (error) => {
-                if (error.response && error.response.status === 404) {
-                    // Manejar el caso cuando el carrito no existe (status code 404)
-                    console.log('Cart not found')
-                    setCart(null)
-                } else {
-                    console.error('Error rendering cart: ', error);
+        if(userCart) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             }
-        })
-    }, [])
+    
+            axiosClient.getRequest({
+                url: `${baseURL}/api/carts/${userCart}`,
+                config: config,
+                callbackSuccess: (res) => {
+                    setCart(res.data.cart)
+                },
+                callbackError: (error) => {
+                    if (error.response && error.response.status === 404) {
+                        console.log('Cart not found')
+                        setCart(null)
+                    } else {
+                        console.error('Error rendering cart: ', error);
+                    }
+                }
+            })
+        }
+    }, [userCart])
 
     const cartView = cart ? cart : null
 

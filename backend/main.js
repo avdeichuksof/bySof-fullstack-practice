@@ -60,6 +60,9 @@ app.use('/api/users', userRouter)
 import cartRouter from './src/routers/router-carts.js'
 app.use('/api/carts', cartRouter)
 
+import contactRouter from './src/routers/router-contact.js'
+app.use('/contact', contactRouter)
+
 // staticFiles
 import path from "path"
 import { fileURLToPath } from "url"

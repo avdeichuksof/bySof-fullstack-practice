@@ -75,7 +75,7 @@ const initPassport = async () => {
                     // validamos password
                     if(!isValidPassword(password, userExists.password)){
                         console.log('Incorrect password')
-                        return done(null, false)
+                        return done(null, false, { message: 'Invalid credentials' })
                     }
 
                     // validamos admin
