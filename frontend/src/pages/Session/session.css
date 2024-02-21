@@ -84,39 +84,57 @@ h1 {
     top: 0;
     left: 0;
     color: var(--primaryColor);
-    transition:  all ease 0.3s;
+    transition: all ease 0.3s;
 }
 
-.form-item input:focus ~ label,
-.form-item input:valid ~ label {
+.form-item input:focus~label,
+.form-item input:valid~label {
     top: -20px;
     font-size: 1rem;
     color: var(--primaryColor);
 }
 
 /* BUTTONS */
-.form-box .button{
+.form-box .button {
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
 }
 
 .form-box .button button {
-    background: none;
-    border: 2px solid var(--primaryColor);
-    /* box-shadow: 3px 3px 0px 0px var(--primaryColor); */
-    filter: drop-shadow(4px 4px var(--primaryColor));
-    padding: 8px;
-    border-radius: 5px;
-    transition: all ease .5s;
+    width: 60%;
+    height: 40px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--primaryColor);
     font-family: var(--titleFont);
     font-weight: 600;
-    color: var(--primaryColor);
+    position: relative;
+    transition: all 0.5s;
+}
+
+.form-box .button button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--detailColor);
+    z-index: -1;
+    transition: all 0.5s;
+}
+
+.form-box .button button:hover::before {
+    width: 100%;
 }
 
 .form-box .button button:hover {
-    transform: translateY(-4px) translateX(-2px);
+    color: var(--mainColor);
 }
+
 
 /* BOTTOM COMMENTS */
 .loginRedirect,
@@ -129,7 +147,7 @@ h1 {
 }
 
 .loginRedirect a,
-.registerRedirect a{
+.registerRedirect a {
     text-decoration: none;
     margin-left: 5px;
     color: var(--detailColor);
@@ -154,8 +172,9 @@ h1 {
     }
 }
 
-@media(max-width: 330px){
-    .box, .box2 {
+@media(max-width: 330px) {
+    .box,
+    .box2 {
         grid-template-columns: 1fr;
     }
 }

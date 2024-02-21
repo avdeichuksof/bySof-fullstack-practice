@@ -2,6 +2,7 @@ import User from '../dao/models/model-user.js'
 import config from '../config/config.js'
 import nodemailer from 'nodemailer'
 import uuid4 from 'uuid4'
+import fs from 'fs'
 
 
 const mailAccount = config.mailAccount
@@ -20,7 +21,7 @@ class EmailController {
                     pass: mailPass
                 }
             })
-    
+
             const mailOptions = {
                 from: 'By Sof' + mailAccount,
                 to: data.to,
@@ -28,13 +29,13 @@ class EmailController {
                 text: data.text,
                 html: data.html
             }
-    
+
             let message = transporter.sendMail(mailOptions, (err, info) => {
-                if(err) console.log(err)
-        
+                if (err) console.log(err)
+
                 console.log(`Email sent to: ${mailOptions.to}`)
             })
-    
+
         } catch (err) {
             console.log('Error sending mail', err)
         }
@@ -43,16 +44,16 @@ class EmailController {
     /* PASSWORD RECOVERY MAILS */
     mailTimeout = (secret) => {
         secrets.push(secret)
-        setTimeout( ()=>{
-            secrets = secrets.filter( s => s != secret)
-        },3600000)
+        setTimeout(() => {
+            secrets = secrets.filter(s => s != secret)
+        }, 3600000)
     }
 
     sendRecoveryMail = async (req, res) => {
         try {
             const userEmail = req.body.email
             /* const userExists = await userService.getUsersByEmailService(userEmail) */
-            const userExists = await User.find({email: userEmail})
+            const userExists = await User.find({ email: userEmail })
 
             const secret = uuid4()
             this.mailTimeout(secret)
@@ -65,7 +66,7 @@ class EmailController {
                     pass: mailPass
                 }
             })
-    
+
             const mailOptions = {
                 from: 'BySof' + mailAccount,
                 to: userEmail,
@@ -84,13 +85,13 @@ class EmailController {
                 `,
                 attachments: []
             }
-    
-            if(userExists){
+
+            if (userExists) {
                 let message = transporter.sendMail(mailOptions, (err, info) => {
-                    if(err) console.log(err)
+                    if (err) console.log(err)
                     console.log('Message sent: %s', info.messageId)
                 })
-            }else{
+            } else {
                 console.log('El usuario ingresado no existe')
             }
         } catch (err) {
@@ -98,7 +99,13 @@ class EmailController {
         }
     }
 
-    sendEmailContact = (data) => {
+    sendEmailContact = async (req, res) => {
+        const { fullName, email, subject, message, file } = req.body
+
+        if (!fullName || !email || !subject || !message) {
+            return res.status(400).json({ message: 'Por favor, complete todods los campos obligatorios' })
+        }
+
         try {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -108,22 +115,37 @@ class EmailController {
                     pass: mailPass
                 }
             })
-    
-            const mailOptions = {
-                from: data.fullName + data.email,
-                to: mailAccount,
-                subject: data.subject,
-                text: data.message
+
+            let attachments = []
+            if (file) {
+                // Lee el contenido del archivo adjunto
+                const fileContent = fs.readFileSync(file.path)
+                attachments.push({
+                    filename: file.name,
+                    content: fileContent
+                })
             }
-    
-            let message = transporter.sendMail(mailOptions, (err, info) => {
-                if(err) console.log(err)
-        
+
+            const mailOptions = {
+                from: `${fullName} <${email}>`,
+                to: mailAccount,
+                subject: subject,
+                text: message,
+                attachments:attachments
+            }
+
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.log('Error sending email:', err)
+                    return res.status(500).json({ message: 'Hubo un problema al enviar el correo electrónico.' })
+                }
                 console.log(`Email sent to: ${mailOptions.to}`)
+                return res.status(200).json({ message: 'Correo electrónico enviado correctamente.' })
             })
-    
+
         } catch (err) {
             console.log('Error sending mail', err)
+            return res.status(500).json({ message: 'Hubo un problema al enviar el correo electrónico.' })
         }
     }
 

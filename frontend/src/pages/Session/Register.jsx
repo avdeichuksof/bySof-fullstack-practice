@@ -29,7 +29,7 @@ const Register = () => {
         }
 
         try {
-            const res = await axiosClient.postRequest({
+            await axiosClient.postRequest({
                 url: `${baseURL}/api/auth/register`,
                 body: form,
                 config: config,

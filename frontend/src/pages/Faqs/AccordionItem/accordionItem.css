@@ -1,0 +1,43 @@
+.accordion-item {
+    width: 100%;
+    height:auto;
+    font-family: var(--font);
+}
+
+.accordion-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1rem;
+    border-top: 2px solid var(--detailColor);
+    margin-bottom: 5px;
+}
+
+.accordion-header .accordion-title {
+    font-weight: 600;
+}
+
+.accordion-header .icon-closed {
+    color: var(--detailColor);
+    font-size: 1rem;
+    transform: rotateZ(45deg);
+    transform: translateX(2px);
+    transition: all ease .5s;
+}
+
+.accordion-header .icon-open {
+    color: var(--detailColor);
+    font-size: 1rem;
+    transform: rotateZ(-45deg);
+    transition: all ease .5s;
+}
+
+.accordion-body {
+    width: 90%;
+    padding: 10px;
+    position: relative;
+    font-size: .8rem;
+
+}

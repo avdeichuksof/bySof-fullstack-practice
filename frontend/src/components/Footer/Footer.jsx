@@ -31,7 +31,7 @@ const Footer = () => {
             </div>
         </div>
         <div className="copy-container">
-            <p>&copy; 2023 Sofía Avdeichuk - Todos los derechos reservados.</p>
+            <p>&copy; 2024 Sofía Avdeichuk - Todos los derechos reservados.</p>
         </div>
     </footer>
 }

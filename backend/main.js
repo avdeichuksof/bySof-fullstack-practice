@@ -57,6 +57,9 @@ app.use('/api/auth', authRouter)
 import userRouter from './src/routers/router-users.js'
 app.use('/api/users', userRouter)
 
+import productRouter from './src/routers/router-products.js'
+app.use('/api/products', productRouter)
+
 import cartRouter from './src/routers/router-carts.js'
 app.use('/api/carts', cartRouter)
 
@@ -68,9 +71,6 @@ import path from "path"
 import { fileURLToPath } from "url"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-
-// history API fallback
-// app.use(history())
 
 
 // ruta estática para archivos de react

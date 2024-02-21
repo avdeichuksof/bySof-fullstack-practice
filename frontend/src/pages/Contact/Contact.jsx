@@ -1,14 +1,15 @@
 import './contact.css'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import AxiosClient from '../../services/axiosClient'
+import axios from 'axios'
 const axiosClient = new AxiosClient()
 
 const formBase = {
     fullName: '',
     email: '',
-    phone: '',
     subject: '',
-    message: ''
+    message: '',
+    file: ''
 }
 
 const Contact = () => {
@@ -21,17 +22,27 @@ const Contact = () => {
 
         const config = {
             headers: {
-                'Content-Type':  'application/json'
+                'Content-Type': 'application/json'
             }
         }
 
         try {
-            const res = await axiosClient.postRequest({
+            // Crear un objeto FormData para enviar el formulario y el archivo adjunto
+            const formData = new FormData();
+            formData.append('fullName', form.fullName);
+            formData.append('email', form.email);
+            formData.append('subject', form.subject);
+            formData.append('message', form.message);
+            formData.append('file', form.file); // Adjunta la ruta del archivo seleccionado
+
+
+            await axiosClient.postRequest({
                 url: `${baseURL}/contact`,
                 body: form,
                 config: config,
                 callbackSuccess: (res) => {
-                    if(res && res.status === 200) console.log('Email sent')
+                    console.log('Email data: ', form)
+                    if (res && res.status === 200) console.log('Email sent')
                 },
                 callbackError: (error) => console.error('Error sending email: ', error)
             })
@@ -42,18 +53,58 @@ const Contact = () => {
 
     const inputChangeHandler = (e) => {
         const { name, value } = e.target
-        setForm({...form, [name]: value})
+        setForm({ ...form, [name]: value })
+    }
+
+    const fileChangeHandler = (e) => {
+        // Almacena solo la ruta del archivo seleccionado
+        const file = e.target.files[0]
+        setForm({ ...form, file: file ? file.name : '' }); // Guarda el nombre del archivo en lugar del objeto de archivo
+    }
+
+    const resetForm = () => {
+        setForm(formBase)
     }
 
     return (
         <div className="contact">
             <h1 className="title">Contactanos</h1>
-            <div className="formContainer">
-                <form action=""></form>
+            <div className="form-container">
+                <form onSubmit={submitHandler}>
+                    <div className="contact-form-box">
+                        <div className="contact-form-item">
+                            <input type="text" name='fullName' value={form.fullName} onChange={inputChangeHandler} required />
+                            <label htmlFor="fullName">nombre y apellido</label>
+                        </div>
+                        <div className="contact-form-item">
+                            <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
+                            <label htmlFor="email">email</label>
+                        </div>
+                    </div>
+                    <div className="contact-form-box-message">
+                        <div className="contact-form-item">
+                            <input type="text" name='subject' value={form.subject} onChange={inputChangeHandler} required />
+                            <label htmlFor="subject">asunto</label>
+                        </div>
+                        <div className="contact-form-item">
+                            <textarea name="message" value={form.message} onChange={inputChangeHandler} required></textarea>
+                            <label htmlFor="message">mensaje</label>
+                        </div>
+                    </div>
+                    <div className='file-select'>
+                        <input type="file" name='file' onChange={fileChangeHandler} />
+                    </div>
+
+                    <div className="buttons">
+                        <button type="button" onClick={resetForm}>Borrar todo</button>
+                        <button type='submit'>Enviar</button>
+                    </div>
+                </form>
             </div>
-            <div className="contactInfo"></div>
         </div>
     )
 
 
 }
+
+export default Contact

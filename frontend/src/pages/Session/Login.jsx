@@ -43,7 +43,7 @@ const Login = () => {
         }
 
         try {
-            const res = await axiosClient.postRequest({
+            await axiosClient.postRequest({
                 url: `${baseURL}/api/auth/login`,
                 body: form,
                 config: config,

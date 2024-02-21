@@ -6,9 +6,9 @@ class ProductController {
     getProducts = async (req, res) => {
         try {
             const products = await productService.getProducts()
-            res.status(200).send({products: products})
+            res.status(200).send({ products: products })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 
@@ -60,10 +60,13 @@ class ProductController {
             const user = req.session.user
             const productFound = await productService.getProductById(id)
 
+            if (!productFound) return res.status(404).send({ error: 'Product not found' })
+
             console.log('producto: ', productFound)
-            res.send({product: productFound, user: user})
+            res.send({ product: productFound, user: user })
         } catch (error) {
-            res.status(400).send({error: error})
+            console.log(error)
+            res.status(500).send({ error: 'Internal server error' })
         }
     }
 
@@ -71,9 +74,9 @@ class ProductController {
         try {
             const newProduct = await productService.createProduct(req.body)
 
-            res.status(201).send({message:'Product created', product: newProduct})
+            res.status(201).send({ message: 'Product created', product: newProduct })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 
@@ -83,9 +86,10 @@ class ProductController {
             const newData = req.body
             const updateProduct = await productService.updateProduct(id, newData)
 
-            res.status(200).send({message:'Product updated', product: updateProduct})
+            console.log('Product updated:', updateProduct)
+            res.status(200).send({ message: 'Product updated', product: updateProduct })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 
@@ -93,11 +97,11 @@ class ProductController {
         try {
             const id = req.params.pid
             const user = req.session.user
-            const deleteProduct = await productService.deleteProduct(id, user)
+            await productService.deleteProduct(id, user)
 
-            res.status(200).send({message:'Product deleted', product: deleteProduct})
+            res.status(200).send({ message: 'Product deleted', productId: id })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 

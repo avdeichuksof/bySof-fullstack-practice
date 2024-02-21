@@ -11,7 +11,7 @@ router.post('/', productController.createProduct)
 
 router.put('/:pid',  productController.updateProduct)
 
-router.delete('/:id', productController.deleteProduct)
+router.delete('/:pid', productController.deleteProduct)
 
 
 export default router

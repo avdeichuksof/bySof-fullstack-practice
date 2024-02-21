@@ -27,7 +27,7 @@ class ProductMethods {
     }
 
     getProductById = async (id) => {
-        const productFound = await Product.findOne({_id: id})
+        const productFound = await Product.findById(id)
         return productFound
     }
 

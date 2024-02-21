@@ -10,7 +10,6 @@ const ProfileMenu = () => {
 
     const [isLoggedIn, setLogin] = useState(false)
     const [userData, setUserData] = useState(null)
-    const [lastConnection, setLastConnection] = useState()
 
     useEffect(() => {
         // fijarse si existe un currentUser
@@ -19,7 +18,6 @@ const ProfileMenu = () => {
             callbackSuccess: (res) => {
                 setLogin(!!res.data.currentUser)
                 setUserData(res.data.currentUser)
-                setLastConnection(res.data.currentUser.lastConnection)
             },
             callbackError: (error) => {
                 console.error('Error checking current user: ', error)
@@ -63,9 +61,7 @@ const ProfileMenu = () => {
                 ) : (
                     <>
                         <li><NavLink to={`/users/${userId}`} className='menu-item' >Mi Perfil</NavLink></li>
-                        {/* {lastConnection !== undefined && (
-                                <li className='menu-item lastConnection'>Última conexión: {lastConnection}</li>
-                            )} */}
+                    
                         <li onClick={logoutHandler} className='menu-item'>Cerrar Sesión</li>
                     </>
                 )}

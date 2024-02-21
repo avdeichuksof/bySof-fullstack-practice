@@ -11,12 +11,20 @@ import Footer from './components/Footer/Footer'
 
 // pages
 import Home from './pages/Home'
+import Faqs from './pages/Faqs/Faqs'
 import Login from './pages/Session/Login'
 import CartView from './pages/Cart/CartView'
+import AboutUs from './pages/AboutUs/AboutUs'
+import Contact from './pages/Contact/Contact'
 import Register from './pages/Session/Register'
+import Products from './pages/Products/Products'
 import ProfileView from './pages/Profile/ProfileView'
 import ForgotPassword from './pages/Session/ForgotPassword'
 import RestorePassword from './pages/Session/RestorePassword'
+
+import AdminUsers from './pages/Admin/AdminUsers/AdminUsers'
+import AdminProducts from './pages/Admin/AdminProducts/AdminProducts'
+
 
 function App() {
   const backend_url = 'http://localhost:8080'
@@ -65,8 +73,15 @@ function App() {
               <Route path='/restorepassword' element={<RestorePassword />} />
               {/* nav routes */}
               <Route path='/' element={<Home />} />
-              <Route path={`/users/${userId}`} element={<ProfileView />}/>
+              <Route path='/products' element={<Products />} /> 
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/about' element={<AboutUs />} />
+              <Route path='/faqs' element={<Faqs />}/>
               <Route path={`/carts/${userCart}`} element={<CartView />}/>
+              <Route path={`/users/${userId}`} element={<ProfileView />}/>
+              {/* Administration routes */}
+              <Route path='/adminproducts' element={<AdminProducts />} />
+              <Route path='/adminusers' element={<AdminUsers />} />
             </Routes>
           </div>
           {!isSessionPage && <Footer className="footer" />}
