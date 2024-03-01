@@ -3,16 +3,16 @@ const productService = new ProductService()
 
 class ProductController {
 
-    getProducts = async (req, res) => {
+    /* getProducts = async (req, res) => {
         try {
             const products = await productService.getProducts()
             res.status(200).send({ products: products })
         } catch (error) {
             res.status(400).send({ error: error })
         }
-    }
+    } */
 
-    /* getProductsPaginate = async (req, res) => {
+    getProductsPaginate = async (req, res) => {
         try {
             let {category, limit, page, sort} = req.query
 
@@ -28,6 +28,8 @@ class ProductController {
 
             let products = data.docs.map((product) => {
                 return {
+                    _id: product._id,
+                    thumbnail: product.thumbnail,
                     title: product.title,
                     price: product.price,
                     size: product.size,
@@ -52,7 +54,7 @@ class ProductController {
         } catch (error) {
             res.status(500).send({ error: error.message })
         }
-    } */
+    }
 
     getProductById = async (req, res) => {
         try {

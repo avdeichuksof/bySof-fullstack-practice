@@ -17,11 +17,11 @@ class CartMethods {
         return newCart.save()
     }
 
-    updateCart = async(id) => {
+    updateCart = async (id) => {
         await Cart.updateOne({_id: id}, {products: []})
     }
 
-    updateProductsInCart = async(id, products) => {
+    updateProductsInCart = async (id, products) => {
         await Cart.updateOne({_id: id}, {products})
     }
 
@@ -30,6 +30,11 @@ class CartMethods {
             {_id: cartId, 'products.product': prodId},
             {$inc: {'products.$.quantity': quantity}}
         )
+    }
+
+    emptyCart = async (id) => {
+        const cartEmpty = await Cart.findByIdAndUpdate(id, { products: [] }, { new: true })
+        return cartEmpty
     }
 
     deleteCart = async (id) => {

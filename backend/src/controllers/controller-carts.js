@@ -36,7 +36,7 @@ class CartController {
         try {
             const cid = req.params.cid
             const pid = req.params.pid
-            const quantity = parseInt(req.body.quantity)
+            const quantity = parseInt(req.body?.quantity)
             await cartService.addProductToCart(cid, pid, quantity)
             res.status(200).send({ message: 'Product added to cart' })
         } catch (error) {
@@ -67,6 +67,16 @@ class CartController {
             } else {
                 res.status(404).send({ message: 'Cart not found' })
             }
+        } catch (error) {
+            res.status(400).send({error: error})
+        }
+    }
+
+    emptyCart = async (req, res) => {
+        try {
+            const cid = req.params.cid
+            const cartEmpty = await cartService.emptyCart(cid)
+            res.status(200).send({message: 'Empty cart', cart: cartEmpty})
         } catch (error) {
             res.status(400).send({error: error})
         }

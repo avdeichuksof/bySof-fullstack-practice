@@ -1,0 +1,101 @@
+.product-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    color: var(--secondaryColor);
+    text-align: center;
+}
+
+.product-form-item {
+    position: relative;
+    margin: 25px auto;
+    width: 100%;
+    font-family: var(--font);
+    font-style: italic;
+}
+
+.product-form-item input {
+    font-size: 1rem;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--detailColor);
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+}
+
+.product-form-item label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--primaryColor);
+    transition: all ease 0.3s;
+}
+
+.product-form-item input:focus~label,
+.product-form-item input:valid~label {
+    top: -20px;
+    font-size: 1rem;
+    color: var(--primaryColor);
+}
+
+.items-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+}
+
+fieldset {
+    border: 2px solid var(--detailColor);
+    width: fit-content;
+    padding: 1rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset legend {
+    padding: 5px;
+    font-family: var(--font);
+    font-style: italic;
+}
+
+.radio-input {
+    margin: 5px;
+    display: flex;
+}
+
+.radio-input input[type="radio"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 4px;
+    font-family: var(--font);
+    color: var(--secondaryColor);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--secondaryColor);
+    border-radius: 50%;
+    transform: translateY(-1px);
+    display: grid;
+    place-content: center;
+}
+.radio-input input[type="radio"]::before {
+    content: "";
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-control-color);
+    background-color: var(--secondaryColor);
+}
+.radio-input input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+.form-btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}

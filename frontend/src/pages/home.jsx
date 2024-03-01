@@ -38,6 +38,8 @@ const Home = () => {
 
     return <div>
         <h1>HOME</h1>
+        <p>sacar stock de los productos</p>
+        <p>fijarse de poner que cuando se borra un usuario, se borre su carrito</p>
     </div>
 }
 

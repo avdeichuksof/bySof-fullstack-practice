@@ -6,7 +6,7 @@ class CartService {
 
     #cartExists = async (id) => {
         const cartFound = await cartMethods.getCartById(id)
-        if(!cartFound) throw new Error('Cart not found. Invalid ID')
+        if (!cartFound) throw new Error('Cart not found. Invalid ID')
         return cartFound
     }
 
@@ -41,25 +41,25 @@ class CartService {
         try {
             const cart = await Cart.findById(cartId)
 
-            if(cart){
+            if (cart) {
                 const productAlreadyInCart = cart.products.find(p => p.product._id.toString() === prodId)
-                
-                if(productAlreadyInCart){
-                    if((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.stock){
+
+                if (productAlreadyInCart) {
+                    if ((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.stock) {
                         /*** AGREGAR UNA ALERT  ***/
-                        return {message: 'Not enough stock'}
-                    }else{
+                        return { message: 'Not enough stock' }
+                    } else {
                         productAlreadyInCart.quantity += quantity
                         await cart.save()
                         /*** AGREGAR UNA ALERT  ***/
-                        return {message: 'Product quantity increased'}
+                        return { message: 'Product quantity increased' }
                     }
-                }else{
-                    const addProduct = {$push: {products: {product: prodId, quantity: quantity}}}
+                } else {
+                    const addProduct = { $push: { products: { product: prodId, quantity: quantity } } }
 
-                    await Cart.updateOne({_id: cartId}, addProduct)
+                    await Cart.updateOne({ _id: cartId }, addProduct)
                     /*** AGREGAR UNA ALERT  ***/
-                    return {message: 'Product added to cart'}
+                    return { message: 'Product added to cart' }
                 }
             }
 
@@ -71,10 +71,10 @@ class CartService {
     updateProduct = async (cartId, products) => {
         try {
             const cartFound = await this.#cartExists(cartId)
-            if(!cartFound) return {message: 'Cart not found'}
+            if (!cartFound) return { message: 'Cart not found' }
 
             await cartMethods.updateProductsInCart(cartId, products)
-            return {message:'Products in cart updated'. cartFound}
+            return { message: 'Products in cart updated'.cartFound }
         } catch (error) {
             throw new Error(error.message)
         }
@@ -84,16 +84,16 @@ class CartService {
         try {
             const cartFound = await this.#cartExists(cartId)
 
-            if(cartFound) {
+            if (cartFound) {
                 const productFound = cartFound.products.find((item) => item.product.toString() === prodId)
-            
-                if(productFound){
+
+                if (productFound) {
                     await cartMethods.updateProductQuantity(cartId, prodId, quantity)
-                    return ({message: 'Quantity updated'})
-                }else{
+                    return ({ message: 'Quantity updated' })
+                } else {
                     throw new Error('Product not found')
                 }
-            }else{
+            } else {
                 throw new Error('Cart not found')
             }
         } catch (error) {
@@ -103,7 +103,7 @@ class CartService {
 
     updateCart = async (cartId, prodId, userCart) => {
         try {
-            if(prodId === null){
+            if (prodId === null) {
                 //si no se pasa ningun id de producto actualiza el carrito completo
                 const cart = await this.#cartExists(cartId)
 
@@ -112,15 +112,15 @@ class CartService {
 
                 console.log('Products in cart updated')
                 return updateCart
-            }else{
+            } else {
                 // si se pasa un producto y existe en el carrito, se aumenta la cantidad
                 const cart = await this.#cartExists(cartId)
 
                 const productExists = cart.products.find((pid) => pid._id === prodId)
 
-                if(productExists){
+                if (productExists) {
                     productExists.quantity = userCart.quantity
-                }else{
+                } else {
                     throw new Error('Product not found in cart')
                 }
                 await cart.save()
@@ -131,23 +131,36 @@ class CartService {
         }
     }
 
+    emptyCart = async (cartId) => {
+        try {
+            const cartFound = await this.#cartExists(cartId)
+
+            if (!cartFound) return console.log('Cart not found')
+
+            const cartEmpty = await cartMethods.emptyCart(cartId)
+            return cartEmpty
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     deleteProductFromCart = async (cartId, prodId) => {
         try {
             const cartFound = await this.#cartExists(cartId)
 
-            if(cartFound){
+            if (cartFound) {
                 // buscamos si el producto está en el carrito
                 const productExists = cartFound.products.find((item) => item.product.toString() === prodId)
 
                 // si está lo eliminamos
-                if(productExists) {
+                if (productExists) {
                     cartFound.products.splice(productExists, 1)
                     await cartFound.save()
                     return cartFound
-                }else{
+                } else {
                     return false
                 }
-            }else{
+            } else {
                 throw new Error('Cart not found')
             }
         } catch (error) {
@@ -159,11 +172,11 @@ class CartService {
         try {
             const cart = await this.#cartExists(cartId)
 
-            if(cart){
+            if (cart) {
                 const deleteCart = await cartMethods.deleteCart(cart)
                 console.log('Cart deleted')
                 return deleteCart
-            }else{
+            } else {
                 throw new Error('Cart not found')
             }
 

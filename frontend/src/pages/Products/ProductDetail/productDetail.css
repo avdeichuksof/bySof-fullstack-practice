@@ -1,0 +1,47 @@
+.prod-not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50%;
+    margin: auto;
+}
+
+.prod-not-found svg {
+    width: 100%;
+    height: auto;
+}
+
+.prod-not-found p {
+    font-family: var(--font);
+    color: var(--primaryColor);
+    font-weight: 600;
+}
+
+.prod-detail {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 2rem auto;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 15px;
+    background-color: var(--mainColor);
+}
+
+.prod-options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.prod-options {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    width: 100%;
+}
+

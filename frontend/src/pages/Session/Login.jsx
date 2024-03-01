@@ -1,21 +1,27 @@
 import './session.css'
 import logo from '../../img/logo.png'
 import background from '../../img/bg5.png'
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import Button from '../../components/Buttons/Button'
 
-const formBase = {
-    email: '',
-    password: ''
-}
-
-const baseURL = 'http://localhost:8080'
 const Login = () => {
+    const baseURL = 'http://localhost:8080'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const formBase = {
+        email: '',
+        password: ''
+    }
 
     const [form, setForm] = useState(formBase)
 
@@ -34,14 +40,8 @@ const Login = () => {
     }
 
     const submitHandler = async (e) => {
-        e.preventDefault()
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
-
+        e.preventDefault() 
+        
         try {
             await axiosClient.postRequest({
                 url: `${baseURL}/api/auth/login`,
@@ -76,33 +76,33 @@ const Login = () => {
                     <img src={`${logo}`} alt="brand" />
                 </Link>
             </nav>
-                <div className='container'>
-                    <h1>INICIA SESIÓN</h1>
-                    <div className="form-box">
-                        <form onSubmit={submitHandler}>
-                            <div className="form-item">
-                                <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                                <label htmlFor="email">email</label>
-                            </div>
+            <div className='container'>
+                <h1>INICIA SESIÓN</h1>
+                <div className="form-box">
+                    <form onSubmit={submitHandler}>
+                        <div className="form-item">
+                            <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
+                            <label htmlFor="email">email</label>
+                        </div>
 
-                            <div className="form-item">
-                                <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
-                                <label htmlFor="password">contraseña</label>
-                            </div>
+                        <div className="form-item">
+                            <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
+                            <label htmlFor="password">contraseña</label>
+                        </div>
 
-                            <div className="button">
-                                <button type='submit'>Iniciar Sesión</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="forgot-pass">
-                        <a href={`${baseURL}/sendrecoverymail`}>¿Olvidaste tu contraseña?</a>
-                    </div>
-                    <div className="registerRedirect">
-                        <p>¿Aún no tienes una cuenta?</p>
-                        <a href={`${baseURL}/register`}>Registrate</a>
-                    </div>
+                        <div className="button">
+                            <Button className='btn-session' type='submit' content="Iniciar Sesión" />
+                        </div>
+                    </form>
                 </div>
+                <div className="forgot-pass">
+                    <a href={`${baseURL}/sendrecoverymail`}>¿Olvidaste tu contraseña?</a>
+                </div>
+                <div className="registerRedirect">
+                    <p>¿Aún no tienes una cuenta?</p>
+                    <a href={`${baseURL}/register`}>Registrate</a>
+                </div>
+            </div>
         </div>
     )
 }

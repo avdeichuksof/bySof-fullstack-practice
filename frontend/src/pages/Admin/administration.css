@@ -1,0 +1,38 @@
+.admin-products-title {
+    font-family: var(--titleFont);
+    color: var(--secondaryColor);
+    font-weight: 800;
+    text-align: center;
+}
+
+.create-product h2,
+.get-id h2,
+.edit-product h2,
+h2.prod-found {
+    font-family: var(--titleFont);
+    color: var(--secondaryColor);
+    text-align: center;
+    margin: 1rem;
+}
+
+.btns-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.create-product {
+    margin: auto;
+}
+
+.get-id .product-form-item {
+    width: 90%;
+}
+
+
+.error-txt {
+    color:red;
+    font-family: var(--font);
+    font-size: 20px;
+    margin: 12px;
+}

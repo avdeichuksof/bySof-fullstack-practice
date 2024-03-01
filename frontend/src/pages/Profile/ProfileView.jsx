@@ -6,6 +6,11 @@ const axiosClient = new AxiosClient()
 
 const ProfileView = () => {
     const baseURL = 'http://localhost:8080'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 
     // guardamos el currentUser
     const [user, setUser] = useState(null)
@@ -28,12 +33,6 @@ const ProfileView = () => {
     const [userData, setUserData] = useState(null)
     useEffect(() => {
         if (user) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-
             axiosClient.getRequest({
                 url: `${baseURL}/api/users/${userId}`,
                 config: config,

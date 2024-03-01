@@ -1,13 +1,7 @@
 import './accordionItem.css'
-import React, {useState} from 'react'
+import React from 'react'
 
 const AccordionItem = ({ isActive, onClick, question, answer }) => {
-    /* const [open, setOpen] = useState(false)
-    const accordionHandler = () => {
-        setOpen(!open)
-    } */
-
-    // const isOpen = index === activeIndex
 
     return (
         <div className="accordion-item">

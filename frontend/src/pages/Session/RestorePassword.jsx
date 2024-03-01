@@ -5,24 +5,25 @@ import React, { useState} from 'react'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
-const formBase = {
-    password: ''
-}
+import Button from '../../components/Buttons/Button'
 
-const baseURL = 'http://localhost:8080'
 
 const RestorePassword = () => {
+    const baseURL = 'http://localhost:8080'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const formBase = {
+        password: ''
+    }
+    
     const [form, setForm] = useState(formBase)
 
     const submitHandler = async (e) => {
         e.preventDefault()
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
         // obtenemos las query params para buscar el email
         const url = new URL(window.location.href)
         const userEmail = url.searchParams.get('email')
@@ -73,7 +74,7 @@ const RestorePassword = () => {
                             <label htmlFor="password">CONTRASEÑA</label>
                         </div>
                         <div className="button">
-                            <button type='submit'>CAMBIAR CONTRASEÑA</button>
+                            <Button className='btn-session' type='submit' content='Cambiar Contraseña' />
                         </div>
                     </form>
                 </div>

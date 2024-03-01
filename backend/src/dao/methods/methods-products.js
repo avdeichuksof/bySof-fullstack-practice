@@ -10,7 +10,7 @@ class ProductMethods {
         try {
             const filter = category ? {category: category} : {}
             const options = {
-                limit: limit || 6,
+                limit: limit || 12,
                 page: page || 1,
                 sort: {
                     price: sort || 'asc'

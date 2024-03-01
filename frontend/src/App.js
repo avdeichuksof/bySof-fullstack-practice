@@ -10,15 +10,20 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 
 // pages
+import Login from './pages/Session/Login'
+import Register from './pages/Session/Register'
+
 import Home from './pages/Home'
 import Faqs from './pages/Faqs/Faqs'
-import Login from './pages/Session/Login'
-import CartView from './pages/Cart/CartView'
 import AboutUs from './pages/AboutUs/AboutUs'
 import Contact from './pages/Contact/Contact'
-import Register from './pages/Session/Register'
+
+import CartView from './pages/Cart/CartView'
+
 import Products from './pages/Products/Products'
 import ProfileView from './pages/Profile/ProfileView'
+import ProductDetail from './pages/Products/ProductDetail/ProductDetail'
+
 import ForgotPassword from './pages/Session/ForgotPassword'
 import RestorePassword from './pages/Session/RestorePassword'
 
@@ -73,7 +78,8 @@ function App() {
               <Route path='/restorepassword' element={<RestorePassword />} />
               {/* nav routes */}
               <Route path='/' element={<Home />} />
-              <Route path='/products' element={<Products />} /> 
+              <Route path='/products' element={<Products />} />
+              <Route path='/products/:pid' element={<ProductDetail />}/>
               <Route path='/contact' element={<Contact />} />
               <Route path='/about' element={<AboutUs />} />
               <Route path='/faqs' element={<Faqs />}/>

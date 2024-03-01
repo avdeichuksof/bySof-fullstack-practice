@@ -15,16 +15,16 @@ const formBase = {
 const Contact = () => {
     const baseURL = 'http://localhost:8080'
 
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
     const [form, setForm] = useState(formBase)
 
     const submitHandler = async (e) => {
         e.preventDefault()
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         try {
             // Crear un objeto FormData para enviar el formulario y el archivo adjunto

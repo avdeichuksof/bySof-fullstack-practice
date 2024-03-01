@@ -20,7 +20,6 @@
 .header ul.menu-inline {
     display: flex;
     flex-wrap: wrap;
-    float: right;
     margin: 20 0px;
     padding: 0 20px;
 }
@@ -85,14 +84,14 @@ ul.menu-mobile li {
     justify-content: center;
     align-items: center;
     position: absolute;
+    /* margin: 1rem 0; */
     width: 140px;
     height: auto;
     padding: 0.5rem;
     text-align: center;
     color: var(--secondaryColor);
     background-color: var(--mainColor);
-    box-shadow: var(--detailColor) 3px 3px 0px 0px;
-    border: 1.5px solid var(--detailColor);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 5px;
     z-index: 10;
 }
@@ -113,8 +112,7 @@ ul.menu-mobile li {
     position: relative;
     box-shadow: none;
     width: 100%;
-    border: 1.5px solid var(--detailColor);
-    box-shadow: var(--detailColor) 3px 3px 0px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .icon-burger {
@@ -127,7 +125,7 @@ ul.menu-mobile li {
 
 /* MEDIA */
 
-@media(min-width: 768px) {
+@media(min-width: 769px) {
     .icon-burger {
         display: none;
     }

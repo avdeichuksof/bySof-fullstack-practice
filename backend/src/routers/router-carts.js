@@ -17,6 +17,7 @@ router.post('/:cid/product/:pid',  cartController.addProductToCart)
 
 router.put('/:cid', cartController.udpateCart)
 router.put('/:cid/products/:pid', cartController.updateProductQuantity)
+router.put('/empty/:cid', cartController.emptyCart)
 
 router.delete('/:cid', cartController.deleteCart)
 router.delete('/:cid/purchases', purchaseController.deletePurchase)

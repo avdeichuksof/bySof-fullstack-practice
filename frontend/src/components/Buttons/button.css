@@ -1,0 +1,50 @@
+.btn-session {
+    width: 60%;
+    height: 40px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--primaryColor);
+    font-family: var(--titleFont);
+    font-weight: 600;
+    position: relative;
+    transition: all 0.5s;
+}
+
+.btn-session::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--detailColor);
+    z-index: -1;
+    transition: all 0.5s;
+}
+
+.btn-session:hover::before {
+    width: 100%;
+}
+
+.btn-session:hover {
+    color: var(--mainColor);
+}
+
+
+.btn-products {
+    border: none;
+    background-color: var(--secondaryColor);
+    color: var(--mainColor);
+    font-family: var(--titleFont);
+    cursor: pointer;
+    border-radius: 30px;
+    padding: 12px;
+    margin: 10px;
+    transition: all ease .5s;
+}
+
+.btn-products:hover {
+    opacity: .8;
+}

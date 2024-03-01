@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react"
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import Button from '../../../components/Buttons/Button'
 import AdminProductsForm from '../../../components/Products/Admin/AdminProductsForm'
+import AdminProductCard from '../../../components/Products/Admin/AdminProductCard/AdminProductCard'
 
 const AdminProducts = () => {
     const baseURL = 'http://localhost:8080'
@@ -116,7 +118,7 @@ const AdminProducts = () => {
                     setProductId('')
                 }
             })
-            
+
             // Actualiza productId solo si se encuentra un producto
             if (response && response.data && response.data.product) {
                 setProductId(response.data.product.id);
@@ -166,6 +168,12 @@ const AdminProducts = () => {
         setUpdated(updateProduct)
     }
 
+    const [showEditForm, setShowEditForm] = useState(false)
+
+    const showEditFormHandler = () => {
+        setShowEditForm(true)
+    }
+
 
     // ------------------------------- delete product
     const deleteProductHandler = async () => {
@@ -200,14 +208,13 @@ const AdminProducts = () => {
 
 
     return <div className='admin-products-container'>
-        <h1>Administración de Productos</h1>
+        <h1 className='admin-products-title'>Administración de Productos</h1>
 
         <div className="create-product">
             <h2>Crear Producto</h2>
             <AdminProductsForm onSubmit={createProductHandler} onChange={createProductChangeHandler} value={createProduct} btnText={'CREAR PRODUCTO'} />
         </div>
 
-        <hr />
         <div className="get-id">
             <h2>Buscar producto por ID</h2>
             <form onSubmit={getProdByIdHandler}>
@@ -215,33 +222,34 @@ const AdminProducts = () => {
                     <input type="text" name='id' value={productId || ''} onChange={prodIdChangeHandler} required />
                     <label htmlFor="id">ID</label>
                 </div>
-                <button type="submit">BUSCAR PRODUCTO</button>
+                <div className="btns-container">
+                    <Button className='btn-session' type='submit' content='BUSCAR PRODUCTO' /> 
+                </div>
             </form>
         </div>
 
         {showOptions && prodFound && (
             <>
-                <h3>Producto encontrado:</h3>
-                <div className="product-info">
-                    <p>id: {productId}</p>
-                    <p>title: {prodFound.title}</p>
-                    <p>thumbnail: {prodFound.thumbnail}</p>
-                    <p>price: {prodFound.price}</p>
-                    <p>size: {prodFound.size}</p>
-                    <p>category: {prodFound.category}</p>
-                    <p>stock: {prodFound.stock}</p>
-                    <p>code: {prodFound.code}</p>
+                <h2 className='prod-found'>Producto encontrado:</h2>
+                <AdminProductCard product={prodFound} />
+
+                <div className="btns-container">
+                    <Button className='btn-session' onClick={showEditFormHandler} content='EDITAR PRODUCTO' />
+                    <Button className='btn-session' onClick={deleteProductHandler} content='ELIMINAR PRODUCTO' />
                 </div>
 
-                <h2>Editar producto</h2>
-                <AdminProductsForm onSubmit={editProductHandler} onChange={updateProductChangeHandler} value={updated} btnText={'EDITAR PRODUCTO'} />
+                {showEditForm && (
+                    <div className='edit-product'>
+                        <h2>Editar producto</h2>
+                        <AdminProductsForm onSubmit={editProductHandler} onChange={updateProductChangeHandler} value={updated} btnText={'EDITAR PRODUCTO'} />
+                    </div>
+                )}
 
-                <button onClick={deleteProductHandler}>ELIMINAR PRODUCTO</button>
             </>
         )}
 
         {showOptions === false && (
-            <p>No se ha encontrado ningún producto con ese ID. Por favor, inténtelo nuevamente.</p>
+            <p className='error-txt'>No se ha encontrado ningún producto con ese ID. Por favor, inténtelo nuevamente.</p>
         )}
 
     </div>

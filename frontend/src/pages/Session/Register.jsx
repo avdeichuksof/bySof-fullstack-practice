@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import Button from '../../components/Buttons/Button'
+
 const formBase = {
     firstName: '',
     lastName: '',
@@ -16,17 +18,16 @@ const formBase = {
 
 const Register = () => {
     const baseURL = 'http://localhost:8080'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
     
     const [form, setForm] = useState(formBase)
 
     const submitHandler = async (e) => {
         e.preventDefault()
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }
 
         try {
             await axiosClient.postRequest({
@@ -90,7 +91,7 @@ const Register = () => {
                             </div>
 
                             <div className="button">
-                                <button type='submit'>Registrarse</button>
+                                <Button className='btn-session' type='submit' content="Registrarse" />
                             </div>
                         </form>
                     </div>

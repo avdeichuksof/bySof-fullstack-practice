@@ -70,6 +70,7 @@ const Navbar = () => {
             </Link>
 
             <nav>
+
                 <ul className={`menu-${click ? 'mobile' : 'inline'}`}>
                     <li><NavLink to={`${baseURL}`} className='menu-item'>Inicio</NavLink></li>
                     <li className={`menu-item text-${subMenu ? 'color' : ' '}`} onClick={subMenuHandler}>Productos

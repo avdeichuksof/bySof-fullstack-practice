@@ -4,7 +4,8 @@ import { Router } from "express"
 const router = new Router()
 import {isAdmin} from  '../utils/middlewares.js'
 
-router.get('/', productController.getProducts)
+// router.get('/', productController.getProducts)
+router.get('/', productController.getProductsPaginate)
 router.get('/:pid', productController.getProductById)
 
 router.post('/', productController.createProduct)
