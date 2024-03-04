@@ -7,7 +7,7 @@
     display: flex;
     flex-flow: column wrap;
     align-self: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
     transition: justify-content .5s ease;
 }
 

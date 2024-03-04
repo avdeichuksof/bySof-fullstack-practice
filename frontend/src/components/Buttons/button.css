@@ -38,6 +38,7 @@
     background-color: var(--secondaryColor);
     color: var(--mainColor);
     font-family: var(--titleFont);
+    font-size: 1rem;
     cursor: pointer;
     border-radius: 30px;
     padding: 12px;

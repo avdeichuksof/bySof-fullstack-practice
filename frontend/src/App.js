@@ -22,7 +22,6 @@ import CartView from './pages/Cart/CartView'
 
 import Products from './pages/Products/Products'
 import ProfileView from './pages/Profile/ProfileView'
-import ProductDetail from './pages/Products/ProductDetail/ProductDetail'
 
 import ForgotPassword from './pages/Session/ForgotPassword'
 import RestorePassword from './pages/Session/RestorePassword'
@@ -79,7 +78,6 @@ function App() {
               {/* nav routes */}
               <Route path='/' element={<Home />} />
               <Route path='/products' element={<Products />} />
-              <Route path='/products/:pid' element={<ProductDetail />}/>
               <Route path='/contact' element={<Contact />} />
               <Route path='/about' element={<AboutUs />} />
               <Route path='/faqs' element={<Faqs />}/>

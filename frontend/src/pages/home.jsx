@@ -6,40 +6,52 @@ import React from "react"
 const Home = () => {
 
     /* ESTO SE PUEDE USAR PARA MOSTRAR ALGUNOS PRODUCTOS CON LIMIT Y PAGINATE */
-/* 
-    const [data, setData] = useState('')
-
-    const fetchData = async () => {
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
+    /* 
+        const [data, setData] = useState('')
+    
+        const fetchData = async () => {
+    
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+    
+            const baseURL = process.env.REACT_APP_BASE_URL
+            try {
+                axiosClient.getRequest({
+                    url: `${baseURL}`,
+                    config: config,
+                    callbackSuccess: (res) => {
+                        console.log('Successfull request ', res)
+                    },
+                    calbackError: (error) => {
+                        console.error('Error: ', error)
+                    }
+                })
+                setData(result.message)
+            } catch (error) {
+                console.error('Error fetching data:', error)
             }
         }
-
-        const baseURL = process.env.REACT_APP_BASE_URL
-        try {
-            axiosClient.getRequest({
-                url: `${baseURL}`,
-                config: config,
-                callbackSuccess: (res) => {
-                    console.log('Successfull request ', res)
-                },
-                calbackError: (error) => {
-                    console.error('Error: ', error)
-                }
-            })
-            setData(result.message)
-        } catch (error) {
-            console.error('Error fetching data:', error)
-        }
-    }
- */
+     */
 
     return <div>
         <h1>HOME</h1>
-        <p>sacar stock de los productos</p>
-        <p>fijarse de poner que cuando se borra un usuario, se borre su carrito</p>
+        <div>
+            <h2>FALTA:</h2>
+            <p> - filtro de productos</p>
+            <p> - contenido de paginas home, about us, carrito y profile</p>
+            <p> - responsive de contacto y faqs </p>
+            <p> - ver lo de docs de usuarios si se agrega de alguna forma</p>
+            <p> - toastify o algo de eso</p>
+            <p> - animaciones en los componentes</p>
+            <p> - agregar con o sin marco ??</p>
+            <p> - fijarse de poner que cuando se borra un usuario, se borre su carrito</p>
+            <p> - testing</p>
+
+        </div>
+
     </div>
 }
 

@@ -15,6 +15,10 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
+    size: {
+        type: String,
+        required: true
+    },
     category: {
         type: String,
         required: true,
@@ -24,6 +28,10 @@ const ProductSchema = new Schema({
         type: Boolean,
         required: true,
         default: true
+    },
+    stock: {
+        type: Number,
+        required: true
     },
     code: {
         type: String,

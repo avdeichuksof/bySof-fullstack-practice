@@ -21,9 +21,9 @@
 .grid-container{
     display: grid;
     grid-template-areas: 
-        'navbar' 'navbar' 'navbar'
-        'main' 'main' 'main'
-        'footer' 'footer' 'footer'
+        'navbar'
+        'main' 
+        'footer'
     ;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;

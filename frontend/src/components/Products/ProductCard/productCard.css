@@ -43,3 +43,28 @@
 .card-data {
     text-align: start;
 }
+
+
+.stock-txt {
+    color: var(--detailColor);
+}
+
+
+.prod-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+.quantity-input {
+    outline: none;
+    border: none;
+    background-color: var(--lightGrey);
+    border-radius: 5px;
+    padding: 4px;
+    font-family: var(--titleFont);
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+}
