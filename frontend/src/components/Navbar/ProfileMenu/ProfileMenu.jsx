@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import { getCurrentUser } from '../../../utils/getCurrentUser'
 
 const ProfileMenu = () => {
     const baseURL = 'http://localhost:8080'

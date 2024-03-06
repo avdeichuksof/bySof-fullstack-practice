@@ -13,7 +13,7 @@ import Footer from './components/Footer/Footer'
 import Login from './pages/Session/Login'
 import Register from './pages/Session/Register'
 
-import Home from './pages/Home'
+import Home from './pages/Home/Home'
 import Faqs from './pages/Faqs/Faqs'
 import AboutUs from './pages/AboutUs/AboutUs'
 import Contact from './pages/Contact/Contact'

@@ -1,6 +1,6 @@
 import './faqs.css'
 import React, { useState } from 'react'
-import AccordionItem from './AccordionItem/AccordionItem'
+import AccordionItem from '../../components/AccordionItem/AccordionItem'
 
 /* LAS RTAS QUE TENGAN PASOS PUEDEN SER LISTITAS */
 
@@ -13,9 +13,12 @@ const Faqs = () => {
 
     return (
         <div className="faqs-container">
-            <h1 className='title-faqs'>FAQs</h1>
+            <div className="titles-container">
+                <h1 className='title-faqs'>FAQs</h1>
+                <h4 className='subtitle-faqs'>Preguntas Frecuentes</h4>
+            </div>
             <div className="accordion">
-                <AccordionItem 
+                <AccordionItem
                     index={0}
                     isActive={active === 0}
                     onClick={() => activeHandler(0)}

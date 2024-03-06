@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import { getCurrentUser } from '../../utils/getCurrentUser'
+
 const ProfileView = () => {
     const baseURL = 'http://localhost:8080'
     const config = {
@@ -12,21 +14,8 @@ const ProfileView = () => {
         }
     }
 
-    // guardamos el currentUser
-    const [user, setUser] = useState(null)
-    useEffect(() => {
-        axiosClient.getRequest({
-            url: `${baseURL}/api/auth/currentuser`,
-            callbackSuccess: (res) => {
-                console.log('User Data: ', res.data.currentUser)
-                setUser(res.data.currentUser)
-            },
-            callbackError: (error) => {
-                console.error('Error checking current user: ', error)
-            }
-        })
-    }, [])
-
+    // tomamos currentUser
+    const user = getCurrentUser()
     const userId = user ? user.id : null
 
     // tomamos datos del usuario encontrado

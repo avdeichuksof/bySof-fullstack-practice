@@ -1,6 +1,7 @@
 /* import React, {useState, useEffect} from "react"
 import AxiosClient from "../services/axiosClient"
 const axiosClient = new AxiosClient() */
+import './home.css'
 import React from "react"
 
 const Home = () => {
@@ -40,11 +41,8 @@ const Home = () => {
         <h1>HOME</h1>
         <div>
             <h2>FALTA:</h2>
-            <p> - ver si se puede hacer un service para el currentUser que no se repita</p>
             <p> - filtro de productos</p>
-            <p> - agregar un get purchases para que  me devuelva las compras de un usuario especifico</p>
             <p> - contenido de paginas home, about us, carrito y profile</p>
-            <p> - responsive de contacto y faqs </p>
             <p> - ver lo de docs de usuarios si se agrega de alguna forma,
                 puede ser que el admin suba foto de prods o foto de perfil de usuario
             </p>

@@ -1,13 +1,15 @@
 import './navBar.css'
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import AxiosClient from '../../services/axiosClient'
+const axiosClient = new AxiosClient()
 
 import brand from '../../img/logo.png'
 import Submenu from './Submenu/Submenu'
 import BurgerMenu from './BurgerMenu/BurgerMenu'
 import ProfileMenu from './ProfileMenu/ProfileMenu'
-import AxiosClient from '../../services/axiosClient'
-const axiosClient = new AxiosClient()
+import { getCurrentUser } from '../../utils/getCurrentUser'
+
 
 const Navbar = () => {
     const [click, setClick] = useState(false)
@@ -46,21 +48,7 @@ const Navbar = () => {
     const baseURL = 'http://localhost:8080'
 
     // tomamos los datos del usuario
-    const [userData, setUserData] = useState(null)
-
-    useEffect(() => {
-        axiosClient.getRequest({
-            url: `${baseURL}/api/auth/currentuser`,
-            callbackSuccess: (res) => {
-                console.log('User Data: ', res.data.currentUser)
-                setUserData(res.data.currentUser)
-            },
-            callbackError: (error) => {
-                console.error('Error checking current user: ', error)
-            }
-        })
-    }, [])
-
+    const userData = getCurrentUser()
     const userCart = userData ? userData.cart : null
 
     return (

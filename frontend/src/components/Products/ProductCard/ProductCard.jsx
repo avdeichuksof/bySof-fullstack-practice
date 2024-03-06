@@ -5,6 +5,7 @@ import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
 import Button from '../../Buttons/Button'
+import { getCurrentUser } from '../../../utils/getCurrentUser'
 
 const ProductCard = ({ product }) => {
     const baseURL = 'http://localhost:8080'
@@ -17,20 +18,7 @@ const ProductCard = ({ product }) => {
     /* ADD TO CART */
 
     // buscamos el carrito del usuario
-    const [userData, setUserData] = useState(null)
-    useEffect(() => {
-        axiosClient.getRequest({
-            url: `${baseURL}/api/auth/currentuser`,
-            callbackSuccess: (res) => {
-                console.log('User Data: ', res.data.currentUser)
-                setUserData(res.data.currentUser)
-            },
-            callbackError: (error) => {
-                console.error('Error checking current user: ', error)
-            }
-        })
-    }, [])
-
+    const userData = getCurrentUser()
     const userCart = userData ? userData.cart : null
 
     // add to cart

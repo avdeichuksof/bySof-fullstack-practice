@@ -1,21 +1,17 @@
-
 /* ARREGLAR FORM, ACOMODAR RESPONSIVE TAMAÑO TABLETSY VER DE MODIFICAR EL BOTON DE FILES */
 
 .contact {
-    height: 100vh;
-    overflow-x: hidden;
+    height: 100%;
     display: flex;
     flex-flow: column wrap;
-    align-self: center;
+    align-items: center;
     justify-content: space-evenly;
-    transition: justify-content .5s ease;
 }
 
 h1.title {
     font-family: var(--titleFont);
     font-weight: 800;
-    font-size: 2rem;
-    padding: 2rem;
+    font-size: 1.8rem;
     color: var(--secondaryColor);
     transition: font-size 0.5s ease;
 }
@@ -25,8 +21,7 @@ h1.title {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-    padding: 0 2rem;
+    padding: 1rem;
 }
 
 .contact-form-box {
@@ -43,13 +38,13 @@ h1.title {
 }
 
 .contact-form-item input,
-textarea {
-    font-size: 1rem;
+.contact-form-item textarea {
+    width: 100%;
     border: none;
     border-bottom: 2px solid var(--detailColor);
-    padding: 4px;
-    background-color: transparent;
+    background-color: none;
     outline: none;
+    padding: 4px 0;
 }
 
 .contact-form-item label {
@@ -74,7 +69,6 @@ textarea {
     height: 60px;
 }
 
-
 .file-select input {
     width: 100%;
     cursor: pointer;
@@ -86,8 +80,6 @@ textarea {
     font-weight: 600;
     margin-top: 15px;
 }
-
-
 .buttons {
     display: flex;
     width: 100%;
@@ -96,73 +88,38 @@ textarea {
     margin-top: 15px;
 }
 
-.buttons button {
-    width: 40%;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: var(--primaryColor);
-    font-family: var(--titleFont);
-    font-weight: 700;
-    position: relative;
-    transition: all 0.5s;
-}
-
-.buttons button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background-color: var(--detailColor);
-    z-index: -1;
-    transition: all 0.5s;
-}
-
-.buttons button:hover::before {
-    width: 100%;
-}
-
-.buttons button:hover {
-    color: var(--mainColor);
-} 
-
-
 /* MEDIA */
 
 @media (min-width: 768px) {
+
     h1.title {
-        font-size: 3rem;
-        text-align: start;
+        font-size: 3.5rem;
+        align-self: flex-start;
         padding: 0 0 0 2rem;
     }
 
     .form-container {
-        width: 40%;
-        align-self: flex-end;
-        justify-content: center;
+        width: 100%;
+        justify-content: flex-end;
+        padding: 2rem;
     }
+
+    .form-container form {
+        width: 70%;
+    }
+
+    .contact-form-item {
+        margin-bottom: 1rem;
+    }
+
+    .contact-form-item textarea {
+        height: 120px;
+    }
+
 }
 
 @media (min-width: 1024px) {
     h1.title {
         font-size: 4rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .contact {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1120px) {
-    .form-container {
-        margin-right: 3rem;
     }
 }

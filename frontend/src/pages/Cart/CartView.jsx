@@ -3,24 +3,13 @@ import React, { useEffect, useState } from 'react'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
+import { getCurrentUser } from '../../utils/getCurrentUser'
+
 const CartView = () => {
     const baseURL = 'http://localhost:8080'
 
     // tomamos los datos del usuario
-    const [userData, setUserData] = useState(null)
-
-    useEffect(() => {
-        axiosClient.getRequest({
-            url: `${baseURL}/api/auth/currentuser`,
-            callbackSuccess: (res) => {
-                setUserData(res.data.currentUser)
-            },
-            callbackError: (error) => {
-                console.error('Error checking current user: ', error)
-            }
-        })
-    }, [])
-
+    const userData = getCurrentUser()
     const userCart = userData ? userData.cart : null
 
     // tomamos el cart

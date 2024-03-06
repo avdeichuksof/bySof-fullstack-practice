@@ -4,6 +4,8 @@ import AxiosClient from '../../services/axiosClient'
 import axios from 'axios'
 const axiosClient = new AxiosClient()
 
+import Button from '../../components/Buttons/Button'
+
 const formBase = {
     fullName: '',
     email: '',
@@ -96,8 +98,8 @@ const Contact = () => {
                     </div>
 
                     <div className="buttons">
-                        <button type="button" onClick={resetForm}>Borrar todo</button>
-                        <button type='submit'>Enviar</button>
+                        <Button className='btn-session' type='button' onClick={resetForm} content='BORRAR TODO' />
+                        <Button className='btn-session' type='submit' content='ENVIAR' />
                     </div>
                 </form>
             </div>

@@ -1,9 +1,9 @@
 .faqs-container {
-    height: 100vh;
-    overflow-x: hidden;
+    height: 100%;
     display: flex;
     flex-flow: column wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .title-faqs {
@@ -11,7 +11,15 @@
     font-weight: 800;
     font-size: 2rem;
     text-align: center;
-    padding: 2rem;
+    margin-bottom: 5px;
+    color: var(--secondaryColor);
+    transition: font-size 0.5s ease;
+}
+
+.subtitle-faqs {
+    font-family: var(--titleFont);
+    text-align: center;
+    font-size: 12px;
     color: var(--secondaryColor);
     transition: font-size 0.5s ease;
 }
@@ -22,29 +30,56 @@
     justify-self: center;
     flex-direction: column;
     width: 80%;
-    height: auto;
-    margin: auto;
+    margin: 2rem 0;
     padding: 5px;
 }
-
-
-
 
 /* MEDIA */
 
 @media (min-width: 768px) {
     h1.title-faqs {
         font-size: 3rem;
-        text-align: start;
-        padding: 0 0 0 2rem;
+    }
+    .subtitle-faqs {
+        font-size: 1rem;
     }
 }
 
 @media (min-width: 1024px) {
+    .faqs-container {
+        justify-content: space-evenly;
+    }
+
+    .titles-container {
+        align-self: start;
+        margin: 1rem;
+    }
+
     h1.title-faqs {
         font-size: 4rem;
+        align-self: start;
+        margin-left: 1rem;
     }
-    .faqs-container {
-        flex-flow: row nowrap;
+
+    .subtitle-faqs {
+        font-size: 1.3rem;
+        align-self: start;
+        margin-left: 1rem;
+    }
+
+    .accordion {
+        align-self: end;
+        width: 80%;
+        margin: 2rem;
+        padding: 5px;
+    }
+}
+
+@media (min-width: 1280px) {
+    h1.title-faqs {
+        font-size: 5rem;
+    }
+    .subtitle-faqs {
+        font-size: 1.8rem;
     }
 }
