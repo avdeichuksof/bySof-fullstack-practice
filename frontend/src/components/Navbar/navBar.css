@@ -43,7 +43,7 @@
 ul.menu-mobile li {
     display: block;
     text-align: center;
-    margin: 15px;
+    margin: 10px;
 }
 
 .header li {
@@ -84,10 +84,9 @@ ul.menu-mobile li {
     justify-content: center;
     align-items: center;
     position: absolute;
-    /* margin: 1rem 0; */
+    margin: 1rem 0;
     width: 140px;
-    height: auto;
-    padding: 0.5rem;
+    padding: 10px;
     text-align: center;
     color: var(--secondaryColor);
     background-color: var(--mainColor);
@@ -109,6 +108,8 @@ ul.menu-mobile li {
 
 .header ul.menu-mobile .submenu-open,
 .header ul.menu-mobile .profileMenu-open {
+    display: flex;
+    align-items: center;
     position: relative;
     box-shadow: none;
     width: 100%;

@@ -49,3 +49,9 @@
 .btn-products:hover {
     opacity: .8;
 }
+
+@media(min-width: 1024px) {
+    .btn-session {
+        width: 40%;
+    }
+}

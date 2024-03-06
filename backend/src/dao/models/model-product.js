@@ -22,6 +22,11 @@ const ProductSchema = new Schema({
     category: {
         type: String,
         required: true,
+        enum: ['arcilla', 'cajitas', 'cuadros', 'personalizados']
+    },
+    subcategory: {
+        type: String,
+        required: true,
         enum: ['famous', 'flowery', 'geometric', 'hobbies', 'tv', 'varios']
     },
     status: {

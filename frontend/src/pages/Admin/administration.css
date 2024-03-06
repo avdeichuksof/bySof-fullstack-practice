@@ -1,7 +1,13 @@
-.admin-products-title {
+.admin-container {
+    height: 100%;
+    width: 100%;
+}
+
+.admin-title {
     font-family: var(--titleFont);
     color: var(--secondaryColor);
     font-weight: 800;
+    font-size: 1.5rem;
     text-align: center;
 }
 
@@ -17,7 +23,7 @@ h2.prod-found {
 
 .btns-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 1rem;
 }
 
@@ -31,7 +37,8 @@ h2.prod-found {
 
 
 .error-txt {
-    color:red;
+    text-align: center;
+    color:var(--detailColor);
     font-family: var(--font);
     font-size: 20px;
     margin: 12px;

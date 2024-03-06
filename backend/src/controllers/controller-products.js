@@ -3,15 +3,6 @@ const productService = new ProductService()
 
 class ProductController {
 
-    /* getProducts = async (req, res) => {
-        try {
-            const products = await productService.getProducts()
-            res.status(200).send({ products: products })
-        } catch (error) {
-            res.status(400).send({ error: error })
-        }
-    } */
-
     getProductsPaginate = async (req, res) => {
         try {
             let {category, limit, page, sort} = req.query
@@ -34,6 +25,7 @@ class ProductController {
                     price: product.price,
                     size: product.size,
                     category: product.category,
+                    subcategory: product.subcategory,
                     stock: product.stock,
                     status: product.status,
                     code: product.code
@@ -48,9 +40,8 @@ class ProductController {
                 links.push({label: i, href: 'http://localhost:8080/home/?page=' + i})
             }
 
-            const user = req.session.user
 
-            res.status(200).send({products: products, pagination: rest, links, user: user}) 
+            res.status(200).send({products: products, pagination: rest, links}) 
         } catch (error) {
             res.status(500).send({ error: error.message })
         }

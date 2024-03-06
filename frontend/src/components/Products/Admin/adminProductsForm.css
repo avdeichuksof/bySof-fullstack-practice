@@ -44,6 +44,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
+
+}
+
+.items-box.radios {
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 fieldset {

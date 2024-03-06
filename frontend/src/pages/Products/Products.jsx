@@ -1,5 +1,6 @@
 import './products.css'
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -14,14 +15,24 @@ const Products = () => {
         }
     }
 
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+    const category = searchParams.get('category')
+
     const [products, setProducts] = useState([])
     const [pagination, setPagination] = useState({})
 
     useEffect(() => {
         const getProducts = async () => {
-            try {
+            try { 
+                let url =  `${baseURL}/api/products`    
+                // si hay query de category, se filtra, sino se muestran todos los prods
+                if (category) {
+                    url += `?category=${category}`
+                }
+
                 const response = await axiosClient.getRequest({
-                    url: `${baseURL}/api/products`,
+                    url: url,
                     config: config,
                 })
                 if (!response) console.log('Products array not found')
@@ -33,12 +44,17 @@ const Products = () => {
             }
         }
         getProducts()
-    }, [])
+    }, [category])
 
     const pageChangeHandler = async (page) => {
         try {
-            await axiosClient.getRequest({
-                url: `${baseURL}/api/products/?=page${page}`,
+            let url =  `${baseURL}/api/products`
+                if (category) {
+                    url += `?category=${category}`
+                }
+                url +=  `&page=${page}`
+            const response = await axiosClient.getRequest({
+                url: url,
                 config: config,
             })
             if (!response) console.log('Product not found')
@@ -53,12 +69,6 @@ const Products = () => {
 
     return (
         <div className='container-products'>
-
-            {/* <div className="price-filter">
-                <form >
-
-                </form>
-            </div> */}
 
             <div className="products-list">
                 {products.map((product) => (

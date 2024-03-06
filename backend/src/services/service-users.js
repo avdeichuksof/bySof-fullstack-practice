@@ -2,7 +2,8 @@ import {createHash, isValidPassword} from '../utils/bcrypt.js'
 import UserMethods from '../dao/methods/methods-users.js'
 import User from '../dao/models/model-user.js'
 const userMethods = new UserMethods()
-
+import CartService from './service-carts.js'
+const cartService = new CartService()
 
 class UserService {
 
@@ -73,6 +74,7 @@ class UserService {
     deleteUser = async (id) => {
         try {
             const deleteUser = await userMethods.deleteUser(id)
+            if(deleteUser) await cartService.deleteCart(deleteUser.cart)
             return deleteUser
         } catch (error) {
             throw new Error(err.message)

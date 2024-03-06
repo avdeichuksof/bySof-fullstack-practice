@@ -40,14 +40,17 @@ const Home = () => {
         <h1>HOME</h1>
         <div>
             <h2>FALTA:</h2>
+            <p> - ver si se puede hacer un service para el currentUser que no se repita</p>
             <p> - filtro de productos</p>
+            <p> - agregar un get purchases para que  me devuelva las compras de un usuario especifico</p>
             <p> - contenido de paginas home, about us, carrito y profile</p>
             <p> - responsive de contacto y faqs </p>
-            <p> - ver lo de docs de usuarios si se agrega de alguna forma</p>
+            <p> - ver lo de docs de usuarios si se agrega de alguna forma,
+                puede ser que el admin suba foto de prods o foto de perfil de usuario
+            </p>
             <p> - toastify o algo de eso</p>
             <p> - animaciones en los componentes</p>
-            <p> - agregar con o sin marco ??</p>
-            <p> - fijarse de poner que cuando se borra un usuario, se borre su carrito</p>
+            <p> - fijarse de poner que cuando se borra un usuario, se borre su carrito (hecho pero hay que ver si funciona) </p>
             <p> - testing</p>
 
         </div>

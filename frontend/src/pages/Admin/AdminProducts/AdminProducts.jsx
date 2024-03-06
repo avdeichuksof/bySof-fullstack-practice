@@ -9,6 +9,11 @@ import AdminProductCard from '../../../components/Products/Admin/AdminProductCar
 
 const AdminProducts = () => {
     const baseURL = 'http://localhost:8080'
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 
     const createProductForm = {
         title: '',
@@ -16,6 +21,7 @@ const AdminProducts = () => {
         price: '',
         size: '',
         category: '',
+        subcategory: '',
         stock: '',
         code: ''
     }
@@ -26,6 +32,7 @@ const AdminProducts = () => {
         price: '',
         size: '',
         category: '',
+        subcategory: '',
         stock: '',
         code: ''
     }
@@ -39,12 +46,6 @@ const AdminProducts = () => {
     const [createProduct, setCreateProduct] = useState(createProductForm)
     const createProductHandler = async (e) => {
         e.preventDefault()
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
 
         try {
             await axiosClient.postRequest({
@@ -79,14 +80,6 @@ const AdminProducts = () => {
     const [productId, setProductId] = useState('')
     const [showOptions, setShowOptions] = useState(null)
 
-    const prodIdChangeHandler = (e) => {
-        const { value } = e.target
-        setProdFound({ ...prodFound, id: value })
-        setProductId(value)
-    }
-
-    console.log('ProdID: ', productId)
-
     const getProdByIdHandler = async (e) => {
         e.preventDefault()
 
@@ -94,12 +87,6 @@ const AdminProducts = () => {
         if (!/^[0-9a-fA-F]{24}$/.test(productId)) {
             console.error('Invalid ID format');
             setProdFound('')
-        }
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
         }
 
         try {
@@ -120,14 +107,19 @@ const AdminProducts = () => {
             })
 
             // Actualiza productId solo si se encuentra un producto
-            if (response && response.data && response.data.product) {
-                setProductId(response.data.product.id);
-            }
+            if (response && response.data && response.data.product) setProductId(response.data.product.id)
         } catch (error) {
             console.error('Error sending request: ', error)
         }
     }
 
+    const prodIdChangeHandler = (e) => {
+        const { value } = e.target
+        setProdFound({ ...prodFound, id: value })
+        setProductId(value)
+    }
+
+    console.log('ProdID: ', productId)
 
     // ---------------------------- edit product
     const [updated, setUpdated] = useState(editProductForm)
@@ -136,11 +128,6 @@ const AdminProducts = () => {
         e.preventDefault()
 
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
 
             await axiosClient.putRequest({
                 url: `${baseURL}/api/products/${productId}`,
@@ -179,14 +166,8 @@ const AdminProducts = () => {
     const deleteProductHandler = async () => {
         try {
             if (!productId) {
-                console.log('Product ID is not available or invalid');
-                return;
-            }
-
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                console.log('Product ID is not available or invalid')
+                return
             }
 
             await axiosClient.deleteRequest({
@@ -207,8 +188,8 @@ const AdminProducts = () => {
     }
 
 
-    return <div className='admin-products-container'>
-        <h1 className='admin-products-title'>Administración de Productos</h1>
+    return <div className='admin-container'>
+        <h1 className='admin-title'>Administración de Productos</h1>
 
         <div className="create-product">
             <h2>Crear Producto</h2>
@@ -223,7 +204,7 @@ const AdminProducts = () => {
                     <label htmlFor="id">ID</label>
                 </div>
                 <div className="btns-container">
-                    <Button className='btn-session' type='submit' content='BUSCAR PRODUCTO' /> 
+                    <Button className='btn-session' type='submit' content='BUSCAR PRODUCTO' />
                 </div>
             </form>
         </div>

@@ -4,15 +4,14 @@ import { Router } from "express"
 const router = new Router()
 import {isAdmin} from  '../utils/middlewares.js'
 
-// router.get('/', productController.getProducts)
 router.get('/', productController.getProductsPaginate)
 router.get('/:pid', productController.getProductById)
 
-router.post('/', productController.createProduct)
+router.post('/', isAdmin, productController.createProduct)
 
-router.put('/:pid',  productController.updateProduct)
+router.put('/:pid', isAdmin, productController.updateProduct)
 
-router.delete('/:pid', productController.deleteProduct)
+router.delete('/:pid', isAdmin, productController.deleteProduct)
 
 
 export default router

@@ -20,8 +20,8 @@ class UsersController {
 
     getUsersById = async (req, res) => {
         try {
-            const uid = req.params.uid
-            const userFound = await userService.getUserById(uid)
+            const id = req.params.uid
+            const userFound = await userService.getUserById(id)
 
             res.status(200).send({ user: userFound })
         } catch (error) {
@@ -186,8 +186,6 @@ class UsersController {
             res.status(401).send('Error logging out')
         }
     }
-
-
 
     getCurrentSessionInfo = (req, res) => {
         try {

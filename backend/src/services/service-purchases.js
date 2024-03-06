@@ -1,9 +1,11 @@
 import Cart from "../dao/models/model-cart.js"
+import Ticket from "../dao/models/model-ticket.js"
 import ProductService from "./service-products.js"
 const productService = new ProductService()
 import TicketService from "./service-tickets.js"
 const ticketService = new TicketService()
-
+import UserService from "./service-users.js"
+const userService = new UserService()
 
 class PurchaseService {
     getPurchases = async () => {
@@ -66,6 +68,19 @@ class PurchaseService {
 
                 return {ticket, prodStock, noStock}
             }
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    getUserPurchases = async (userId) => {
+        try {
+            const purchaser = await userService.getUserById(userId)
+            if (!purchaser) console.log('User not found')
+
+            const userTickets = await Ticket.find(tkt => tkt.purchaser === purchaser)
+
+            return userTickets
         } catch (error) {
             throw new Error(error.message)
         }

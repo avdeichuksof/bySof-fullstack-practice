@@ -53,7 +53,7 @@ class ProductService {
 
     createProduct = async (newProduct) => {
         try {
-            if (!newProduct.title, !newProduct.thumbnail, !newProduct.price, !newProduct.size, !newProduct.category, !newProduct.stock, !newProduct.code) {
+            if (!newProduct.title, !newProduct.thumbnail, !newProduct.price, !newProduct.size, !newProduct.category, !newProduct.subcategory, !newProduct.stock, !newProduct.code) {
                 throw new Error('Error creating product. All fields must be completed')
             }
 

@@ -62,10 +62,20 @@ class PurchaseController {
             
             res.status(200).send({message: 'Purchased', newTkt})
         } catch (error) {
-            res.status(500).sen({error: error})
+            res.status(500).send({error: error})
         }
     }
 
+    getUserPurchases = async (req, res) => {
+        try {
+            const id = req.params.uid
+            const userPurchases = await purchaseService.getUserPurchases(id)
+
+            res.status(200).send({message: 'User Purchases: ', userPurchases})
+        } catch (error) {
+            res.status(500).send({error: error})
+        }
+    }
 
     deletePurchase = async (req, res) => {
         try {

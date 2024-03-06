@@ -7,10 +7,10 @@ const Submenu = () => {
         <nav>
             <ul className='submenu'>
                 <li><NavLink to="/products" className='menu-item'>Todo</NavLink></li>
-                <li><NavLink to="/products/arcilla" className='menu-item'>Arcilla</NavLink></li>
-                <li><NavLink to="/products/cajitas" className='menu-item'>Cajitas</NavLink></li>
-                <li><NavLink to="/products/cuadros" className='menu-item'>Cuadros</NavLink></li>
-                <li><NavLink to="/products/personalizados" className='menu-item'>Personalizados</NavLink></li>
+                <li><NavLink to="/products?category=arcilla" className='menu-item'>Arcilla</NavLink></li>
+                <li><NavLink to="/products?category=cajitas" className='menu-item'>Cajitas</NavLink></li>
+                <li><NavLink to="/products?category=cuadros" className='menu-item'>Cuadros</NavLink></li>
+                <li><NavLink to="/products?category=personalizados" className='menu-item'>Personalizados</NavLink></li>
             </ul>
         </nav>
     )

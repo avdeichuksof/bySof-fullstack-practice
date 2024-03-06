@@ -8,7 +8,7 @@ const router = new Router()
 
 router.get('/', cartController.getCarts)
 router.get('/:cid', cartController.getCartsById)
-// arreglar un get purchases para que  me devuelva las compras de un usuario especifico
+
 router.get('/:cid/purchases', purchaseController.getPurchase)
 router.get('/:cid/purchase', purchaseController.generatePurchase)
 
