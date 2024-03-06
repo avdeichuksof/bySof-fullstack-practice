@@ -22,6 +22,9 @@ class CartService {
     getCartById = async (id) => {
         try {
             const cartFound = await cartMethods.getCartById(id)
+            if (!cartFound) {
+                return undefined
+            }
             return cartFound
         } catch (error) {
             throw new Error(error.message)

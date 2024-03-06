@@ -7,6 +7,7 @@ const axiosClient = new AxiosClient()
 import Button from '../../Buttons/Button'
 import { getCurrentUser } from '../../../utils/getCurrentUser'
 
+
 const ProductCard = ({ product }) => {
     const baseURL = 'http://localhost:8080'
     const config = {

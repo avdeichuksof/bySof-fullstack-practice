@@ -5,7 +5,7 @@ import React from 'react'
 const Footer = () => {
     return <footer className='footer'>
         <div className="box-rrss">
-            <h4> REDES SOCIALES </h4>
+            <h4 className='footer-title'> REDES SOCIALES </h4>
             <div className="rrss">
                 <div className="icon-whatsapp">
                     <a href="https://www.whatsapp.com/">

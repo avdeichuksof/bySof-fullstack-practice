@@ -8,7 +8,7 @@
     display: grid;
 }
 
-h4{
+h4.footer-title{
     margin-bottom: 10px;
     text-align: center;
     font-family: var(--titleFont);

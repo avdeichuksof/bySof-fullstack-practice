@@ -17,9 +17,14 @@ class CartController {
         try {
             const cid = req.params.cid
             const cartFound = await cartService.getCartById(cid)
+            if (!cartFound) {
+                res.status(404).send({message: 'Cart not found'})
+                return
+            }
+
             res.status(200).send({ cart: cartFound })
         } catch (error) {
-            res.status(404).send({ error: error })
+            res.status(400).send({ error: error })
         }
     }
 

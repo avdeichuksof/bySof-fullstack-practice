@@ -41,7 +41,9 @@ const Home = () => {
         <h1>HOME</h1>
         <div>
             <h2>FALTA:</h2>
+            <p> - function para totalprice en carrito</p>
             <p> - filtro de productos</p>
+            <p> - agregar en vista de admin un boton para poner un id y borrar un carrito</p>
             <p> - contenido de paginas home, about us, carrito y profile</p>
             <p> - ver lo de docs de usuarios si se agrega de alguna forma,
                 puede ser que el admin suba foto de prods o foto de perfil de usuario
