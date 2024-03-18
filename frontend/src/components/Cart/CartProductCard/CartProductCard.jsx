@@ -1,12 +1,12 @@
+
 import './cartProductCard.css'
-import React from 'react'
+import React, { useState } from 'react'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
-// update quantity
-// eliminar del carrito
+import { getCurrentUser } from '../../../utils/getCurrentUser'
 
-const CartProductCard = ({ product }) => {
+const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
     const baseURL = 'http://localhost:8080'
     const config = {
         headers: {
@@ -14,37 +14,102 @@ const CartProductCard = ({ product }) => {
         }
     }
 
+    // tomamos los datos del usuario para tomar el cartId
+    const userData = getCurrentUser()
+    const userCartId = userData ? userData.cart : null
+
+
+    // -------------------- update quantity
+
+    const updateProductQuantityHandler = async (newQuantity) => {
+        try {
+            const response = await axiosClient.putRequest({
+                url: `${baseURL}/api/carts/${userCartId}/product/${product._id}`,
+                body: { quantity: newQuantity },
+                config: config,
+                callbackSuccess: (res) => {
+                    console.log('Product quantity updated: ', res.data.quantity)
+                    onQttyChange(product._id, newQuantity)
+                },
+                callbackError: (error) => {
+                    console.log('Error updating product quantity: ', error)
+                }
+            })
+        } catch (error) {
+            console.error('Error sending request: ', error)
+        }
+    }
+
+    const decreaseQtty = async () => {
+        if (quantity > 1) {
+            const updatedQuantity = quantity - 1
+            updateProductQuantityHandler(updatedQuantity)
+        }
+    }
+
+    const increaseQtty = async () => {
+        if (quantity < product.stock) {
+            const updatedQuantity = quantity + 1
+            updateProductQuantityHandler(updatedQuantity)
+        } else {
+            console.log('Product stock reached')
+        }
+    }
+
+
+    // ---------------------- eliminar del carrito
+    const [deleteProd, setDeleteProd] = useState(null)
+
+    const deleteFromCartHandler = async () => {
+        try {
+            console.log(userCartId, product._id)
+            const response = await axiosClient.deleteRequest({
+                url: `${baseURL}/api/carts/${userCartId}/product/${product._id}`,
+                config: config,
+            })
+
+            if (response.status === 200 && response.data) {
+                setDeleteProd(true)
+                onDelete(product._id)
+            } else {
+                console.log('Error deleting product')
+            }
+
+        } catch (error) {
+            console.error('Error sending request: ', error)
+        }
+    }
+
+
+
     return (
         <div className="cart-prod-container">
+            <div className="btn-delete-prod">
+                <button onClick={deleteFromCartHandler}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                </svg></button>
+            </div>
             <div className="cart-prod-card">
-                <div className="mobile-btn-delete-prod">
-                    <button>X</button>
-                </div>
-                <div className="cart-prod-info">
-                    <img className='cart-prod-img' src={product.product.thumbnail} alt={product.product.title} />
-                    <div className="info-txt">
-                        <h4>{product.product.title}</h4>
-                        <p>Tamaño: {product.product.size}</p>
+                <img className='cart-prod-img' src={product.thumbnail} alt={product.title} />
+                <div className="info-txt">
+                    <div className="cart-prod-txt">
+                        <h4>{product.title}</h4>
+                        <p className='cart-prod-size'>Tamaño: {product.size}</p>
+                    </div>
+                    <div className="cart-prod-price">
+                        <p>${product.price}</p>
                     </div>
                 </div>
-                <div className="change-prod-quantity">
-                    <form className="prod-quantity" /* onSubmit={addToCartHandler} */>
-                        <label htmlFor="quantity">Cantidad: </label>
-                        <input className='cart-quantity-input' type="number" name='quantity' value={product.quantity} min={1} max={product.stock}  /*onChange={addToCartChangeHandler} */ />
-                    </form>
-                </div>
-                <div className="cart-prod-price">
-                    <p>${product.product.price}</p>
-                </div>
             </div>
-            <div className="btn-delete-prod">
-                <button>X</button>
+            <div className="change-prod-quantity">
+                <button onClick={decreaseQtty}>-</button>
+                <p> {quantity} </p>
+                <button onClick={increaseQtty}>+</button>
             </div>
         </div>
 
 
     )
-
 }
 
 export default CartProductCard

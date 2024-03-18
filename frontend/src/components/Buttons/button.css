@@ -36,22 +36,20 @@
 .btn-products {
     border: none;
     background-color: var(--secondaryColor);
+    border: 2px solid var(--secondaryColor);
     color: var(--mainColor);
     font-family: var(--titleFont);
     font-size: 1rem;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 50px;
     padding: 12px;
     margin: 10px;
-    transition: all ease .5s;
+    transition: all ease .3s;
 }
 
 .btn-products:hover {
-    opacity: .8;
-}
+    border: 2px solid var(--secondaryColor);
+    background-color: var(--mainColor);
+    color: var(--secondaryColor);
 
-@media(min-width: 1024px) {
-    .btn-session {
-        width: 40%;
-    }
 }

@@ -28,7 +28,7 @@ class CartMethods {
     updateProductQuantity = async (cartId, prodId, quantity) => {
         return await Cart.findOneAndUpdate(
             {_id: cartId, 'products.product': prodId},
-            {$inc: {'products.$.quantity': quantity}}
+            {$set: {'products.$.quantity': quantity}}
         )
     }
 

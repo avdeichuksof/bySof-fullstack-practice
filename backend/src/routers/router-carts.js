@@ -11,16 +11,17 @@ router.get('/:cid', cartController.getCartsById)
 
 router.get('/:cid/purchases', purchaseController.getPurchase)
 router.get('/:cid/purchase', purchaseController.generatePurchase)
+router.get('/:cid/:uid/purchases', purchaseController.getUserPurchases)
 
 router.post('/', cartController.createCart)
 router.post('/:cid/product/:pid',  cartController.addProductToCart)
 
 router.put('/:cid', cartController.udpateCart)
-router.put('/:cid/products/:pid', cartController.updateProductQuantity)
 router.put('/empty/:cid', cartController.emptyCart)
+router.put('/:cid/product/:pid', cartController.updateProductQuantity)
 
 router.delete('/:cid', cartController.deleteCart)
 router.delete('/:cid/purchases', purchaseController.deletePurchase)
-router.delete('/:cid/products/:pid', cartController.deleteProductFromCart)
+router.delete('/:cid/product/:pid', cartController.deleteProductFromCart)
 
 export default router

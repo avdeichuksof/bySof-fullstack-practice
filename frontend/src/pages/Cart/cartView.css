@@ -1,0 +1,122 @@
+.cart-view-container {
+    padding: 1rem;  
+    height: 100%;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.title-cart {
+    font-family: var(--titleFont);
+    font-weight: 800;
+    text-align: center;
+    color: var(--secondaryColor);
+    margin: 1rem;
+}
+
+.cart-view {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.empty-cart-btn-container {
+    display: flex;
+    align-self: end;
+    align-items: center;
+    color: var(--primaryColor);
+}
+
+.empty-cart-btn-container:hover{
+    color: var(--detailColor);
+}
+
+.btn-empty-cart {
+    background-color: none;
+    background: none;
+    border: none;
+    font-family: var(--titleFont);
+    /* color: var(--primaryColor); */
+    font-weight: 500;
+    margin: 4px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-actions {
+    height: 200px;
+    border-top: 2px dotted var(--primaryColor);
+    display: flex;
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.total-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+.total-container p {
+    font-size: 20px;
+}
+.total-container p.total-txt {
+    color: #6b6b6b;
+}
+.total-container p.total {
+    color: var(--detailColor);
+    font-weight: 500;
+}
+
+.cart-btns-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.error-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.error-container .error-txt {
+    font-family: var(--titleFont);
+}
+.empty-cart-icon svg {
+    font-weight: 400;
+    color: var(--lightGrey);
+}
+
+
+/* MEDIA */
+
+@media(min-width: 768px){
+    .cart-view {
+        width: 90%;
+    }
+
+    /* .total-container, */ .cart-btns-container {
+        justify-content: space-evenly;
+    }
+}
+
+@media(min-width: 820px) {
+    .cart-view {
+        justify-content: space-around;
+    }
+
+    .title-cart {
+        font-size: 3rem;
+        margin: 1rem;
+    }
+
+    
+}

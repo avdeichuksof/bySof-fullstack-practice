@@ -53,9 +53,10 @@ class CartController {
         try {
             const cid = req.params.cid
             const pid = req.params.pid
-            const quantity = req.body
+
+            const quantity = req.body.quantity
             const newQuantity = await cartService.updateProductQuantity(cid, pid, quantity)
-            res.status(200).send({ message: 'Quantity updated' })
+            res.status(200).send({ message: 'Quantity updated', quantity: newQuantity })
         } catch (error) {
             res.status(400).send({ error: error })
         }
@@ -91,10 +92,21 @@ class CartController {
         try {
             const pid = req.params.pid
             const cid = req.params.cid
-            const deleteProduct = await cartService.deleteProductFromCart(cid, pid)
-            res.status(200).send({message: 'Product deleted from cart', productt: deleteProduct})
+
+            console.log('pid desde controller: ', pid)
+            console.log('cid desde controller: ', cid)
+
+            const deletedProd = await cartService.deleteProductFromCart(cid, pid)
+            console.log('prodDeteled:', deletedProd)
+            // no se encontró el prod
+            if(deletedProd.message) {
+                res.status(404).send({error: deletedProd.message})
+            }else {
+                res.status(200).send({message: 'Product deleted from cart', deletedProd: deletedProd})
+            }
+
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({error: error.message})
         }
     }
 

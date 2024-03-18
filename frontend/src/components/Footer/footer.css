@@ -42,3 +42,11 @@ h4.footer-title{
     align-items: center;
     justify-content: flex-start;
 }
+
+/* MEDIA */
+
+@media(min-width: 820px) {
+    .copy-container {
+        font-size: .8rem;
+    }
+}

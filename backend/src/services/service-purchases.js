@@ -20,14 +20,20 @@ class PurchaseService {
     generatePurchase = async (user, cartId) => {
         try {
             const cart = await Cart.findById(cartId)
+            console.log('Cart found service: ', cart)
 
             if(cart){
                 // guardamos ID de productos
                 const prodsId = cart.products.map(prod => prod.product._id.toString())
+                console.log('prodsId service: ', prodsId)
                 // guardamos las cantidades
                 const prodsAmount = cart.products.map(q => q.quantity)
+                console.log('prodsAmount service: ', prodsAmount)
                 // guardamos info
                 const prodsInfo = await productService.getProductData(prodsId)
+                console.log('prodsInfo service: ', prodsInfo)
+
+
 
                 let amount = 0
                 let noStock = []
@@ -38,13 +44,16 @@ class PurchaseService {
                         const quantity = parseInt(prodsAmount[i], 10)
                         const price = parseFloat(product.price)
 
+                        console.log('Product data service: ', quantity, price)
+
                         if(!isNaN(quantity) && !isNaN(price)){
                             // si ya no tiene stock lo agregamos a la lista sin stock
                             if(quantity > product.stock){
                                 noStock.push({prodId: product._id, quantity: quantity})
+                                console.log('Product out of stock')
                             }else{
                                 // si hay stock, restamos lo que se compró del stock
-                                const newStok = product.stock - quantity
+                                const newStock = product.stock - quantity
 
                                 // calculamos el total
                                 const prodPrice = price * quantity
@@ -65,6 +74,8 @@ class PurchaseService {
                 const ticket = await ticketService.createTicket({
                     amount: amount, purchaser: user
                 })
+
+                console.log('ticket service: ', ticket)
 
                 return {ticket, prodStock, noStock}
             }

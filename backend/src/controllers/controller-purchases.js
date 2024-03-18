@@ -22,13 +22,18 @@ class PurchaseController {
             const cid = req.params.cid
             const user = req.session.user.email
 
+            console.log('User cart desde controller: ', cid)
+            console.log('User email desde controller: ', user)
+
             const cartFound = await cartService.getCartById(cid)
+            console.log('cartFound controller: ', cartFound)
 
             if(cartFound.products.length < 1){
                 res.send({message: 'Cart is empty'})
             }
 
             const newTicket = await purchaseService.generatePurchase(user, cid)
+            console.log('newTicket controller: ', newTicket)
             // actualizamos productos que no tengan más stock
             await cartService.updateProduct(cid, newTicket.noStock)
             // actualizamos stock de productos
@@ -37,9 +42,11 @@ class PurchaseController {
             // guardamos el ticket con la info
             const newTkt = {
                 id: newTicket.ticket._id,
+                code: newTicket.ticket.code,
                 amount: newTicket.ticket.amount,
                 purchaser: newTicket.ticket.purchaser
             } 
+            console.log('newTkt controller: ', newTkt)
 
             // envio de mail por compra
             const email = {
@@ -60,7 +67,7 @@ class PurchaseController {
 
             await emailController.sendEmail(email)
             
-            res.status(200).send({message: 'Purchased', newTkt})
+            res.status(200).send({message: 'Purchased', ticket: newTkt })
         } catch (error) {
             res.status(500).send({error: error})
         }
