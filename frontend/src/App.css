@@ -16,6 +16,7 @@
     --secondaryColor: #208393;
     --font: 'Nunito', sans-serif;
     --titleFont: 'Syne', sans-serif;
+    --bgImg: '../img/anakinDarth.jpg';
 }
 
 .grid-container{

@@ -35,14 +35,17 @@ class PurchaseController {
             const newTicket = await purchaseService.generatePurchase(user, cid)
             console.log('newTicket controller: ', newTicket)
             // actualizamos productos que no tengan más stock
-            await cartService.updateProduct(cid, newTicket.noStock)
+            const updatedProds = await cartService.updateProduct(cid, newTicket.noStock)
+            console.log('updatedProds: ', updatedProds)
             // actualizamos stock de productos
-            await ticketService.updateStockAfterPurchase(newTicket.prodStock)
+            const updateStock = await ticketService.updateStockAfterPurchase(newTicket.prodStock)
+            console.log('updateStock: ', updateStock)
 
             // guardamos el ticket con la info
             const newTkt = {
                 id: newTicket.ticket._id,
                 code: newTicket.ticket.code,
+                date: newTicket.ticket.date,
                 amount: newTicket.ticket.amount,
                 purchaser: newTicket.ticket.purchaser
             } 
@@ -57,16 +60,16 @@ class PurchaseController {
                     <div class="container">
                         <h1> Resumen de compra </h1>
                             <div class="row">
-                                <h4> Día: ${newTicket.ticket.purchase_datetime} </h4>    
-                                <h3> Código: ${newTicket.ticket.code} </h3>
-                                <h3> Total: ${newTicket.ticket.amount} </h3>
+                                <h4> Día: ${newTkt.date} </h4>    
+                                <h3> Código: ${newTkt.code} </h3>
+                                <h3> Total: ${newTkt.amount} </h3>
                             </div>
                     </div>
                 `
             }
-
-            await emailController.sendEmail(email)
-            
+            console.log('email: ',email)
+            const emailSent = await emailController.sendEmail(email)
+            console.log('emailSent: ', emailSent)
             res.status(200).send({message: 'Purchased', ticket: newTkt })
         } catch (error) {
             res.status(500).send({error: error})

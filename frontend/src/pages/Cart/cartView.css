@@ -27,6 +27,7 @@
     align-self: end;
     align-items: center;
     color: var(--primaryColor);
+    cursor: pointer;
 }
 
 .empty-cart-btn-container:hover{
@@ -38,7 +39,6 @@
     background: none;
     border: none;
     font-family: var(--titleFont);
-    /* color: var(--primaryColor); */
     font-weight: 500;
     margin: 4px;
 }
@@ -51,7 +51,7 @@
 
 .cart-actions {
     height: 200px;
-    border-top: 2px dotted var(--primaryColor);
+    border-top: 2px dashed var(--primaryColor);
     display: flex;
     margin-top: 1rem;
     flex-direction: column;
@@ -76,6 +76,7 @@
 
 .cart-btns-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
 }
@@ -103,7 +104,8 @@
         width: 90%;
     }
 
-    /* .total-container, */ .cart-btns-container {
+    .cart-btns-container {
+        flex-direction: row;
         justify-content: space-evenly;
     }
 }

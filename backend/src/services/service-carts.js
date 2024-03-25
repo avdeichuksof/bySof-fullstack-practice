@@ -31,6 +31,20 @@ class CartService {
         }
     }
 
+    getTotalProducts = async (id) => {
+        try {
+            const cartFound = await this.#cartExists(id)
+            if(!cartFound) return console.log('Cart not found')
+
+            const totalProducts = cartFound.products.reduce((acum, product) => acum + product.quantity, 0)
+
+            return totalProducts
+        } catch (error) {
+            throw new Error(error.message)
+            
+        }
+    }
+
     createCart = async () => {
         try {
             const newCart = await cartMethods.createCart()
@@ -74,9 +88,11 @@ class CartService {
     updateProduct = async (cartId, products) => {
         try {
             const cartFound = await this.#cartExists(cartId)
+            console.log('cartFound service carts: ', cartFound)
             if (!cartFound) return { message: 'Cart not found' }
 
             const prodUpdated = await cartMethods.updateProductsInCart(cartId, products)
+            console.log('prodUpdated service carts: ', prodUpdated)
             return { message: 'Products in cart updated', product: prodUpdated }
         } catch (error) {
             throw new Error(error.message)

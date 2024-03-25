@@ -67,7 +67,7 @@ function App() {
   return (
     <Suspense fallback={<div>Loading...</div>} >
         <div className='grid-container'>
-          {!isSessionPage && <Navbar className="navbar" />}
+          {!isSessionPage && <Navbar className="navbar"/>}
           <div className='main'>
             <Routes>
               {/* Session routes */}

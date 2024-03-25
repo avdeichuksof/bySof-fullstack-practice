@@ -1,6 +1,5 @@
 import './productCard.css'
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -37,7 +36,7 @@ const ProductCard = ({ product }) => {
         }
 
         try {
-            const response = await axiosClient.postRequest({
+            await axiosClient.postRequest({
                 url: `${baseURL}/api/carts/${userCart}/product/${product._id}`,
                 body: addProd,
                 config: config,

@@ -48,6 +48,7 @@
 @media (min-width: 1024px) {
     .faqs-container {
         justify-content: space-evenly;
+        padding: 3rem;
     }
 
     .titles-container {

@@ -28,6 +28,7 @@ class TicketService {
                 await productService.updateProductStock(product.id, product.stock)
                 console.log('Stock updated')
             }
+            return {message: 'Stock updated successfully'}
         } catch (error) {
             throw new Error(error.message)
         }

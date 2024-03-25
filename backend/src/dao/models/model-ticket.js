@@ -7,10 +7,9 @@ const TicketSchema = new Schema({
         default: uuid4()
     },
     date: {
-        type: Date,
-        default: Date.now()
+        type: Date
     },
-    total: {
+    amount: {
         type: Number,
         required: true
     },

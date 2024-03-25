@@ -22,7 +22,8 @@ class CartMethods {
     }
 
     updateProductsInCart = async (id, products) => {
-        await Cart.updateOne({_id: id}, {products})
+        const updatedProducts = await Cart.updateOne({_id: id}, {products})
+        return updatedProducts
     }
 
     updateProductQuantity = async (cartId, prodId, quantity) => {

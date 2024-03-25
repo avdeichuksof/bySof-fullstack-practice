@@ -28,6 +28,16 @@ class CartController {
         }
     }
 
+    getTotalProducts = async (req, res) => {
+        try {
+            const cid = req.params.cid
+            const totalProducts = await cartService.getTotalProducts(cid)
+            res.status(200).send({totalProducts: totalProducts})
+        } catch (error) {
+            res.status(400).send({ error: error })
+        }
+    }
+
     createCart = async (req, res) => {
         try {
             const newCart = await cartService.createCart()

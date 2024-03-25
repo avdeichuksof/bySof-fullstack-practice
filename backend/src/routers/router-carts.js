@@ -8,6 +8,7 @@ const router = new Router()
 
 router.get('/', cartController.getCarts)
 router.get('/:cid', cartController.getCartsById)
+router.get('/:cid/items', cartController.getTotalProducts)
 
 router.get('/:cid/purchases', purchaseController.getPurchase)
 router.get('/:cid/purchase', purchaseController.generatePurchase)

@@ -1,5 +1,4 @@
 import './footer.css'
-import brand from '../../img/logo-white.png'
 import React from 'react'
 
 const Footer = () => {

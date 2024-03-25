@@ -1,57 +1,66 @@
-import './navBar.css'
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import AxiosClient from '../../services/axiosClient'
-const axiosClient = new AxiosClient()
+    import './navBar.css'
+    import React, { useEffect, useState } from 'react'
+    import { Link, NavLink } from 'react-router-dom'
+    import AxiosClient from '../../services/axiosClient'
+    const axiosClient = new AxiosClient()
 
-import brand from '../../img/logo.png'
-import Submenu from './Submenu/Submenu'
-import BurgerMenu from './BurgerMenu/BurgerMenu'
-import ProfileMenu from './ProfileMenu/ProfileMenu'
-import { getCurrentUser } from '../../utils/getCurrentUser'
+    import brand from '../../img/logo.png'
+    import Submenu from './Submenu/Submenu'
+    import CartWidget from './CartWidget/CartWidget'
+    import BurgerMenu from './BurgerMenu/BurgerMenu'
+    import ProfileMenu from './ProfileMenu/ProfileMenu'
+    import { getCurrentUser } from '../../utils/getCurrentUser'
 
 
-const Navbar = () => {
-    const [click, setClick] = useState(false)
-    const clickHandler = () => {
-        setClick(!click)
-    }
+    const Navbar = () => {
+        const [click, setClick] = useState(false)
+        const clickHandler = () => {
+            setClick(!click)
+        }
 
-    // agregamos efecto para manejar los cambios del tamaño de ventana.
-    // Arreglamos problema de que no se vea el menú al cambiar tamaño
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 768 && click) {
-                setClick(false)
+        // agregamos efecto para manejar los cambios del tamaño de ventana.
+        // Arreglamos problema de que no se vea el menú al cambiar tamaño
+        useEffect(() => {
+            const handleResize = () => {
+                if (window.innerWidth >= 768 && click) {
+                    setClick(false)
+                }
+            }
+
+            // escucha el cambio de tamaño de ventanaz
+            window.addEventListener('resize', handleResize)
+
+            return () => {
+                window.removeEventListener('resize', handleResize)
+            }
+        }, [click])
+
+
+        const [subMenu, setSubMenu] = useState(false)
+        const subMenuHandler = () => {
+            setSubMenu(!subMenu)
+        }
+
+        const [profileMenu, setProfileMenu] = useState(false)
+        const profileMenuHandler = () => {
+            setProfileMenu(!profileMenu)
+        }
+
+        const baseURL = 'http://localhost:8080'
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
             }
         }
 
-        // escucha el cambio de tamaño de ventana
-        window.addEventListener('resize', handleResize)
+        // tomamos los datos del usuario
+        const userData = getCurrentUser()
+        const userCart = userData ? userData.cart : null
 
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [click])
+        // cantidad de productos en carritotal)
+        
 
-
-    const [subMenu, setSubMenu] = useState(false)
-    const subMenuHandler = () => {
-        setSubMenu(!subMenu)
-    }
-
-    const [profileMenu, setProfileMenu] = useState(false)
-    const profileMenuHandler = () => {
-        setProfileMenu(!profileMenu)
-    }
-
-    const baseURL = 'http://localhost:8080'
-
-    // tomamos los datos del usuario
-    const userData = getCurrentUser()
-    const userCart = userData ? userData.cart : null
-
-    return (
+        return (
             <header className='header'>
                 <Link to='/'>
                     <img src={brand} alt="brand" className='brand' />
@@ -72,9 +81,7 @@ const Navbar = () => {
 
                         <li>
                             <NavLink to={`/carts/${userCart}`} className='icon menu-item'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-cart3" viewBox="0 0 16 16">
-                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                                </svg>
+                                <CartWidget />
                             </NavLink>
                         </li>
 
@@ -94,7 +101,7 @@ const Navbar = () => {
                 </div>
 
             </header>
-    )
-}
+        )
+    }
 
-export default Navbar;
+    export default Navbar

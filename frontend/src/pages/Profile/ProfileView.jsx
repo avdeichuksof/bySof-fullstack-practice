@@ -43,11 +43,10 @@ const ProfileView = () => {
     const isAdmin = userData?.role === 'admin'
 
     return (
-        <div className="profileView">
-            <h1>Bienvenid@ {userData?.firstName || 'Usuario'}</h1>
+        <div className="profile-view">
+            <h1 className='profile-title'>Bienvenid@ {userData?.firstName || 'Usuario'}</h1>
             <div className="content">
                 <div className="user-data">
-                    <p>role: {userData?.role}</p>
                     <p>Última conexión: {userData?.lastConnection}</p>
                 </div>
                 <div className="user-options-container">
@@ -59,7 +58,8 @@ const ProfileView = () => {
                             </>
                         ) : (
                             <>
-                                <Link to='' className='options-item'><li>Hacerse VIP</li></Link>
+                                <div className="vip-popup">¡Recibirás descuentos y productos únicos!</div>
+                                <Link to='' className='options-item vip-item'><li>¡Pasate a VIP!</li></Link>
                                 <Link to='' className='options-item'><li>Mis compras</li></Link>
                             </>
                         )}

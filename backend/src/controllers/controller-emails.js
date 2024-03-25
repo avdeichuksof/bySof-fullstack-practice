@@ -36,6 +36,7 @@ class EmailController {
                 console.log(`Email sent to: ${mailOptions.to}`)
             })
 
+            return message
         } catch (err) {
             console.log('Error sending mail', err)
         }

@@ -33,8 +33,6 @@ class PurchaseService {
                 const prodsInfo = await productService.getProductData(prodsId)
                 console.log('prodsInfo service: ', prodsInfo)
 
-
-
                 let amount = 0
                 let noStock = []
                 let prodStock = []
@@ -47,20 +45,20 @@ class PurchaseService {
                         console.log('Product data service: ', quantity, price)
 
                         if(!isNaN(quantity) && !isNaN(price)){
-                            // si ya no tiene stock lo agregamos a la lista sin stock
-                            if(quantity > product.stock){
-                                noStock.push({prodId: product._id, quantity: quantity})
-                                console.log('Product out of stock')
-                            }else{
+                            if(quantity <= product.stock){
                                 // si hay stock, restamos lo que se compró del stock
                                 const newStock = product.stock - quantity
+                                console.log('NewStock service: ', newStock)
 
                                 // calculamos el total
-                                const prodPrice = price * quantity
-                                amount += prodPrice
-
+                                amount += price * quantity
+                                
                                 // actualizamos stock
                                 prodStock.push({prodId: product._id, stock: newStock})
+                            }else{
+                                // si ya no tiene stock lo agregamos a la lista sin stock
+                                noStock.push({prodId: product._id, quantity: quantity})
+                                console.log('Product out of stock')
                             }
                         }else{
                             throw new Error('Invalid quantity or price for product ID: ', prodsId[i])
@@ -70,13 +68,16 @@ class PurchaseService {
                     }
                 })
 
+                const purchaseDatetime = Date.now()
+
                 // creamos el ticket
                 const ticket = await ticketService.createTicket({
-                    amount: amount, purchaser: user
+                    amount: amount, purchaser: user, date: purchaseDatetime
                 })
 
                 console.log('ticket service: ', ticket)
-
+                console.log('prodStock service: ', prodStock)
+                console.log('noStock service: ', noStock)
                 return {ticket, prodStock, noStock}
             }
         } catch (error) {

@@ -121,6 +121,7 @@ const CartView = () => {
     /* const [purchaseCode, setPurchaseCode] = useState('') */
     const generatePurchaseHandler = async () => {
         try {
+            console.log('cartId: ', userCartId)
             await axiosClient.getRequest({
                 url: `${baseURL}/api/carts/${userCartId}/purchase`,
                 config: config,

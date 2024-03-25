@@ -1,0 +1,17 @@
+.profile-view {
+    height: 100%;
+    padding: 1rem;
+    font-family: var(--font);
+}
+
+.profile-title {
+    font-family: var(--titleFont);
+    color: var(--secondaryColor);
+    font-weight: 800;
+    text-align: center;
+}
+
+.user-data {
+    text-align: center;
+
+}
