@@ -74,7 +74,6 @@ class UserService {
     deleteUser = async (id) => {
         try {
             const deleteUser = await userMethods.deleteUser(id)
-            if(deleteUser) await cartService.deleteCart(deleteUser.cart)
             return deleteUser
         } catch (error) {
             throw new Error(err.message)

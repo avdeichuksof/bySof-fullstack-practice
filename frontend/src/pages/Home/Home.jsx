@@ -46,14 +46,13 @@ const Home = () => {
             <p> - arreglar que si agregué hasta el stock maximo no se pueda agregar de nuevo nada, que quede desabilitado</p>
             <p> - widget cant prods y ver si le agregamos el precio total ahí</p>
             <p> - filtro de productos</p>
-            <p> - contenido de paginas home, y profile</p>
+            <p> - contenido de paginas home</p>
             <p> - ver lo de docs de usuarios si se agrega de alguna forma,
                 puede ser que el admin suba foto de prods o foto de perfil de usuario
             </p>
             <p> - toastify o algo de eso</p>
             <p> - poner loaders</p>
             <p> - animaciones en los componentes</p>
-            <p> - fijarse de poner que cuando se borra un usuario, se borre su carrito (hecho pero hay que ver si funciona) </p>
             <p> - arreglar errores de login/logout</p>
             <p> - testing</p>
             <br />

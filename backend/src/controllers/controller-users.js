@@ -45,7 +45,10 @@ class UsersController {
     deleteUser = async (req, res) => {
         try {
             const uid = req.params.uid
+            const getDeletedUser = await  userService.getUserById(uid)
+            if(getDeletedUser) await cartService.deleteCart(getDeletedUser.cart)
             const deleteUser = await userService.deleteUser(uid)
+            
 
             res.status(200).send({ message: 'User deleted', user: deleteUser })
         } catch (error) {
@@ -97,7 +100,7 @@ class UsersController {
         }
     }
 
-    /* USERS SESSION MANAGEMENT */
+    /* ------------ USERS SESSION MANAGEMENT ------------ */
 
     userRegister = (req, res) => {
         try {
