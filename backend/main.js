@@ -21,7 +21,10 @@ import http from 'http'
 const server = http.createServer(app)
 
 // CORS
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000', // permite solicitudes desde el frontend
+    credentials: true // permite el envío de cookies de cross-origin
+}))
 
 // mongoDB
 import connectDB from './src/dao/db/db.js'
@@ -33,13 +36,18 @@ app.use(bodyParser.json())
 
 
 // mongoStore
+const expireTime = 1000 * 60 * 60 * 2 // dos horas en ms
+
 app.use(session({
     store: MongoStore.create({
         mongoUrl: config.mongoURL
     }),
     secret: config.secret,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: expireTime
+    }
 }))
 
 // passport

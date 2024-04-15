@@ -34,14 +34,14 @@ class CartService {
     getTotalProducts = async (id) => {
         try {
             const cartFound = await this.#cartExists(id)
-            if(!cartFound) return console.log('Cart not found')
+            if (!cartFound) return console.log('Cart not found')
 
             const totalProducts = cartFound.products.reduce((acum, product) => acum + product.quantity, 0)
 
             return totalProducts
         } catch (error) {
             throw new Error(error.message)
-            
+
         }
     }
 
@@ -62,21 +62,21 @@ class CartService {
                 const productAlreadyInCart = cart.products.find(p => p.product._id.toString() === prodId)
 
                 if (productAlreadyInCart) {
-                    if ((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.stock) {
+                    if ((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.product.stock) {
                         /*** AGREGAR UNA ALERT  ***/
-                        return { message: 'Not enough stock' }
+                        console.log('Not enough stock')
                     } else {
                         productAlreadyInCart.quantity += quantity
                         await cart.save()
                         /*** AGREGAR UNA ALERT  ***/
-                        return { message: 'Product quantity increased' }
+                        console.log('Product quantity increased')
                     }
                 } else {
                     const addProduct = { $push: { products: { product: prodId, quantity: quantity } } }
 
                     await Cart.updateOne({ _id: cartId }, addProduct)
                     /*** AGREGAR UNA ALERT  ***/
-                    return { message: 'Product added to cart' }
+                    console.log('Product added to cart')
                 }
             }
 
@@ -88,11 +88,9 @@ class CartService {
     updateProduct = async (cartId, products) => {
         try {
             const cartFound = await this.#cartExists(cartId)
-            console.log('cartFound service carts: ', cartFound)
             if (!cartFound) return { message: 'Cart not found' }
 
             const prodUpdated = await cartMethods.updateProductsInCart(cartId, products)
-            console.log('prodUpdated service carts: ', prodUpdated)
             return { message: 'Products in cart updated', product: prodUpdated }
         } catch (error) {
             throw new Error(error.message)
@@ -106,10 +104,14 @@ class CartService {
             if (cartFound) {
                 const productFound = cartFound.products.find((item) => item.product._id.toString() === prodId)
                 if (productFound) {
-
-                    // actualizamos la cantidad
-                    const newQuantity = await cartMethods.updateProductQuantity(cartId, prodId, quantity)
-                    return newQuantity
+                    // si la cantidad que se quiere agregar es mayor al stock del producto, no se puede
+                    if (productFound.quantity + quantity > productFound.product.stock) {
+                        console.log('Not enough stock')
+                    } else {
+                        // sino actualizamos la cantidad
+                        const newQuantity = await cartMethods.updateProductQuantity(cartId, prodId, quantity)
+                        return newQuantity
+                    }
                 } else {
                     throw new Error('Product not found')
                 }
@@ -171,21 +173,17 @@ class CartService {
 
             // buscamos si el producto está en el carrito
             const prodFound = cartFound.products.find((item) => item.product._id.toString() === prodId)
-            console.log('prodFound: ', prodFound)
 
             // si está lo eliminamos
             if (prodFound) {
 
                 const prodIndex = cartFound.products.findIndex((item) => item.product._id.toString() === prodFound.product._id.toString())
-                console.log('prodIndex: ', prodIndex)
 
                 if (prodIndex !== -1) {
                     // gaurdamos el prod y lo borramos
                     const deletedProd = cartFound.products.splice(prodIndex, 1)[0]
-                    console.log('to be deleted: ', deletedProd)
 
                     await cartFound.save()
-                    console.log('Updated cart: ', cartFound.products)
                     return { deletedProd: deletedProd }
                 } else {
                     console.log('Error deleting product')

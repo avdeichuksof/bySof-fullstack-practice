@@ -13,7 +13,7 @@ class ProductMethods {
                 limit: limit || 12,
                 page: page || 1,
                 sort: {
-                    price: sort || 'asc' 
+                    price: sort || ''
                 }
             }
 

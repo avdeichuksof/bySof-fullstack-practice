@@ -13,6 +13,7 @@ export const getCurrentUser = () => {
 
     const [user, setUser] = useState(null)
 
+    
     useEffect(() => {
         axiosClient.getRequest({
             url: `${baseURL}/api/auth/currentuser`,

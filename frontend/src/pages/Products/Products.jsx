@@ -6,7 +6,6 @@ const axiosClient = new AxiosClient()
 
 import ProductCard from '../../components/Products/ProductCard/ProductCard'
 
-
 const Products = () => {
     const baseURL = 'http://localhost:8080'
     const config = {
@@ -24,8 +23,8 @@ const Products = () => {
 
     useEffect(() => {
         const getProducts = async () => {
-            try { 
-                let url =  `${baseURL}/api/products`    
+            try {
+                let url = `${baseURL}/api/products`
                 // si hay query de category, se filtra, sino se muestran todos los prods
                 if (category) {
                     url += `?category=${category}`
@@ -48,11 +47,11 @@ const Products = () => {
 
     const pageChangeHandler = async (page) => {
         try {
-            let url =  `${baseURL}/api/products`
-                if (category) {
-                    url += `?category=${category}`
-                }
-                url +=  `&page=${page}`
+            let url = `${baseURL}/api/products`
+            if (category) {
+                url += `?category=${category}`
+            }
+            url += `&page=${page}`
             const response = await axiosClient.getRequest({
                 url: url,
                 config: config,
@@ -66,9 +65,48 @@ const Products = () => {
         }
     }
 
+    // ordenar productos por precio
+    const sortProductsPriceHandler = async (sort) => {
+        try {
+            let url = `${baseURL}/api/products`
+            // si hay sort, se filtran por precio
+            if (sort) {
+                url += `?sort=${sort}`
+            }
+            const response = await axiosClient.getRequest({
+                url: url,
+                config: config,
+            })
+            if (!response) console.log('Product not found')
+            const data = response.data
+            setProducts(data.products)
+            setPagination(data.pagination)
+        } catch (error) {
+            console.log('Error sending request: ', error)
+        }
+    }
+
+    const [click, setClick] = useState(false)
+
+    const clickHandler = () => {
+        setClick(!click)
+    }
 
     return (
         <div className='container-products'>
+
+            <div className="products-sort">
+                <button className={`${click ? 'open' : 'close'} sort-btn`} onClick={clickHandler}>
+                    Ordenar por
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67" />
+                    </svg>
+                </button>
+                <div className={` ${click ? 'show-options' : 'hide-options'} `}>
+                    <button onClick={() => sortProductsPriceHandler('desc')} className="option">Mayor precio</button>
+                    <button onClick={() => sortProductsPriceHandler('asc')} className="option">Menor Precio</button>
+                </div>
+            </div>
 
             <div className="products-list">
                 {products.map((product) => (

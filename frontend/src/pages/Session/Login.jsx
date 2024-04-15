@@ -24,14 +24,22 @@ const Login = () => {
     }
 
     const [form, setForm] = useState(formBase)
+    const [login, setLogin] = useState(null)
+    const [lastConnection, setLastConnection] = useState('')
 
     const checkCurrentUser = () => {
         // fijarse si existe un currentUser
         axiosClient.getRequest({
             url: `${baseURL}/api/auth/currentuser`,
             callbackSuccess: (res) => {
-                setLogin(!!res.data.currentUser);
-                setLastConnection(res.data.currentUser.lastConnection);
+                if(res.data.currentUser) {
+                    setLogin(true)
+                    setLastConnection(res.data.currentUser.lastConnection)
+                } else {
+                    // no se encontró usuario
+                    setLogin(false)
+                    setLastConnection('')
+                }
             },
             callbackError: (error) => {
                 console.error('Error checking current user: ', error);

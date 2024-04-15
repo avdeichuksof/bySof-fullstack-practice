@@ -54,6 +54,7 @@ const ProductCard = ({ product }) => {
         } catch (error) {
             console.error('Error sending request: ', error)
         }
+
     }
 
     const addToCartChangeHandler = (e) => {

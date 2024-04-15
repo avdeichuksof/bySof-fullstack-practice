@@ -103,11 +103,7 @@ class CartController {
             const pid = req.params.pid
             const cid = req.params.cid
 
-            console.log('pid desde controller: ', pid)
-            console.log('cid desde controller: ', cid)
-
             const deletedProd = await cartService.deleteProductFromCart(cid, pid)
-            console.log('prodDeteled:', deletedProd)
             // no se encontró el prod
             if(deletedProd.message) {
                 res.status(404).send({error: deletedProd.message})
