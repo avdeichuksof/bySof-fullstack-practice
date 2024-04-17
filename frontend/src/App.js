@@ -15,13 +15,13 @@ import Register from './pages/Session/Register'
 
 import Home from './pages/Home/Home'
 import Faqs from './pages/Faqs/Faqs'
+import CartView from './pages/Cart/CartView'
 import AboutUs from './pages/AboutUs/AboutUs'
 import Contact from './pages/Contact/Contact'
-
-import CartView from './pages/Cart/CartView'
-
 import Products from './pages/Products/Products'
+
 import ProfileView from './pages/Profile/ProfileView'
+import EditProfile from './pages/Profile/EditProfile/EditProfile'
 
 import ForgotPassword from './pages/Session/ForgotPassword'
 import RestorePassword from './pages/Session/RestorePassword'
@@ -104,6 +104,7 @@ function App() {
               <Route path='/faqs' element={<Faqs />} />
               <Route path={`/carts/${userCart}`} element={<CartView />} />
               <Route path={`/users/${userId}`} element={<ProfileView />} />
+              <Route path={`/users/edit/${userId}`} element={<EditProfile />} />
               {/* Administration routes */}
               <Route path='/adminproducts' element={<AdminProducts />} />
               <Route path='/adminusers' element={<AdminUsers />} />

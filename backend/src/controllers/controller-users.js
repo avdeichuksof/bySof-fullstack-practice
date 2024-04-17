@@ -29,15 +29,56 @@ class UsersController {
         }
     }
 
+    editUser = async (req, res) => {
+        try {
+            const id = req.params.uid
+            const newData = req.body
+
+            const updateUser = await userService.editUser(id, newData)
+            
+            res.status(201).send(updateUser)
+        } catch (error) {
+            res.status(400).send({ error: error })
+        }
+    }
+
+    restorePassword = async (req, res) => {
+        try {
+            const newPassword = await userService.restorePassword(req.body.email, req.body.password)
+            res.status(201).json({ message: 'Password restored successfully', password: newPassword })
+        } catch (error) {
+            console.error('Error changing password:', error)
+            res.status(500).json({ error: 'Internal Server Error' })
+        }
+    }
+
     changePassword = async (req, res) => {
         try {
-            const newPassword = await userService.changePassword(req.body.email, req.body.password)
-            res.status(200).json({ message: 'Password changed successfully', password: newPassword })
-        } catch (error) {
-            // Log the error
-            console.error('Error changing password:', error)
+            const userId = req.params.uid
+            console.log('userId controller: ', userId)
+            const userFound = await userService.getUserById(userId)
+            if(!userFound) console.error('User not found')
+            /* console.log('userFound controller: ', userFound) */
 
-            // Send error response
+            const currentPass = req.body.password
+            const newPass = req.body.newPassword
+
+            const newPassword = await userService.changePassword(userId, currentPass, newPass)
+
+            console.log('newPassword controller: ', newPassword)
+/* 
+            // datos para enviar el email
+            const data = {
+                id: userId,
+                email: userFound.email
+            }
+            console.log('data controller: ', data)
+
+            await emailController.passwordChanged(data) */
+
+            res.status(201).send(newPassword)
+
+        } catch (error) {
             res.status(500).json({ error: 'Internal Server Error' })
         }
     }
@@ -45,11 +86,15 @@ class UsersController {
     deleteUser = async (req, res) => {
         try {
             const uid = req.params.uid
+            // buscamos el user por el uid 
             const getDeletedUser = await  userService.getUserById(uid)
+            
+            // si existe, borramos el carrito
             if(getDeletedUser) await cartService.deleteCart(getDeletedUser.cart)
+
+            // borramos el usuario
             const deleteUser = await userService.deleteUser(uid)
             
-
             res.status(200).send({ message: 'User deleted', user: deleteUser })
         } catch (error) {
             res.status(400).send({ error: error })
@@ -104,8 +149,10 @@ class UsersController {
 
     userRegister = (req, res) => {
         try {
+            // validamos que haya un req.user
             if (!req.user) return res.status(400).send({ error: 'There was an error registering.' })
 
+            // guardamos los datos del req.user 
             req.session.user = {
                 _id: req.user._id,
                 firstName: req.user.firstName,
@@ -117,6 +164,7 @@ class UsersController {
                 cart: req.user.cart
             }
 
+            // redirigimos a login
             res.status(200).redirect('/api/auth/login')
         } catch (error) {
             res.status(500).send({ error: error })
@@ -129,6 +177,7 @@ class UsersController {
 
     userLogin = (req, res) => {
         try {
+            // validamos la sesión
             if (!req.user) res.status(401).json({ error: 'Invalid credentials' })
 
             req.logIn(req.user, (err) => {
@@ -138,6 +187,7 @@ class UsersController {
                 }
             })
 
+            // guardamos los datos del req.user y setteamos lastConnection
             req.session.user = {
                 _id: req.user._id,
                 firstName: req.user.firstName,
@@ -149,6 +199,7 @@ class UsersController {
                 lastConnection: req.user.lastConnection
             }
 
+            // pasamos los datos a DTO para no mostrar info sensible
             const showUserData = new UserDTO(req.session.user)
             console.log({ loggedIn: showUserData })
 
@@ -192,16 +243,19 @@ class UsersController {
 
     getCurrentSessionInfo = (req, res) => {
         try {
+            // buscamos el req.session.user
             const user = req.session.user
 
+            // si no existe retorna error
             if(!user) return res.status(404).send({error: 'User session not found'})
 
+            // si existe, pasamos los datos por DTO para no mostrar info sensible
             const showUserData = new UserDTO(user)
 
             res.status(200).send({ currentUser: showUserData })
         } catch (error) {
             console.error('Error catching current user data:', error)
-            res.status(500).send({error: 'Internal server erroruFIiYrNAh22DxVP'})
+            res.status(500).send({error: 'Internal server error'})
         }
     }
 

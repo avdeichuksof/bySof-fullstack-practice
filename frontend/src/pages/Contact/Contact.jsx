@@ -1,9 +1,9 @@
 import './contact.css'
 import React, { useState } from 'react'
 import AxiosClient from '../../services/axiosClient'
-import axios from 'axios'
 const axiosClient = new AxiosClient()
 
+import contactIllustration from '../../img/undraw_team_chat_re_vbq1.svg'
 import Button from '../../components/Buttons/Button'
 
 const formBase = {
@@ -71,37 +71,40 @@ const Contact = () => {
     return (
         <div className="contact">
             <h1 className="title">Contactanos</h1>
-            <div className="form-container">
-                <form onSubmit={submitHandler}>
-                    <div className="contact-form-box">
-                        <div className="contact-form-item">
-                            <input type="text" name='fullName' value={form.fullName} onChange={inputChangeHandler} required />
-                            <label htmlFor="fullName">nombre y apellido</label>
+            <div className="contact-box">
+                <img className='contact-illustration' src={contactIllustration} alt="ilustración" />
+                <div className="form-container">
+                    <form onSubmit={submitHandler}>
+                        <div className="contact-form-box">
+                            <div className="contact-form-item">
+                                <input type="text" name='fullName' value={form.fullName} onChange={inputChangeHandler} required />
+                                <label htmlFor="fullName">nombre y apellido</label>
+                            </div>
+                            <div className="contact-form-item">
+                                <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
+                                <label htmlFor="email">email</label>
+                            </div>
                         </div>
-                        <div className="contact-form-item">
-                            <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                            <label htmlFor="email">email</label>
+                        <div className="contact-form-box-message">
+                            <div className="contact-form-item">
+                                <input type="text" name='subject' value={form.subject} onChange={inputChangeHandler} required />
+                                <label htmlFor="subject">asunto</label>
+                            </div>
+                            <div className="contact-form-item">
+                                <textarea name="message" value={form.message} onChange={inputChangeHandler} required></textarea>
+                                <label htmlFor="message">mensaje</label>
+                            </div>
                         </div>
-                    </div>
-                    <div className="contact-form-box-message">
-                        <div className="contact-form-item">
-                            <input type="text" name='subject' value={form.subject} onChange={inputChangeHandler} required />
-                            <label htmlFor="subject">asunto</label>
+                        <div className='file-select'>
+                            <input type="file" name='file' onChange={fileChangeHandler} />
                         </div>
-                        <div className="contact-form-item">
-                            <textarea name="message" value={form.message} onChange={inputChangeHandler} required></textarea>
-                            <label htmlFor="message">mensaje</label>
-                        </div>
-                    </div>
-                    <div className='file-select'>
-                        <input type="file" name='file' onChange={fileChangeHandler} />
-                    </div>
 
-                    <div className="buttons">
-                        <Button className='btn-session' type='button' onClick={resetForm} content='BORRAR TODO' />
-                        <Button className='btn-session' type='submit' content='ENVIAR' />
-                    </div>
-                </form>
+                        <div className="buttons">
+                            <Button className='btn-session' type='button' onClick={resetForm} content='BORRAR TODO' />
+                            <Button className='btn-session' type='submit' content='ENVIAR' />
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     )

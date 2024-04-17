@@ -65,10 +65,6 @@ const RestorePassword = () => {
                 <p>Ingresa tu nueva contraseña.</p>
                 <div className="form-box">
                     <form onSubmit={submitHandler}>
-                        {/* <div className="form-item">
-                            <input type="email" name='email' value={form.email} onChange={inputChangeHandler} required />
-                            <label htmlFor="email">EMAIL</label>
-                        </div> */}
                         <div className="form-item">
                             <input type="password" name='password' value={form.password} onChange={inputChangeHandler} required />
                             <label htmlFor="password">CONTRASEÑA</label>

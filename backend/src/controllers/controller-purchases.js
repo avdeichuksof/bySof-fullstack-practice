@@ -22,21 +22,22 @@ class PurchaseController {
             const cid = req.params.cid
             const user = req.session.user.email
 
-            console.log('User cart desde controller: ', cid)
-            console.log('User email desde controller: ', user)
-
+            // buscamos el carrito del usuario
             const cartFound = await cartService.getCartById(cid)
             console.log('cartFound controller: ', cartFound)
 
+            // si no tiene productos, envía mensaje y no se ejecuta la compra
             if(cartFound.products.length < 1){
                 res.send({message: 'Cart is empty'})
             }
 
+            // generamos compra
             const newTicket = await purchaseService.generatePurchase(user, cid)
-            console.log('newTicket controller: ', newTicket)
+
             // actualizamos productos que no tengan más stock
             const updatedProds = await cartService.updateProduct(cid, newTicket.noStock)
             console.log('updatedProds: ', updatedProds)
+
             // actualizamos stock de productos
             const updateStock = await ticketService.updateStockAfterPurchase(newTicket.prodStock)
             console.log('updateStock: ', updateStock)

@@ -42,8 +42,10 @@ class ProductService {
     getProductData = async (array) => {
         const productData = []
 
+        // recorremos el array recibido (de productos) por cada id
         for (const id of array) {
             const productFound = await this.getProductById(id)
+            // guardamos la data del producto en productData
             productData.push(productFound)
         }
 
@@ -53,10 +55,12 @@ class ProductService {
 
     createProduct = async (newProduct) => {
         try {
+            // validamos todos los campos necesarios
             if (!newProduct.title, !newProduct.thumbnail, !newProduct.price, !newProduct.size, !newProduct.category, !newProduct.subcategory, !newProduct.stock, !newProduct.code) {
                 throw new Error('Error creating product. All fields must be completed')
             }
 
+            // si está ok, creamos producto
             const product = await productMethods.createProduct(newProduct)
             if (product) console.log({ message: 'Product created successfully', product: product })
 
@@ -93,8 +97,10 @@ class ProductService {
 
     deleteProduct = async (id, currentUser) => {
         try {
+            // buscamos el prod a eliminar por ID
             const productFound = await this.#productExists(id)
 
+            // validamos que solo el admin pueda borrar productos
             if (currentUser.role === 'admin') {
                 const deletedProduct = await productMethods.deleteProduct(id)
                 if (deletedProduct) console.log({ message: 'Product has been removed successfully', product: productFound })

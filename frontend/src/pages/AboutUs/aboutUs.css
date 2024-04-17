@@ -103,6 +103,10 @@
         text-align: left;
         width: 100%;
     }
+}
 
-
+@media(min-width: 820px) {
+    .about-imgs {
+        padding: 0 3rem;
+    }
 }

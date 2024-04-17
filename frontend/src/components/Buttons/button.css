@@ -1,5 +1,5 @@
 .btn-session {
-    width: 60%;
+    width: fit-content;
     height: 40px;
     cursor: pointer;
     border: none;
@@ -10,6 +10,7 @@
     font-weight: 600;
     position: relative;
     transition: all 0.5s;
+    padding: 0 10px;
 }
 
 .btn-session::before {
@@ -31,6 +32,8 @@
 .btn-session:hover {
     color: var(--mainColor);
 }
+
+
 
 
 .btn-products {

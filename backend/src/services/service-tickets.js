@@ -24,6 +24,7 @@ class TicketService {
 
     updateStockAfterPurchase = async (stock) => {
         try {
+            // actualizamos el stock para cada producto
             for(const product of stock){
                 await productService.updateProductStock(product.id, product.stock)
                 console.log('Stock updated')

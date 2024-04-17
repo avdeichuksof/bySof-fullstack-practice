@@ -18,27 +18,6 @@ const Home = () => {
         }
     }
 
-    const [products, setProducts] = useState([])
-
-    useEffect(() => {
-        try {
-            axiosClient.getRequest({
-                url: `${baseURL}/api/products/?limit=4`,
-                config: config,
-                callbackSuccess: (res) => {
-                    console.log('Products ', res.data.products)
-                    setProducts(res.data.products)
-                },
-                calbackError: (error) => {
-                    console.error('Error: ', error)
-                }
-            })
-        } catch (error) {
-            console.error('Error sending request:', error)
-        }
-    }, [])
-
-
     // alternar entre textos en .info-text
     const [showFrontTxt, setShowFrontTxt] = useState(true)
 
@@ -83,22 +62,22 @@ const Home = () => {
                 </section>
                 <h2 className='categories-title'>Explorá nuestros productos</h2>
                 <section className='categories-display'>
-                    <Link className='link' to='#'>
+                    <Link className='link' to='/products?category=arcilla'>
                         <div className='category-box arcilla'>
                             <p>Arcilla</p>
                         </div>
                     </Link>
-                    <Link className='link' to='#'>
+                    <Link className='link' to='/products?category=cajitas'>
                         <div className='category-box cajitas'>
                             <p>Cajitas</p>
                         </div>
                     </Link>
-                    <Link className='link' to='#'>
+                    <Link className='link' to='/products?category=cuadros'>
                         <div className='category-box cuadros'>
                             <p>Cuadros</p>
                         </div>
                     </Link>
-                    <Link className='link' to='#'>
+                    <Link className='link' to='/products?category=personalizados'>
                         <div className='category-box personalizado'>
                             <p>Personalizá</p>
                         </div>
@@ -127,7 +106,6 @@ export default Home
 
 {/* <div className="falta">
     <h2>FALTA:</h2>
-    <p> - hacer pagina de editar perfil </p>
     <p> - usar stripe para finalizar compra</p>
     <p> - Dockerizar backend </p>
     <p> - ver error de recargar pagina y abrir el otra pestaña</p>

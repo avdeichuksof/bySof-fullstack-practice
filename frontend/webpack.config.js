@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 dotenv.config()
 const path = require('path')
-const webpack  = require('webpack')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -31,6 +31,18 @@ module.exports = {
                 test: /\.(png|jpg|jpeg|gif)$/,
                 use: 'file-loader'
             },
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'images/'
+                        }
+                    }
+                ]
+            }
         ]
     },
     resolve: {

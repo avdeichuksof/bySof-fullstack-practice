@@ -8,6 +8,7 @@ class ProductMethods {
 
     getProductsPaginate = async (category, limit, page, sort) => {
         try {
+            // creamos los filtros y opciones de paginado
             const filter = category ? {category: category} : {}
             const options = {
                 limit: limit || 12,

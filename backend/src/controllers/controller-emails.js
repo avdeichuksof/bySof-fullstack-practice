@@ -42,7 +42,8 @@ class EmailController {
         }
     }
 
-    /* PASSWORD RECOVERY MAILS */
+    /* REESTABLECER CONTRASEÑA */
+    // luego de una hora no se puede acceder al mail
     mailTimeout = (secret) => {
         secrets.push(secret)
         setTimeout(() => {
@@ -53,8 +54,8 @@ class EmailController {
     sendRecoveryMail = async (req, res) => {
         try {
             const userEmail = req.body.email
-            /* const userExists = await userService.getUsersByEmailService(userEmail) */
             const userExists = await User.find({ email: userEmail })
+
 
             const secret = uuid4()
             this.mailTimeout(secret)
@@ -87,6 +88,7 @@ class EmailController {
                 attachments: []
             }
 
+            // enviamos el mail
             if (userExists) {
                 let message = transporter.sendMail(mailOptions, (err, info) => {
                     if (err) console.log(err)
@@ -100,9 +102,56 @@ class EmailController {
         }
     }
 
+    /* AVISO DE CAMBIO DE CONTRASEÑA */
+    passwordChanged = async (data) => {
+        try {
+            const userExists = await User.findById(data.id)
+            if(!userExists) console.log('User not found')
+
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                port: 587,
+                auth: {
+                    user: mailAccount,
+                    pass: mailPass
+                }
+            })
+
+            const mailOptions = {
+                from: 'BySof' + mailAccount,
+                to: data.email,
+                subject: 'Password Changed',
+                text: 'Se ha cambiado su contraseña',
+                html: `
+                    <div class="container"> 
+                        <h2> Cambio de contraseña </h2>
+                        <p> Notificamos que en su cuenta ocurrió un cambio de contraseña. </p>
+                        <h6> Si usted no realizó un cambio de contraseña notifiquenos. </h6>
+                    </div>
+                `,
+                attachments: []
+            }
+
+            // enviamos el mail
+            if (userExists) {
+                let message = transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) console.log(err)
+                    console.log('Message sent: %s', info.messageId)
+                })
+            } else {
+                console.log('El usuario ingresado no existe')
+            }
+        } catch (err) {
+            throw new Error('Error sending mail ' + err)
+        }
+    }
+
+    /* EMAIL DE CONTACTO */
+
     sendEmailContact = async (req, res) => {
         const { fullName, email, subject, message, file } = req.body
 
+        // validamos los datos requeridos
         if (!fullName || !email || !subject || !message) {
             return res.status(400).json({ message: 'Por favor, complete todods los campos obligatorios' })
         }

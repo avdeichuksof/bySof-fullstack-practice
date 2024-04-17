@@ -5,8 +5,10 @@ class ProductController {
 
     getProductsPaginate = async (req, res) => {
         try {
+            // tomamos los filtros y opciones por query params
             let {category, limit, page, sort} = req.query
 
+            // definimos cómo va a ordenar sort
             if(sort && (sort !== 'asc' && sort != 'desc')){
                 sort = ''
             }else if (sort == 'asc'){
@@ -15,8 +17,10 @@ class ProductController {
                 sort = -1
             }
 
+            // hacemos la paginación con esas opciones
             const data = await productService.getProductsPaginate(category, limit, page, sort)
 
+            // mappeamos data para obtener los datos de cada producto y paginar
             let products = data.docs.map((product) => {
                 return {
                     _id: product._id,
@@ -50,7 +54,6 @@ class ProductController {
     getProductById = async (req, res) => {
         try {
             const id = req.params.pid
-            const user = req.session.user
             const productFound = await productService.getProductById(id)
 
             if (!productFound) return res.status(404).send({ error: 'Product not found' })

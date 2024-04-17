@@ -10,6 +10,9 @@ router.get('/', usersController.getUsers)
 router.get('/:uid', usersController.getUsersById)
 router.get('/:uid/purchases', purchaseController.getUserPurchases)
 
+router.put('/edit/:uid', usersController.editUser)
+router.put('/edit/:uid/password', usersController.changePassword)
+
 router.delete('/inactive', isAdmin, usersController.deleteInactiveUsers)
 router.delete('/:uid', usersController.deleteUser)
 

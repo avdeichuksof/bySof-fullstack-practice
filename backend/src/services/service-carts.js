@@ -56,21 +56,28 @@ class CartService {
 
     addProductToCart = async (cartId, prodId, quantity) => {
         try {
+            // buscamos el carrito de usuario 
             const cart = await Cart.findById(cartId)
 
             if (cart) {
+                // validamos si el producto ya se encuentra en el carrito
                 const productAlreadyInCart = cart.products.find(p => p.product._id.toString() === prodId)
 
+                // si está en el carrito, aumentamos la cantidad
                 if (productAlreadyInCart) {
+                    // si la suma de la cantidad en carrito y lo que se agrega es mayor al stock, no suma la cantidad
                     if ((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.product.stock) {
                         /*** AGREGAR UNA ALERT  ***/
                         console.log('Not enough stock')
+                        return productAlreadyInCart.quantity
                     } else {
+                        // si hay suficiente stock, aumentamos la cantidad en carrito
                         productAlreadyInCart.quantity += quantity
                         await cart.save()
                         /*** AGREGAR UNA ALERT  ***/
                         console.log('Product quantity increased')
                     }
+                    // si el producto no está en el carrito, lo agregamos con la cantidad solicitada
                 } else {
                     const addProduct = { $push: { products: { product: prodId, quantity: quantity } } }
 
@@ -79,7 +86,6 @@ class CartService {
                     console.log('Product added to cart')
                 }
             }
-
         } catch (error) {
             throw new Error(error.message)
         }
@@ -102,6 +108,7 @@ class CartService {
             const cartFound = await this.#cartExists(cartId)
 
             if (cartFound) {
+                // verificamos si el producto se encuentra en el carrito
                 const productFound = cartFound.products.find((item) => item.product._id.toString() === prodId)
                 if (productFound) {
                     // si la cantidad que se quiere agregar es mayor al stock del producto, no se puede
@@ -126,7 +133,7 @@ class CartService {
     updateCart = async (cartId, prodId, userCart) => {
         try {
             if (prodId === null) {
-                //si no se pasa ningun id de producto actualiza el carrito completo
+                // si no se pasa ningun id de producto actualiza el carrito completo
                 const cart = await this.#cartExists(cartId)
 
                 const updateCart = cart.products = userCart.products

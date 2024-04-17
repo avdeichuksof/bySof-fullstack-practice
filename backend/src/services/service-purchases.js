@@ -19,9 +19,11 @@ class PurchaseService {
 
     generatePurchase = async (user, cartId) => {
         try {
+            // buscamos el carrito del usuario
             const cart = await Cart.findById(cartId)
             console.log('Cart found service: ', cart)
 
+            // si existe el carrito
             if(cart){
                 // guardamos ID de productos
                 const prodsId = cart.products.map(prod => prod.product._id.toString())
@@ -29,7 +31,7 @@ class PurchaseService {
                 // guardamos las cantidades
                 const prodsAmount = cart.products.map(q => q.quantity)
                 console.log('prodsAmount service: ', prodsAmount)
-                // guardamos info
+                // guardamos info de cada producto
                 const prodsInfo = await productService.getProductData(prodsId)
                 console.log('prodsInfo service: ', prodsInfo)
 
@@ -37,13 +39,15 @@ class PurchaseService {
                 let noStock = []
                 let prodStock = []
 
+                // verificamos stocks y precio total antes de la compra
                 prodsInfo.map((product, i) => {
                     if(product){
+                        // parseamos cantidad y precio para evitar errores
                         const quantity = parseInt(prodsAmount[i], 10)
                         const price = parseFloat(product.price)
 
                         console.log('Product data service: ', quantity, price)
-
+                        
                         if(!isNaN(quantity) && !isNaN(price)){
                             if(quantity <= product.stock){
                                 // si hay stock, restamos lo que se compró del stock
@@ -68,6 +72,7 @@ class PurchaseService {
                     }
                 })
 
+                // guardamos fecha de compra
                 const purchaseDatetime = Date.now()
 
                 // creamos el ticket
@@ -86,10 +91,12 @@ class PurchaseService {
     }
 
     getUserPurchases = async (userId) => {
-        try {
+        try {   
+            // buscamos comprador por ID
             const purchaser = await userService.getUserById(userId)
             if (!purchaser) console.log('User not found')
-
+            
+            // obtenemos sus compras realizadas
             const userTickets = await Ticket.find(tkt => tkt.purchaser === purchaser)
 
             return userTickets

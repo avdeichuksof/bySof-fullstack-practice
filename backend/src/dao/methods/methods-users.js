@@ -17,7 +17,7 @@ class UserMethods {
         return newUser
     }
 
-    updateUser = async (id, newData) => {
+    editUser = async (id, newData) => {
         const updateUser = await User.updateOne({ _id: id }, { $set: newData })
         return updateUser
     }

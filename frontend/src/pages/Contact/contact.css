@@ -17,6 +17,17 @@ h1.title {
     transition: font-size 0.5s ease;
 }
 
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-illustration {
+    width: 80%;
+    padding: 1rem 0;
+}
 
 .form-container {
     display: flex;
@@ -99,14 +110,31 @@ h1.title {
         padding: 0 0 0 2rem;
     }
 
-    .form-container {
+    .contact {
+        justify-content: space-evenly;
+        padding: 2rem 0;
+    }
+    
+    .contact-illustration {
+        width: 250px;
+        align-self: start;
+        padding-top: 3rem;
+    }
+
+    .contact-box {
         width: 100%;
+        flex-direction: row;
+        align-items: normal;
+        justify-content: space-around;
+    }
+
+    .form-container {
         justify-content: flex-end;
-        padding: 2rem;
+        padding: 2rem 0 ;
     }
 
     .form-container form {
-        width: 70%;
+        width: 100%;
     }
 
     .contact-form-item {

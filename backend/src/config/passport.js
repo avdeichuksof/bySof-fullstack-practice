@@ -37,21 +37,30 @@ const initPassport = async () => {
                     // creamos carrito del usuaril
                     const cart = new Cart()
 
-                    // creamos usuario
-                    const newUser = {
-                        email: username,
-                        firstName: userData.firstName,
-                        lastName: userData.lastName,
-                        password: createHash(userData.password),
-                        cart: await cart.save(),
-                        age: userData.age,
-                        role: role
-                    }
+                    // regex para validar email
+                    const re = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
 
-                    // guardamos el nuevo usuario
-                    const userCreated = await userService.createUser(newUser)
-                    console.log('User registered')
-                    done(null, userCreated)
+                    if (re.test(username)) {
+                        const email = username
+
+                        // creamos usuario
+                        const newUser = {
+                            email: email,
+                            firstName: userData.firstName,
+                            lastName: userData.lastName,
+                            password: createHash(userData.password),
+                            cart: await cart.save(),
+                            age: userData.age,
+                            role: role
+                        }
+                        
+                        // guardamos el nuevo usuario
+                        const userCreated = await userService.createUser(newUser)
+                        console.log('User registered')
+                        done(null, userCreated)
+                    }else {
+                        console.error('Invalid email format.')
+                    }
                 } catch (error) {
                     return done('Error registering user ' + error.message)
                 }
@@ -59,27 +68,27 @@ const initPassport = async () => {
         )
     )
 
-    passport.use('login', 
-        new LocalStrategy({usernameField: 'email'},
-        
-            async(username, password, done) => {
+    passport.use('login',
+        new LocalStrategy({ usernameField: 'email' },
+
+            async (username, password, done) => {
                 try {
                     // buscamos el usuario
-                    const userExists = await User.findOne({email: username})
+                    const userExists = await User.findOne({ email: username })
 
                     // si no existe
-                    if(!userExists) {
+                    if (!userExists) {
                         console.log('User not found')
                         return done(null, false)
                     }
                     // validamos password
-                    if(!isValidPassword(password, userExists.password)){
+                    if (!isValidPassword(password, userExists.password)) {
                         console.log('Incorrect password')
                         return done(null, false, { message: 'Invalid credentials' })
                     }
 
                     // validamos admin
-                    if(userExists.email === config.adminEmail && userExists.password === config.adminPass){
+                    if (userExists.email === config.adminEmail && userExists.password === config.adminPass) {
                         req.session.admin = true
                     }
 
@@ -99,11 +108,11 @@ const initPassport = async () => {
         done(null, user._id)
     }),
 
-    // deserializa cuando querramos loguear y da paso a la estrategia de login
-    passport.deserializeUser(async (id, done) => {
-        let user = await User.findById(id)
-        done(null, user)
-    })
+        // deserializa cuando querramos loguear y da paso a la estrategia de login
+        passport.deserializeUser(async (id, done) => {
+            let user = await User.findById(id)
+            done(null, user)
+        })
 }
 
 export default initPassport

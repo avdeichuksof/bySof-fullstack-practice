@@ -25,6 +25,6 @@ router.get('/failedlogin', usersController.redirectFailedLogin)
 router.get('/logout', usersController.userLogout)
 
 router.post('/sendrecoverymail', emailController.sendRecoveryMail)
-router.post('/restorepassword', usersController.changePassword)
+router.post('/restorepassword', usersController.restorePassword)
 
 export default router
