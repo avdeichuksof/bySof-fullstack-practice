@@ -1,6 +1,7 @@
 import './navBar.css'
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import io from 'socket.io-client'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -59,6 +60,21 @@ const Navbar = () => {
     // cantidad de productos en carritotal
     const [totalProducts, setTotalProducts] = useState(0)
 
+    useEffect(() => {
+        const socket = io(baseURL)
+
+        /* socket.on('cartUpdated', (data) => {
+            setTotalProducts(data.totalProducts)
+        }) */
+
+        socket.on('totalProds', (data) => {
+            setTotalProducts(data.totalProds)
+        })
+
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
 
     const getTotalProducts = async () => {
         try {

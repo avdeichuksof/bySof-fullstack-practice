@@ -41,7 +41,6 @@ class CartService {
             return totalProducts
         } catch (error) {
             throw new Error(error.message)
-
         }
     }
 
@@ -69,7 +68,7 @@ class CartService {
                     if ((productAlreadyInCart.quantity + quantity) > productAlreadyInCart.product.stock) {
                         /*** AGREGAR UNA ALERT  ***/
                         console.log('Not enough stock')
-                        return productAlreadyInCart.quantity
+                        return false
                     } else {
                         // si hay suficiente stock, aumentamos la cantidad en carrito
                         productAlreadyInCart.quantity += quantity
@@ -112,10 +111,11 @@ class CartService {
                 const productFound = cartFound.products.find((item) => item.product._id.toString() === prodId)
                 if (productFound) {
                     // si la cantidad que se quiere agregar es mayor al stock del producto, no se puede
-                    if (productFound.quantity + quantity > productFound.product.stock) {
+                    if (quantity > productFound.product.stock) {
                         console.log('Not enough stock')
+                        return
                     } else {
-                        // sino actualizamos la cantidad
+                        // si hay stock, actualizamos la cantidad
                         const newQuantity = await cartMethods.updateProductQuantity(cartId, prodId, quantity)
                         return newQuantity
                     }

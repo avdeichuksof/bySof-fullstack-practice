@@ -106,16 +106,16 @@ export default Home
 
 {/* <div className="falta">
     <h2>FALTA:</h2>
-    <p> - usar stripe para finalizar compra</p>
+    <p> - usar stripe para finalizar compra</p> 
     <p> - Dockerizar backend </p>
-    <p> - ver error de recargar pagina y abrir el otra pestaña</p>
+    <p> - ver error de recargar pagina y abrir en otra pestaña</p>
     <p> - arreglar que si agregué hasta el stock maximo no se pueda agregar de nuevo nada, que quede desabilitado</p>
-    <p> - widget cant prods y ver si le agregamos el precio total ahí</p>
     <p> - ver lo de docs de usuarios si se agrega de alguna forma,
         puede ser que el admin suba foto de prods o foto de perfil de usuario
     </p>
     <p> - toastify o algo de eso</p>
     <p> - animaciones en los componentes</p>
+    <p> - documentar son swagger </p>
     <p> - testing</p>
     <br />
     <br />

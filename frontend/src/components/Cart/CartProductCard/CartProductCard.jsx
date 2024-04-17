@@ -23,12 +23,12 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
 
     const updateProductQuantityHandler = async (newQuantity) => {
         try {
-            const response = await axiosClient.putRequest({
+            await axiosClient.putRequest({
                 url: `${baseURL}/api/carts/${userCartId}/product/${product._id}`,
                 body: { quantity: newQuantity },
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product quantity updated: ', res.data.quantity)
+                    console.log('Product quantity updated: ', res.data)
                     onQttyChange(product._id, newQuantity)
                 },
                 callbackError: (error) => {
@@ -48,7 +48,7 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
     }
 
     const increaseQtty = async () => {
-        if (quantity < product.stock) {
+        if (quantity < product.stock ) {
             const updatedQuantity = quantity + 1
             updateProductQuantityHandler(updatedQuantity)
         } else {
@@ -58,7 +58,6 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
 
 
     // ---------------------- eliminar del carrito
-    const [deleteProd, setDeleteProd] = useState(null)
 
     const deleteFromCartHandler = async () => {
         try {
@@ -69,7 +68,6 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
             })
 
             if (response.status === 200 && response.data) {
-                setDeleteProd(true)
                 onDelete(product._id)
             } else {
                 console.log('Error deleting product')

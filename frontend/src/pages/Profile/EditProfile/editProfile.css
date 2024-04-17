@@ -38,13 +38,9 @@
 }
 
 @media(min-width: 1024px) {
-    .forms-container  {
-        padding: 0 3rem;
-    }
-
     .subcontainer {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: flex;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
     }

@@ -1,7 +1,7 @@
 import CartService from "../services/service-carts.js"
 const cartService = new CartService()
-import TicketService from "../services/service-tickets.js"
-const ticketService = new TicketService()
+
+import io from "../../main.js"
 
 class CartController {
     getCarts = async (req, res) => {
@@ -18,7 +18,7 @@ class CartController {
             const cid = req.params.cid
             const cartFound = await cartService.getCartById(cid)
             if (!cartFound) {
-                res.status(404).send({message: 'Cart not found'})
+                res.status(404).send({ message: 'Cart not found' })
                 return
             }
 
@@ -32,7 +32,8 @@ class CartController {
         try {
             const cid = req.params.cid
             const totalProducts = await cartService.getTotalProducts(cid)
-            res.status(200).send({totalProducts: totalProducts})
+
+            res.status(200).send({ totalProducts: totalProducts })
         } catch (error) {
             res.status(400).send({ error: error })
         }
@@ -53,6 +54,13 @@ class CartController {
             const pid = req.params.pid
             const quantity = parseInt(req.body?.quantity)
             await cartService.addProductToCart(cid, pid, quantity)
+
+            // tomamos el total de los productos
+            const totalProducts = await cartService.getTotalProducts(cid)
+
+            io.emit('totalProds', { totalProds: totalProducts })
+            io.emit('cartUpdated', { cartId: cid })
+
             res.status(200).send({ message: 'Product added to cart' })
         } catch (error) {
             res.status(400).send({ error: error })
@@ -63,10 +71,18 @@ class CartController {
         try {
             const cid = req.params.cid
             const pid = req.params.pid
-
             const quantity = req.body.quantity
+
             const newQuantity = await cartService.updateProductQuantity(cid, pid, quantity)
-            res.status(200).send({ message: 'Quantity updated', quantity: newQuantity })
+            console.log('Product quantity updated')
+
+            // tomamos el total de los productos
+            const totalProducts = await cartService.getTotalProducts(cid)
+
+            io.emit('totalProds', { totalProds: totalProducts })
+            io.emit('cartUpdated', { cartId: cid })
+
+            res.status(200).json({ newQuantity: newQuantity, totalProducts: totalProducts })
         } catch (error) {
             res.status(400).send({ error: error })
         }
@@ -84,7 +100,7 @@ class CartController {
                 res.status(404).send({ message: 'Cart not found' })
             }
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 
@@ -92,9 +108,16 @@ class CartController {
         try {
             const cid = req.params.cid
             const cartEmpty = await cartService.emptyCart(cid)
-            res.status(200).send({message: 'Empty cart', cart: cartEmpty})
+
+            // tomamos el total de los productos
+            const totalProducts = await cartService.getTotalProducts(cid)
+
+            io.emit('totalProds', { totalProds: totalProducts })
+            io.emit('cartUpdated', { cartId: cid })
+
+            res.status(200).send({ message: 'Empty cart', cart: cartEmpty })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 
@@ -105,14 +128,20 @@ class CartController {
 
             const deletedProd = await cartService.deleteProductFromCart(cid, pid)
             // no se encontró el prod
-            if(deletedProd.message) {
-                res.status(404).send({error: deletedProd.message})
-            }else {
-                res.status(200).send({message: 'Product deleted from cart', deletedProd: deletedProd})
+            if (deletedProd.message) {
+                res.status(404).send({ error: deletedProd.message })
+            } else {
+                // tomamos el total de los productos
+                const totalProducts = await cartService.getTotalProducts(cid)
+
+                io.emit('totalProds', { totalProds: totalProducts })
+                io.emit('cartUpdated', { cartId: cid })
+
+                res.status(200).send({ message: 'Product deleted from cart', deletedProd: deletedProd })
             }
 
         } catch (error) {
-            res.status(400).send({error: error.message})
+            res.status(400).send({ error: error.message })
         }
     }
 
@@ -120,9 +149,9 @@ class CartController {
         try {
             const cid = req.params.cid
             const deleteCart = await cartService.deleteCart(cid)
-            res.status(200).send({message: 'Cart deleted', cart: deleteCart})
+            res.status(200).send({ message: 'Cart deleted', cart: deleteCart })
         } catch (error) {
-            res.status(400).send({error: error})
+            res.status(400).send({ error: error })
         }
     }
 

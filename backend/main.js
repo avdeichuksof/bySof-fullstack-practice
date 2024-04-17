@@ -11,7 +11,6 @@ import initPassport from './src/config/passport.js'
 
 // server
 import express from 'express'
-import history from 'connect-history-api-fallback'
 
 const app = express()
 const PORT = config.port
@@ -19,6 +18,10 @@ const PORT = config.port
 // http
 import http from 'http'
 const server = http.createServer(app)
+
+// websocket
+import { Server } from 'socket.io'
+const io = new Server(server)
 
 // CORS
 app.use(cors({
@@ -31,7 +34,7 @@ import connectDB from './src/dao/db/db.js'
 
 // JSON settings
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 
@@ -82,13 +85,33 @@ const __dirname = path.dirname(__filename)
 
 
 // ruta estática para archivos de react
-app.use(express.static(path.join(__dirname , '/public')))
-const frontendBuildPath = path.join(__dirname, '..' ,'frontend', 'dist')
+app.use(express.static(path.join(__dirname, '/public')))
+const frontendBuildPath = path.join(__dirname, '..', 'frontend', 'dist')
 app.use(express.static(path.join(frontendBuildPath)))
 
 // catch-all
 app.get('*', (req, res) => {
     res.sendFile(path.join(frontendBuildPath, 'index.html'))
+})
+
+// websocket config
+import CartController from './src/controllers/controller-carts.js'
+const cartController = new CartController()
+
+io.on('connection', (socket) => {
+    console.log('User connected')
+
+    socket.on('cartUpdated', async (data) => {
+        const cartId = data.cartId
+        const totalProducts = await cartController.getTotalProducts(cartId)
+
+        io.emit('totalProds', {totalProducts: totalProducts})
+    })
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected')
+    })
+
 })
 
 
@@ -98,3 +121,5 @@ server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
     connectDB()
 })
+
+export default io
