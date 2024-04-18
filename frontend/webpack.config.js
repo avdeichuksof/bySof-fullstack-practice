@@ -1,13 +1,13 @@
 const dotenv = require('dotenv')
 dotenv.config()
-const path = require('path')
+// const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: __dirname + '/dist',
         filename: 'bundle.js'
     },
     mode: 'development',
@@ -50,7 +50,7 @@ module.exports = {
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'dist'),
+            directory: __dirname + 'dist',
         },
         compress: true,
         port: 3001,
@@ -64,11 +64,14 @@ module.exports = {
         }),
         new webpack.EnvironmentPlugin({
             NODE_ENV: 'development',
+            
         }),
         new webpack.DefinePlugin({
             'process.env.MONGO_URL': JSON.stringify(process.env.MONGO_URL),
             'process.env.PORT': JSON.stringify(process.env.PORT),
-            'process.env.SECRET': JSON.stringify(process.env.SECRET)
+            'process.env.SECRET': JSON.stringify(process.env.SECRET),
+            'process.env.REACT_APP_BASE_URL': JSON.stringify(process.env.REACT_APP_BASE_URL),
+            'process.env.REACT_APP_PAYMENT_ENDPOINT': JSON.stringify(process.env.REACT_APP_PAYMENT_ENDPOINT),
         }),
     ]
 }

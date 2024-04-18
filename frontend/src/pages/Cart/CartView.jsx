@@ -180,7 +180,7 @@ const CartView = () => {
                         <div className="cart-btns-container">
                             <Link to='/products'><Button type='button' className='btn-products' content='Seguir Comprando' /></Link>
 
-                            <Button type='button' className='btn-products' content='Finalizar Compra' onClick={generatePurchaseHandler} />
+                            <Link to='/payments' > <Button type='button' className='btn-products' content='Finalizar Compra' onClick={generatePurchaseHandler} /> </Link>
                         </div>
                     </div>
 

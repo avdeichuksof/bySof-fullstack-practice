@@ -15,6 +15,7 @@ import Register from './pages/Session/Register'
 
 import Home from './pages/Home/Home'
 import Faqs from './pages/Faqs/Faqs'
+import Stripe from './pages/Stripe/Stripe'
 import CartView from './pages/Cart/CartView'
 import AboutUs from './pages/AboutUs/AboutUs'
 import Contact from './pages/Contact/Contact'
@@ -105,6 +106,7 @@ function App() {
               <Route path={`/carts/${userCart}`} element={<CartView />} />
               <Route path={`/users/${userId}`} element={<ProfileView />} />
               <Route path={`/users/edit/${userId}`} element={<EditProfile />} />
+              <Route path='/payments' element={<Stripe />} />
               {/* Administration routes */}
               <Route path='/adminproducts' element={<AdminProducts />} />
               <Route path='/adminusers' element={<AdminUsers />} />

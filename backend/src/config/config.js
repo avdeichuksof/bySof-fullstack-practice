@@ -24,5 +24,6 @@ export default {
     mailAccount: process.env.GMAIL_ACCOUNT,
     mailPass: process.env.GMAIL_APP_PASSWORD,
     adminEmail: process.env.ADMIN_EMAIL,
-    adminPass: process.env.ADMIN_PASS
+    adminPass: process.env.ADMIN_PASS,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY
 }
