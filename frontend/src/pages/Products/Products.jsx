@@ -1,5 +1,7 @@
 import './products.css'
 import React, { useState, useEffect } from 'react'
+import toast, {Toaster} from 'react-hot-toast'
+
 import { useLocation } from 'react-router-dom'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
@@ -34,7 +36,10 @@ const Products = () => {
                     url: url,
                     config: config,
                 })
-                if (!response) console.log('Products array not found')
+                if (!response) toast.error('Ocuarrió un error al cargar los productos.', {
+                    duration: 5000,
+                    position: 'top-right'
+                })
                 const data = response.data
                 setProducts(data.products)
                 setPagination(data.pagination)

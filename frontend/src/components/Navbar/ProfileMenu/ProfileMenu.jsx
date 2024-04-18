@@ -1,6 +1,7 @@
 import './profileMenu.css'
 import { NavLink } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -41,11 +42,13 @@ const ProfileMenu = () => {
                 url: `${baseURL}/api/auth/logout`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('User logged out ', res)
                     window.location.href = `${baseURL}/login`
                 },
                 callbackError: (error) => {
-                    console.error('Error logging out: ', error)
+                    toast.error('Ocurrió un error al cerrar la sesión. Intenta nuevamente.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     throw new Error(error)
                 }
             })

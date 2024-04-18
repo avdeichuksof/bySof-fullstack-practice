@@ -3,8 +3,8 @@ import logo from '../../img/logo.png'
 import background from '../../img/bg5.png'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import toast, {Toaster} from 'react-hot-toast'
+
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -61,8 +61,12 @@ const Login = () => {
                     if (res && res.status === 200) window.location.href = `${baseURL}`
                 },
                 callbackError: (error) => {
-                    console.error('Error logging in: ', error)
-                    alert(error.response.data.error || 'Error al iniciar sesión, verifica tus credenciales.')
+                    /* console.error('Error logging in: ', error)
+                    alert(error.response.data.error || 'Error al iniciar sesión, verifica tus credenciales.') */
+                    toast.error('Error al iniciar sesión. Usuario o contraseña incorrectos', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -84,6 +88,7 @@ const Login = () => {
                     <img src={`${logo}`} alt="brand" />
                 </Link>
             </nav>
+            <Toaster />
             <div className='container'>
                 <h1>INICIA SESIÓN</h1>
                 <div className="form-box">

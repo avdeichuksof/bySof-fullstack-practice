@@ -1,6 +1,7 @@
 import '../administration.css'
 import React, { useState } from "react"
-import { Link } from 'react-router-dom'
+import toast, {Toaster} from 'react-hot-toast'
+
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -28,7 +29,10 @@ const AdminUsers = () => {
         e.preventDefault()
 
         if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
-            console.error('Invalid ID format');
+            toast.error('Invalid ID format.', {
+                duration: 5000,
+                position: 'top-right'
+            });
             setUser('')
         }
 
@@ -37,12 +41,14 @@ const AdminUsers = () => {
                 url: `${baseURL}/api/users/${userId}`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('User Found: ', res.data.user)
                     setUser(res.data.user)
                     setShowUserOptions(true)
                 },
                 callbackError: (error) => {
-                    console.error('Invalid ID, User not found: ', error)
+                    toast.error('Usuario no encontrado. ID inválido.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setShowUserOptions(false)
                     setUser({})
                     setUserId('')
@@ -69,7 +75,10 @@ const AdminUsers = () => {
     const getUserPurchasesHandler = async () => {
         try {
             if (!userId) {
-                console.log('User ID is invalid')
+                toast.error('ID de usuario inválido.', {
+                    duration: 5000,
+                    position: 'top-right'
+                })
                 return
             }
 
@@ -82,7 +91,10 @@ const AdminUsers = () => {
                     setShowPurchases(true)
                 },
                 callbackError: (error) => {
-                    console.log('Error getting purchases: ', error)
+                    toast.error('Error al obtener compras.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setShowPurchases(false)
                 }
             })
@@ -96,7 +108,10 @@ const AdminUsers = () => {
     const deleteUserHandler = async () => {
         try {
             if (!userId) {
-                console.log('User ID is invalid')
+                toast.error('ID de usuario inválido.', {
+                    duration: 5000,
+                    position: 'top-right'
+                })
                 return
             }
 
@@ -104,11 +119,17 @@ const AdminUsers = () => {
                 url: `${baseURL}/api/users/${userId}`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('User deleted: ', res.data)
+                    toast.success('Usuario eliminado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
                     if (error.response && error.response.status === 404) {
-                        console.log('User not found')
+                        toast.error('Error al eliminar usuario. ID inválido.', {
+                            duration: 5000,
+                            position: 'top-right'
+                        })
                     }
                 }
             })
@@ -126,12 +147,18 @@ const AdminUsers = () => {
                 url: `${baseURL}/api/users/inactive`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Users deleted: ', res.data)
+                    toast.success('Usuarios eliminadso.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setInactiveUsersError(false)
                     setInactiveUsers(res.data)
                 },
                 callbackError: (error) => {
-                    console.log('Error deleting users or not users were inactive: ', error)
+                    toast.error('Error al eliminar usuarios inactivos o se encontraron.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setInactiveUsersError(true)
                     setInactiveUsers([])
                 }
@@ -144,7 +171,8 @@ const AdminUsers = () => {
 
 
     return <div className='admin-container'>
-        {/* agregar link de volver a mi perfil */}
+        <Toaster />
+        
         <h1 className='admin-title'>Administración de Usuarios</h1>
 
         <div className="get-id">

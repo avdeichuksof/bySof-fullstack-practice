@@ -2,6 +2,7 @@ import './session.css'
 import logo from '../../img/logo.png'
 import background from '../../img/bg4.png'
 import React, { useState} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -37,10 +38,18 @@ const RestorePassword = () => {
                 callbackSuccess: (res) => {
                     console.log('Response from server:', res)
                     console.log('Password restored')
+                    toast.success('La contraseña se cambió correctamente.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     if (res && res.status === 200) window.location.href = `${baseURL}/login`
                 },
                 callbackError: (error) => {
                     console.error('Error restoring password: ', error)
+                    toast.error('Ocurrió un error al cambiar la contraseña. Intenta nuevamente.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -56,10 +65,10 @@ const RestorePassword = () => {
     
     return (
         <div className="body" style={{ backgroundImage: `url(${background})` }} >
+            <Toaster />
             <nav className="nav">
                 <img src={`${logo}`} alt="brand" />
             </nav>
-
             <div className="container">
                 <h1>REESTABLECER CONTRASEÑA</h1>
                 <p>Ingresa tu nueva contraseña.</p>

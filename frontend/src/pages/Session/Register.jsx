@@ -3,6 +3,7 @@ import logo from '../../img/logo.png'
 import background from '../../img/bg7.png'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import toast, {Toaster} from 'react-hot-toast'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -35,9 +36,19 @@ const Register = () => {
                 body: form,
                 config: config,
                 callbackSuccess: (res) => {
+                    toast.success('Usuario registrado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     if (res && res.status === 200) window.location.href = '/login'
                 },
-                callbackError: (error) => console.error('Error registering user: ', error)
+                callbackError: (error) => {
+                    console.error('Error registering user: ', error)
+                    toast.error('Error al registrar usuario. Intentalo nuevamente.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
+                }
             })
         } catch (error) {
             console.error('Error sending request:', error)
@@ -57,6 +68,7 @@ const Register = () => {
                     <img src={`${logo}`} alt="brand" />
                 </Link>
             </nav>
+            <Toaster />
             <div className='container'>
                     <h1>REGISTRATE</h1>
                     <div className="form-box">

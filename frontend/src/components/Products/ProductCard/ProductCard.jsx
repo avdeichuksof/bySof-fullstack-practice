@@ -1,5 +1,6 @@
 import './productCard.css'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -41,10 +42,16 @@ const ProductCard = ({ product }) => {
                 body: addProd,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product added to cart: ', res.data)
+                    toast.success('Producto agregado al carrito.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                 },
                 callbackError: (error) => {
-                    console.log('Error adding product to cart: ', error)
+                    toast.error('Ocurrió un error al agregar el producto al carrito.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
 
@@ -68,24 +75,27 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div className="card-container">
-            <img src={product.thumbnail} alt={product.title} className="card-img" />
-            <div className="card-body">
-                <h4 className="card-title">{product.title}</h4>
-                <p className="card-size">Tamaño: {product.size}</p>
-                <p className='card-price'>${product.price}</p>
+        <>
+            <Toaster />
+            <div className="card-container">
+                <img src={product.thumbnail} alt={product.title} className="card-img" />
+                <div className="card-body">
+                    <h4 className="card-title">{product.title}</h4>
+                    <p className="card-size">Tamaño: {product.size}</p>
+                    <p className='card-price'>${product.price}</p>
 
-                {product.stock == 0 && (
-                    <p className='stock-txt'><b>Producto fuera de stock</b></p>
-                )}
+                    {product.stock == 0 && (
+                        <p className='stock-txt'><b>Producto fuera de stock</b></p>
+                    )}
 
-                <form className="prod-options" onSubmit={addToCartHandler}>
-                    <input className='quantity-input' type="number" name='quantity' value={addProd.quantity} min={1} max={product.stock} onChange={addToCartChangeHandler} />
+                    <form className="prod-options" onSubmit={addToCartHandler}>
+                        <input className='quantity-input' type="number" name='quantity' value={addProd.quantity} min={1} max={product.stock} onChange={addToCartChangeHandler} />
 
-                    <Button type='submit' className='btn-products' content='Añadir al Carrito' />
-                </form>
+                        <Button type='submit' className='btn-products' content='Añadir al Carrito' />
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     )
 
 }

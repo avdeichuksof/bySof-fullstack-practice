@@ -1,6 +1,8 @@
 
 import './cartProductCard.css'
-import React, { useState } from 'react'
+import React from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -28,11 +30,18 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
                 body: { quantity: newQuantity },
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product quantity updated: ', res.data)
+                    toast.success('Cantidad actualizada.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                     onQttyChange(product._id, newQuantity)
                 },
                 callbackError: (error) => {
                     console.log('Error updating product quantity: ', error)
+                    toast.error('Ocurrió un error al actualizar la cantidad.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                 }
             })
         } catch (error) {
@@ -48,7 +57,7 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
     }
 
     const increaseQtty = async () => {
-        if (quantity < product.stock ) {
+        if (quantity < product.stock) {
             const updatedQuantity = quantity + 1
             updateProductQuantityHandler(updatedQuantity)
         } else {
@@ -68,9 +77,16 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
             })
 
             if (response.status === 200 && response.data) {
+                toast.success('Producto eliminado del carrito.', {
+                    duration: 5000,
+                    position: 'top-right',
+                })
                 onDelete(product._id)
             } else {
-                console.log('Error deleting product')
+                toast.error('Ocurrió un error al eliminar el producto.', {
+                    duration: 5000,
+                    position: 'top-right',
+                })
             }
 
         } catch (error) {
@@ -81,32 +97,33 @@ const CartProductCard = ({ product, quantity, onDelete, onQttyChange }) => {
 
 
     return (
-        <div className="cart-prod-container">
-            <div className="btn-delete-prod">
-                <button onClick={deleteFromCartHandler}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                </svg></button>
-            </div>
-            <div className="cart-prod-card">
-                <img className='cart-prod-img' src={product.thumbnail} alt={product.title} />
-                <div className="info-txt">
-                    <div className="cart-prod-txt">
-                        <h4>{product.title}</h4>
-                        <p className='cart-prod-size'>Tamaño: {product.size}</p>
-                    </div>
-                    <div className="cart-prod-price">
-                        <p>${product.price}</p>
+        <>
+            <Toaster />
+            <div className="cart-prod-container">
+                <div className="btn-delete-prod">
+                    <button onClick={deleteFromCartHandler}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                    </svg></button>
+                </div>
+                <div className="cart-prod-card">
+                    <img className='cart-prod-img' src={product.thumbnail} alt={product.title} />
+                    <div className="info-txt">
+                        <div className="cart-prod-txt">
+                            <h4>{product.title}</h4>
+                            <p className='cart-prod-size'>Tamaño: {product.size}</p>
+                        </div>
+                        <div className="cart-prod-price">
+                            <p>${product.price}</p>
+                        </div>
                     </div>
                 </div>
+                <div className="change-prod-quantity">
+                    <button onClick={decreaseQtty}>-</button>
+                    <p> {quantity} </p>
+                    <button onClick={increaseQtty}>+</button>
+                </div>
             </div>
-            <div className="change-prod-quantity">
-                <button onClick={decreaseQtty}>-</button>
-                <p> {quantity} </p>
-                <button onClick={increaseQtty}>+</button>
-            </div>
-        </div>
-
-
+        </>
     )
 }
 

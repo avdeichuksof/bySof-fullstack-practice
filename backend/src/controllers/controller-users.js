@@ -223,7 +223,7 @@ class UsersController {
     }
 
     userLogout = async (req, res) => {
-        const userId = req.session.user._id
+        const userId = req.session.user.id
         // si encontramos el user id 
         if (userId) {
             // cerramos la session y updateamos lastConnection

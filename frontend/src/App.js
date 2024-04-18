@@ -1,6 +1,7 @@
 import './App.css'
 import React, { Suspense, useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+
 import axios from 'axios'
 import AxiosClient from './services/axiosClient'
 const axiosClient = new AxiosClient()
@@ -33,10 +34,10 @@ import AdminProducts from './pages/Admin/AdminProducts/AdminProducts'
 function App() {
   const backend_url = 'http://localhost:8080'
   const location = useLocation()
-  const isSessionPage = location.pathname === '/login' || 
-                        location.pathname === '/register' || 
-                        location.pathname === '/sendrecoverymail' || 
-                        location.pathname === '/restorepassword'
+  const isSessionPage = location.pathname === '/login' ||
+    location.pathname === '/register' ||
+    location.pathname === '/sendrecoverymail' ||
+    location.pathname === '/restorepassword'
 
   // loaders
   const [loading, setLoading] = useState(true)

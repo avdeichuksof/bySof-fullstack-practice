@@ -1,5 +1,7 @@
 import '../EditUserForm/editUserForm.css'
 import React, { useState } from "react"
+import toast, { ToastBar, Toaster } from 'react-hot-toast'
+
 import AxiosClient from "../../../services/axiosClient"
 const axiosClient = new AxiosClient()
 
@@ -36,7 +38,10 @@ const ChangePasswordForm = () => {
                 body: changePassword,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Password changed successfully')
+                    toast.success('Se ha cambiado la contraseña.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     // Mantener el objeto changePassword actualizado incluso después de cambiar la contraseña
                     setChangePassword(prevState => ({
                         ...prevState,
@@ -45,7 +50,10 @@ const ChangePasswordForm = () => {
                     }))
                 },
                 callbackError: (error) => {
-                    console.error('Failed to change password', error)
+                    toast.error('Error al cambiar la contraseña.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setChangePassword(changePasswordForm)
                 }
             })
@@ -60,23 +68,26 @@ const ChangePasswordForm = () => {
     }
 
     return (
-        <div className="user-form-container pass-form">
-            <h2 className='user-form-subtitle'>Cambiar contraseña</h2>
-            <form onSubmit={updatePasswordHandler}>
-                <div className="password-form-item">
-                    <input type="password" name='password' value={changePassword.password} onChange={updatePassChangeHandler} />
-                    <label htmlFor="password">contraseña actual</label>
-                </div>
-                <div className="password-form-item">
-                    <input type="password" name='newPassword' value={changePassword.newPassword} onChange={updatePassChangeHandler} />
-                    <label htmlFor="newPassword">nueva contraseña</label>
-                </div>
+        <>
+            <Toaster />
+            <div className="user-form-container pass-form">
+                <h2 className='user-form-subtitle'>Cambiar contraseña</h2>
+                <form onSubmit={updatePasswordHandler}>
+                    <div className="password-form-item">
+                        <input type="password" name='password' value={changePassword.password} onChange={updatePassChangeHandler} />
+                        <label htmlFor="password">contraseña actual</label>
+                    </div>
+                    <div className="password-form-item">
+                        <input type="password" name='newPassword' value={changePassword.newPassword} onChange={updatePassChangeHandler} />
+                        <label htmlFor="newPassword">nueva contraseña</label>
+                    </div>
 
-                <div className="user-form-btn-container">
-                    <Button type='submit' className='btn-session' content='CAMBIAR CONTRASEÑA' />
-                </div>
-            </form>
-        </div>
+                    <div className="user-form-btn-container">
+                        <Button type='submit' className='btn-session' content='CAMBIAR CONTRASEÑA' />
+                    </div>
+                </form>
+            </div>
+        </>
     )
 }
 

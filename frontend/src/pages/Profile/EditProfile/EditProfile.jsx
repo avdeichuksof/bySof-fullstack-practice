@@ -1,5 +1,6 @@
 import './editProfile.css'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 import editIllustration from '../../../img/undraw_profile_data_re_v81r.svg'
 import EditUserForm from '../../../components/Users/EditUserForm/EditUserForm'
@@ -44,10 +45,16 @@ const EditProfile = () => {
                 body: updated,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('User data updated: ', res.data)
+                    toast.success('Perfil actualizado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
-                    console.error('Error updating user data: ', error)
+                    toast.error('Ocurrió un error al actualizar perfil.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -70,6 +77,8 @@ const EditProfile = () => {
 
     return (
         <div className="edit-profile-container">
+            <Toaster />
+
             <h1 className='edit-profile-title'>Editar Perfil</h1>
 
             <div className="forms-container">

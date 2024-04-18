@@ -1,6 +1,7 @@
 import './cartView.css'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -32,6 +33,7 @@ const CartView = () => {
                 callbackSuccess: (res) => {
                     setCartFound(res.data.cart)
                     setCartProducts(res.data.cart.products)
+                    
                 },
                 callbackError: (error) => {
                     if (error.response && error.response.status === 404) {
@@ -58,12 +60,18 @@ const CartView = () => {
                 url: `${baseURL}/api/carts/empty/${userCartId}`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Cart emptied successfully', res.data)
+                    toast.success('Carrito vacío.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                     setEmptyCart(true)
                     setCartProducts([])
                 },
                 callbackError: (error) => {
-                    console.log('Error emptying cart', error)
+                    toast.error('Ocurrió un error al vaciar el carrito.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                     setEmptyCart(false)
                 }
             })
@@ -131,7 +139,10 @@ const CartView = () => {
                     // setPurchaseCode(res.data.ticket.id)
                 },
                 callbackError: (error) => {
-                    console.log('There was an error generating purchase: ', error)
+                    toast.error('Error al generar compra.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setPurchased(false)
                 }
             })
@@ -145,6 +156,8 @@ const CartView = () => {
 
     return (
         <div className="cart-view-container">
+            <Toaster />
+            
             <h1 className='title-cart'>Mi Carrito</h1>
 
             {userCart && products.length !== 0 ? (

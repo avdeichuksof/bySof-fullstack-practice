@@ -2,6 +2,8 @@ import './session.css'
 import logo from '../../img/logo.png'
 import background from '../../img/bg2.png'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -31,10 +33,17 @@ const ForgotPassword = () => {
                 configs: config,
                 callbackSuccess: (res) => {
                     console.log('Email sent', res)
-                    alert('Revisa tu correo para realizar el cambio de contraseña')
+                    toast('Revisa tu correo para realizar el cambio de contraseña', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
                     console.error('Error sending mail: ', error)
+                    toast.error('Ocurrió un error. Vuelve a intentarlo.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -50,6 +59,7 @@ const ForgotPassword = () => {
     
     return (
         <div className="body" style={{ backgroundImage: `url(${background})` }} >
+            <Toaster />
             <nav className="nav">
                 <img src={`${logo}`} alt="brand" />
             </nav>

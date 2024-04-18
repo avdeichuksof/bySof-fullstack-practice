@@ -1,5 +1,6 @@
 import '../administration.css'
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import toast, {Toaster} from 'react-hot-toast'
 import AxiosClient from '../../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -53,10 +54,16 @@ const AdminProducts = () => {
                 body: createProduct,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product  created successfully: ', res.data)
+                    toast.success('Producto creado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
-                    console.log('Failed to create the Product', error.message)
+                    toast.error('Error al crear producto.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -94,12 +101,14 @@ const AdminProducts = () => {
                 url: `${baseURL}/api/products/${productId}`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product found: ', res.data.product)
                     setProdFound(res.data.product)
                     setShowOptions(true)
                 },
                 callbackError: (error) => {
-                    console.error('Invalid ID, product not found: ', error)
+                    toast.error('Producto no encontrado. ID inválido.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                     setShowOptions(false)
                     setProdFound({})
                     setProductId('')
@@ -134,10 +143,16 @@ const AdminProducts = () => {
                 body: updated,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product updated: ', res.data)
+                    toast.success('Producto actualizado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
-                    console.error('Error updating product: ', error)
+                    toast.error('Error al actualizar producto.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 }
             })
         } catch (error) {
@@ -174,11 +189,17 @@ const AdminProducts = () => {
                 url: `${baseURL}/api/products/${productId}`,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Product deleted: ', res.data)
+                    toast.success('Producto eliminado.', {
+                        duration: 5000,
+                        position: 'top-right'
+                    })
                 },
                 callbackError: (error) => {
                     if (error.response && error.response.status === 404) {
-                        console.log('Product not found')
+                        toast.error('Error al eliminar producto. ID inválido.', {
+                            duration: 5000,
+                            position: 'top-right'
+                        })
                     }
                 }
             })
@@ -189,6 +210,7 @@ const AdminProducts = () => {
 
 
     return <div className='admin-container'>
+        <Toaster />
         <h1 className='admin-title'>Administración de Productos</h1>
 
         <div className="create-product">

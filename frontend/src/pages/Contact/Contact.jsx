@@ -1,5 +1,6 @@
 import './contact.css'
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import AxiosClient from '../../services/axiosClient'
 const axiosClient = new AxiosClient()
 
@@ -43,10 +44,18 @@ const Contact = () => {
                 body: form,
                 config: config,
                 callbackSuccess: (res) => {
-                    console.log('Email data: ', form)
                     if (res && res.status === 200) console.log('Email sent')
+                    toast.success('El email se envió correctamente.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
                 },
-                callbackError: (error) => console.error('Error sending email: ', error)
+                callbackError: (error) => {
+                    toast.error('Ocurrió un error al enviar el mail. Intentalo nuevamente.', {
+                        duration: 5000,
+                        position: 'top-right',
+                    })
+                }
             })
         } catch (error) {
             console.error('Error sending request: ', error)
@@ -70,6 +79,8 @@ const Contact = () => {
 
     return (
         <div className="contact">
+            <Toaster />
+
             <h1 className="title">Contactanos</h1>
             <div className="contact-box">
                 <img className='contact-illustration' src={contactIllustration} alt="ilustración" />
